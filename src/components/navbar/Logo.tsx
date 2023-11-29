@@ -14,7 +14,9 @@ const Logo = () => {
         width="50"
         src="/images/logo.svg"
       ></Image>
-      <h1 className=" font-bold">Co-Travel <br/> Nepal</h1>
+      <h2 className=" font-bold text-accent">
+        Co-Travel <br /> Nepal
+      </h2>
     </div>
   );
 };

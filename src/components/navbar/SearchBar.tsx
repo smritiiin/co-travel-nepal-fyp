@@ -3,11 +3,11 @@ import React from "react";
 const SearchBar = () => {
   return (
     //  change to a new component */}
-    <div className="flex px-4 group">
+    <div className="flex group pr-1 h-10">
       <div className=" ease-in-out duration-5000 group-hover:w-full group-focus-within:w-full group-focus-within:bg-white flex group-hover:bg-white items-center justify-between w-0 rounded-full shadow-xl p-1 sticky">
         {/* <!-- text input --> */}
         <input
-          className=" opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 invisible group-hover:visible group-focus-within:visible ease-in-out duration-700 font-bold uppercase rounded-full w-full h-9 py-4 pl-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
+          className=" opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 invisible group-hover:visible group-focus-within:visible ease-in-out duration-700 font-bold uppercase rounded-full w-full h-full py-4 pl-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs"
           type="text"
           placeholder="Search"
         ></input>
@@ -15,7 +15,7 @@ const SearchBar = () => {
         <button className="-ml-11 group-hover:ml-auto group-focus-within:ml-auto">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="ionicon h-9 w-9"
+            className="ionicon h-10 w-10"
             viewBox="0 0 512 512"
           >
             <title>Search</title>

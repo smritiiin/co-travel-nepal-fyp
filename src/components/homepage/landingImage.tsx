@@ -4,10 +4,6 @@ import Image from "next/image";
 const LandingImage = () => {
   const [imageUrl, setImageUrl] = useState("/images/user.svg");
 
-  const handleClick = (image: string) => {
-    console.log(image);
-    setImageUrl(`/images/${image}.svg`);
-  };
   const images = [
     "/images/koshibarrage.svg",
     // "/images/login-cover.svg",
@@ -22,7 +18,6 @@ const LandingImage = () => {
           height="1100"
           width="11111"
           src="/images/koshibarrage.svg"
-          onClick={() => handleClick(image)}
         ></Image>
       ))}
     </div>
