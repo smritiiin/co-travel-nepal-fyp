@@ -49,7 +49,6 @@ const SignInFrom = () => {
 
           <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
             <Input
-              type="password"
               label="Password"
               endContent={
                 <button
@@ -67,7 +66,6 @@ const SignInFrom = () => {
               type={isVisible ? "text" : "password"}
             />
           </div>
-          
 
           {/* <input
             type="text"
