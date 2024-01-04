@@ -1,4 +1,5 @@
 "use client";
+import { Providers } from "./providers";
 import type { Metadata } from "next";
 import { usePathname } from "next/navigation";
 import { Inter } from "next/font/google";
@@ -23,8 +24,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        {showNavbar && <Navbar />}
-        <main className="relative ">{children}</main>
+        <Providers>
+          {showNavbar && <Navbar />}
+          <main className="relative ">{children}</main>
+        </Providers>
       </body>
     </html>
   );

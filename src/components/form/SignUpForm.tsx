@@ -2,11 +2,19 @@ import { signupValidation } from "@/app/auth/validation/signupValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import React from "react";
-// import CoverImg from "../CoverImg";
+import CoverImg from "../CoverImg";
 import { useForm, SubmitHandler } from "react-hook-form";
+
+import { Input, Button, Checkbox } from "@nextui-org/react";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import * as z from "zod";
 
 const SignUpForm = () => {
+ const [isVisible, setIsVisible] = React.useState(false);
+
+ const toggleVisibility = () => setIsVisible(!isVisible);
+
   type Inputs = {
     email: string;
     username: string;
@@ -32,8 +40,48 @@ const SignUpForm = () => {
       <div className="flex flex-col">
         <h1>Create an account!</h1>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 flex flex-col">
-          <input
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-3 flex flex-col"
+        >
+          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+            <Input type="email" label="Email" />
+          </div>
+
+          <div className="flex gap-x-2">
+            <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+              <Input type="email" label="First Name" />
+            </div>
+            <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+              <Input type="email" label="Last Name" />
+            </div>
+          </div>
+
+          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+            <Input type="email" label="Username" />
+          </div>
+          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+            <Input
+              // type="password"
+              label="Password"
+              endContent={
+                <button
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibility}
+                >
+                  {isVisible ? (
+                    <FaEye className="text-2xl text-default-400 pointer-events-none" />
+                  ) : (
+                    <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
+                  )}
+                </button>
+              }
+              type={isVisible ? "text" : "password"}
+            />
+          </div>
+
+          {/* <Input
             type="text"
             id="email"
             placeholder="Email"
@@ -43,9 +91,9 @@ const SignUpForm = () => {
           />
           {errors.email?.message && (
             <div className=" text-red-500">{errors.email?.message}</div>
-          )}
+          )} */}
 
-          <input
+          {/* <Input
             type="text"
             id="username"
             placeholder="Username"
@@ -57,7 +105,7 @@ const SignUpForm = () => {
             <div className=" text-red-500">{errors.username?.message}</div>
           )}
 
-          <input
+          <Input
             type="password"
             id="password"
             placeholder="Password"
@@ -67,21 +115,25 @@ const SignUpForm = () => {
           />
           {errors.password?.message && (
             <div className=" text-red-500">{errors.password?.message}</div>
-          )}
+          )} */}
 
-          <button
-            type="submit"
-            className="btn btn-primary"
-            disabled={isSubmitting}
-          >
+          <Checkbox >Option</Checkbox>
+
+          <Button type="submit" color="primary" disabled={isSubmitting}>
             Sign Up
-          </button>
+          </Button>
         </form>
 
-        <p>Already have an account? </p>
-        <Link href="/login">Log in</Link>
+        <p className="flex gap-x-2 mt-5">
+          Already have an account?
+          <Link href="/auth/login" className=" text-blue-600 font-semibold">
+            Log in
+          </Link>
+        </p>
       </div>
-      <div>{/* <CoverImg /> */}</div>
+      <div>
+        <CoverImg />
+      </div>
     </div>
   );
 };

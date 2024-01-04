@@ -1,66 +1,47 @@
+import {
+  Navbar,
+  NavbarBrand,
+  Link,
+} from "@nextui-org/react";
+
 import { NAV_LINKS } from "@/constants";
 import Logo from "./Logo";
-import Link from "next/link";
 import Image from "next/image";
 import SearchBar from "./SearchBar";
 import DarkLightMode from "../theme-changer/DarkLightMode";
+import UserProfile from "./UserProfile";
 
-const Navbar = () => {
+// className="flex justify-between px-6 fixed w-full z-30 items-center bg-white
+const Nav = () => {
   return (
-    <nav className="flex justify-between px-6 fixed w-full z-30 items-center bg-white">
-      <Link href="/">
-        <Logo />
-      </Link>
+    <Navbar shouldHideOnScroll className=" flex justify-around w-full border">
+      <NavbarBrand>
+        <Link href="/">
+          <Logo />
+        </Link>
+      </NavbarBrand>
 
-      <ul className="hidden h-full gap-12 lg:flex md:flex">
-        {NAV_LINKS.map((link) => (
-          <Link
-            href={link.href}
-            key={link.key}
-            className="flex justify-center transition-all cursor-pointer hover:text-red-600"
-          >
-            {link.label}
-          </Link>
-        ))}
-      </ul>
+      <div className="">
+        <ul className="hidden h-full gap-12 lg:flex md:flex justify-center">
+          {NAV_LINKS.map((link) => (
+            <Link
+              href={link.href}
+              key={link.key}
+              className="flex justify-center transition-all cursor-pointer hover:text-red-600"
+            >
+              {link.label}
+            </Link>
+          ))}
+        </ul>
+      </div>
 
-      <div className="flex items-center justify-end gap-1">
+      <div className="flex items-center border gap-1">
         <SearchBar />
         <DarkLightMode />
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <Image
-                alt="Tailwind CSS Navbar component"
-                src="/images/user.svg"
-                width={20}
-                height={20}
-              />
-            </div>
-          </div>
-          <ul className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <a>Logout</a>
-            </li>
-          </ul>
-        </div>
+        <UserProfile />
       </div>
-    </nav>
+    </Navbar>
   );
 };
 
-export default Navbar;
-// https://daisyui.com/components/navbar/
+export default Nav;
