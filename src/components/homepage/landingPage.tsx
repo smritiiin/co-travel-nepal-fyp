@@ -4,7 +4,7 @@ import Image from "next/image";
 const LandingPage = () => {
   return (
     <div className="flex justify-end w-full px-8 h-screen">
-      <div className="flex flex-col justify-around items-center h-full ">
+      <div className="flex flex-col justify-around items-center h-full  ">
         <div>
           <h1>Start your journey by one click, explore the beauty of Nepal!</h1>
           <p>

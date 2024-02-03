@@ -1,9 +1,13 @@
 "use client";
+import CoverImg from "@/components/CoverImg";
 import SignInFrom from "@/components/form/SignInFrom";
 
 const login = () => {
   return (
-    <SignInFrom/>
+    <div className=" flex justify-center items-center">
+      <CoverImg />
+      <SignInFrom />
+    </div>
   );
 };
 

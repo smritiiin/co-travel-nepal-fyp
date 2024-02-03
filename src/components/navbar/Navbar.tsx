@@ -1,6 +1,8 @@
 import {
   Navbar,
   NavbarBrand,
+  NavbarContent,
+  NavbarItem,
   Link,
 } from "@nextui-org/react";
 
@@ -21,6 +23,12 @@ const Nav = () => {
         </Link>
       </NavbarBrand>
 
+      <NavbarContent
+        className="hidden sm:flex gap-4"
+        justify="center"
+      >
+        <NavbarItem>Home</NavbarItem>
+      </NavbarContent>
       <div className="">
         <ul className="hidden h-full gap-12 lg:flex md:flex justify-center">
           {NAV_LINKS.map((link) => (
