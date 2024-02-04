@@ -6,7 +6,10 @@ import Link from "next/link";
 
 const Signup = () => {
   return (
-   <SignUpForm/>
+    <>
+      {/* <CoverImg /> */}
+      <SignUpForm />
+    </>
   );
 };
 

@@ -1,9 +1,10 @@
 import { signupValidation } from "@/app/auth/validation/signupValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import CoverImg from "../CoverImg";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { signup } from "../../app/api/signup";
 
 import { Input, Button, Checkbox } from "@nextui-org/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -12,28 +13,51 @@ import * as z from "zod";
 
 const SignUpForm = () => {
  const [isVisible, setIsVisible] = React.useState(false);
-
  const toggleVisibility = () => setIsVisible(!isVisible);
 
-  type Inputs = {
-    email: string;
-    username: string;
-    password: string;
-  };
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm<Inputs>({
-    defaultValues: {
-      email: "",
-      username: "",
-      password: "",
-    },
-    resolver: zodResolver(signupValidation),
-  });
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+ const onSignup = async (e: any) => {
+  e.preventDefault();
+  console.log("Email: ", email);
+  console.log("Password: ", password);
+
+  const resp: any = await signup({ email,fname, lname, password, confirmPassword });
+  console.log("THIS IS RESPONSE: ", resp);
+  if (resp.success) {
+    console.log("Signup Sucessful");
+    document.cookie = `x-access-token=${resp.data.token}; path=/;`;
+    window.location.href = "/";
+  } else {
+    console.log("Something went wrong...");
+    console.log(resp.error);
+    // alert(resp.error);
+  }
+};
+
+  // type Inputs = {
+  //   email: string;
+  //   username: string;
+  //   password: string;
+  // };
+
+  // const {
+  //   register,
+  //   handleSubmit,
+  //   formState: { errors, isSubmitting },
+  // } = useForm<Inputs>({
+  //   defaultValues: {
+  //     email: "",
+  //     username: "",
+  //     password: "",
+  //   },
+  //   resolver: zodResolver(signupValidation),
+  // });
+  // const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
 
   return (
     <div className="flex justify-center items-center">
@@ -41,29 +65,65 @@ const SignUpForm = () => {
         <h1>Create an account!</h1>
 
         <form
-          onSubmit={handleSubmit(onSubmit)}
+          // onSubmit={handleSubmit(onSubmit)}
           className="space-y-3 flex flex-col"
         >
           <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-            <Input type="email" label="Email" />
+            <Input
+              type="email"
+              label="Email"
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
 
           <div className="flex gap-x-2">
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-              <Input type="email" label="First Name" />
+              <Input
+                type="text"
+                label="First Name"
+                name="fname"
+                onChange={(e) => setFname(e.target.value)}
+              />
             </div>
             <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-              <Input type="email" label="Last Name" />
+              <Input
+                type="text"
+                label="Last Name"
+                name="lname"
+                onChange={(e) => setLname(e.target.value)}
+              />
             </div>
-          </div>
-
-          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
-            <Input type="email" label="Username" />
           </div>
           <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
             <Input
               // type="password"
               label="Password"
+              name="password"
+              onChange={(e) => setPassword(e.target.value)}
+              endContent={
+                <button
+                  className="focus:outline-none"
+                  type="button"
+                  onClick={toggleVisibility}
+                >
+                  {isVisible ? (
+                    <FaEye className="text-2xl text-default-400 pointer-events-none" />
+                  ) : (
+                    <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
+                  )}
+                </button>
+              }
+              type={isVisible ? "text" : "password"}
+            />
+          </div>
+
+          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+            <Input
+              // type="password"
+              label="Confirm Password"
+              name="confirmPassword"
+              onChange={(e) => setConfirmPassword(e.target.value)}
               endContent={
                 <button
                   className="focus:outline-none"
@@ -117,9 +177,9 @@ const SignUpForm = () => {
             <div className=" text-red-500">{errors.password?.message}</div>
           )} */}
 
-          <Checkbox >Option</Checkbox>
+          <Checkbox>Option</Checkbox>
 
-          <Button type="submit" color="primary" disabled={isSubmitting}>
+          <Button type="submit" color="primary" onClick={onSignup}>
             Sign Up
           </Button>
         </form>
