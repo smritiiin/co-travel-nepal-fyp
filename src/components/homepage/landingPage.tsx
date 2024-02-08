@@ -24,6 +24,7 @@ const LandingPage = () => {
         width="800"
         src="/images/landing.svg"
       ></Image>
+
     </div>
   );
 };

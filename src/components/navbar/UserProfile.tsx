@@ -24,7 +24,7 @@ export default function UserProfile() {
         <Avatar
           isBordered
           as="button"
-          className="transition-transform"
+          className="transition-transform h-9 w-9"
           color="primary"
           name="Jason Hughes"
           size="sm"

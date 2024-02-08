@@ -3,7 +3,7 @@ import React from "react";
 const SearchBar = () => {
   return (
     //  change to a new component */}
-    <div className="flex group pr-1 h-10">
+    <div className="flex group pr-1 h-10 w-full">
       <div className=" ease-in-out duration-5000 group-hover:w-full group-focus-within:w-full group-focus-within:bg-white flex group-hover:bg-white items-center justify-between w-0 rounded-full shadow-xl p-1 sticky">
         {/* <!-- text input --> */}
         <input

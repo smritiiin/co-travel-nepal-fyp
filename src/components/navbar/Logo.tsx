@@ -5,8 +5,9 @@ import { useRouter } from "next/navigation";
 
 const Logo = () => {
   const router = useRouter();
+
   return (
-    <div className="flex">
+    <div className="grid grid-flow-col w-40 px-4">
       <Image
         alt="Logo"
         className="block cursor-pointer"
@@ -14,9 +15,11 @@ const Logo = () => {
         width="50"
         src="/images/logo.svg"
       ></Image>
-      <h2 className=" font-bold text-accent">
-        Co-Travel <br /> Nepal
-      </h2>
+      <div className="">
+        <h2 className=" text-center font-bold text-accent">
+          Co-Travel <br /> Nepal
+        </h2>
+      </div>
     </div>
   );
 };

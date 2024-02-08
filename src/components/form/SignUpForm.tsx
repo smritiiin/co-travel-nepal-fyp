@@ -23,15 +23,15 @@ const SignUpForm = () => {
 
  const onSignup = async (e: any) => {
   e.preventDefault();
-  console.log("Email: ", email);
-  console.log("Password: ", password);
+  // console.log("Email: ", email);
+  // console.log("Password: ", password);
 
   const resp: any = await signup({ email,fname, lname, password, confirmPassword });
   console.log("THIS IS RESPONSE: ", resp);
   if (resp.success) {
     console.log("Signup Sucessful");
     document.cookie = `x-access-token=${resp.data.token}; path=/;`;
-    window.location.href = "/";
+    // window.location.href = "/auth/login";
   } else {
     console.log("Something went wrong...");
     console.log(resp.error);

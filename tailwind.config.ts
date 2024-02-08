@@ -1,5 +1,5 @@
 import type { Config } from "tailwindcss";
-const {nextui} = require("@nextui-org/react")
+const { nextui } = require("@nextui-org/react");
 
 const config: Config = {
   content: [
@@ -26,7 +26,7 @@ const config: Config = {
         dark: {
           colors: {
             primary: {
-              DEFAULT: "#34D058",
+              DEFAULT: "#c251db",
               foreground: "#000000",
             },
             focus: "#BEF264",
