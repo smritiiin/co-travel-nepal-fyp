@@ -1,9 +1,9 @@
-import Image from 'next/image';
-import React from 'react'
+import Image from "next/image";
+import React from "react";
 
 const TravelStories = () => {
   return (
-    <div>
+    <div className="w-full overflow-hidden">
       <div className="flex justify-between">
         <h1>Travel Stories</h1>
         <p>Read More</p>
@@ -65,6 +65,6 @@ const TravelStories = () => {
       </div>
     </div>
   );
-}
+};
 
-export default TravelStories
+export default TravelStories;

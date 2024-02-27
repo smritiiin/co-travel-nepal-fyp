@@ -8,9 +8,9 @@ const CoverImg = () => {
   return (
     <Image
       alt="Logo"
-      className="block m-5"
-      height="500"
-      width="500"
+      className="md:block sm:hidden " //add animation
+      height="470"
+      width="470"
       src="/images/login-cover.svg"
     ></Image>
   );

@@ -3,8 +3,9 @@ import Image from "next/image";
 
 const LandingPage = () => {
   return (
-    <div className="flex justify-end w-full px-8 h-screen">
+    <div className="flex justify-center px-8 h-screen">
       <div className="flex flex-col justify-around items-center h-full  ">
+        {/* Opening text div */}
         <div>
           <h1>Start your journey by one click, explore the beauty of Nepal!</h1>
           <p>
@@ -19,12 +20,11 @@ const LandingPage = () => {
       </div>
       <Image
         alt="Home Page"
-        className=""
+        className=" m-10 "
         height="800"
         width="800"
         src="/images/landing.svg"
       ></Image>
-
     </div>
   );
 };

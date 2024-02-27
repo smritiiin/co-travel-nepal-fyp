@@ -4,7 +4,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import CoverImg from "../CoverImg";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { signup } from "../../app/api/signup";
+import { signup } from "../../api/signup";
 
 import { Input, Button, Checkbox } from "@nextui-org/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -12,8 +12,10 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as z from "zod";
 
 const SignUpForm = () => {
- const [isVisible, setIsVisible] = React.useState(false);
- const toggleVisibility = () => setIsVisible(!isVisible);
+ const [isVisible1, setIsVisible1] = useState(false);
+ const [isVisible2, setIsVisible2] = useState(false);
+ const toggleVisibility1 = () => setIsVisible1(!isVisible1);
+ const toggleVisibility2 = () => setIsVisible2(!isVisible2);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -105,16 +107,16 @@ const SignUpForm = () => {
                 <button
                   className="focus:outline-none"
                   type="button"
-                  onClick={toggleVisibility}
+                  onClick={toggleVisibility1}
                 >
-                  {isVisible ? (
+                  {isVisible1 ? (
                     <FaEye className="text-2xl text-default-400 pointer-events-none" />
                   ) : (
                     <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
                   )}
                 </button>
               }
-              type={isVisible ? "text" : "password"}
+              type={isVisible1 ? "text" : "password"}
             />
           </div>
 
@@ -128,16 +130,16 @@ const SignUpForm = () => {
                 <button
                   className="focus:outline-none"
                   type="button"
-                  onClick={toggleVisibility}
+                  onClick={toggleVisibility2}
                 >
-                  {isVisible ? (
+                  {isVisible2 ? (
                     <FaEye className="text-2xl text-default-400 pointer-events-none" />
                   ) : (
                     <FaEyeSlash className="text-2xl text-default-400 pointer-events-none" />
                   )}
                 </button>
               }
-              type={isVisible ? "text" : "password"}
+              type={isVisible2 ? "text" : "password"}
             />
           </div>
 
@@ -191,9 +193,9 @@ const SignUpForm = () => {
           </Link>
         </p>
       </div>
-      <div>
+      {/* <div>
         <CoverImg />
-      </div>
+      </div> */}
     </div>
   );
 };

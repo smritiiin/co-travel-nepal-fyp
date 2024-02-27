@@ -5,9 +5,9 @@ const Destination = () => {
       <div className="flex justify-center items-end">
         <h1 className="text-center">
           Your next{" "}
-          <span className=" text-green-700">
+          <p className=" text-green-700">
             travel <br /> Destination
-          </span>{" "}
+          </p>{" "}
           is
         </h1>
         <select className="select">

@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { usePathname } from "next/navigation";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/navbar/Navbar";
+import Navbar from "./components/navbar/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,7 +19,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const showNavbar = pathname !== "/auth/login" && pathname !== "/auth/signup";
+  const showNavbar =
+    pathname !== "/auth/login" &&
+    pathname !== "/auth/signup" &&
+    !pathname.startsWith("/admin");
 
   return (
     <html lang="en">

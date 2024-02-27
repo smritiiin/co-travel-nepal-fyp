@@ -3,7 +3,7 @@ import React from "react";
 
 const Testimonials = () => {
   return (
-    <div>
+    <div className="w-full">
       <div>
         <h1>Testimonials</h1>
         <p>See what our users has to say about Co-Travel Nepal</p>
@@ -12,7 +12,7 @@ const Testimonials = () => {
       <div className="rounded shadow px-6 py-5 flex justify-center ">
         <div>
           <div className="flex ">
-            <Image src="/images/user.svg" alt="" width={50} height={50} />
+            <Image src="/images/user.svg" alt="User" width={50} height={50} />
             <div>
               <h2>John Doe</h2>
               <p>Traveller</p>
@@ -25,9 +25,7 @@ const Testimonials = () => {
               everyone to walk this amazing trek in Nepal....................
             </p>
           </div>
-          <div>
-            Stars
-          </div>
+          <div>Stars</div>
         </div>
 
         <div>
