@@ -27,12 +27,12 @@ export default function Places() {
             </Button>
           </div>
           <Divider />
-          <table>
+          {/* <table>
             <thead>Place</thead>
             <thead>State</thead>
             <thead>Description</thead>
             <thead>Location</thead>
-          </table>
+          </table> */}
         </div>
       </div>
     </div>

@@ -1,12 +1,22 @@
 "use client";
+import { addPlace } from "@/app/api/addPlaceAPI";
 import NavBar from "../../NavBar";
-import { Input, Image } from "@nextui-org/react";
+import { Input, Image, Button } from "@nextui-org/react";
 import { useRef, useState } from "react";
 
 const AddPlace = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedImages, setSelectedImages] = useState<string[]>([]);
   const [showAddButton, setShowAddButton] = useState(true);
+
+  const [placeFields, setPlaceFields] = useState({
+    PlaceName: "",
+    StateId: 0,
+    Description: "",
+    Latitude: 0,
+    Longitude: 0,
+    // image: null,
+  });
 
   const handleImageClick = () => {
     if (fileInputRef.current) {
@@ -31,6 +41,20 @@ const AddPlace = () => {
     setShowAddButton(true);
   };
 
+  const onAddPlace = async (e: any) => {
+    e.preventDefault();
+    console.log("These are the values", placeFields);
+
+    const resp: any = await addPlace(placeFields);
+    console.log("THIS IS RESPONSE: ", resp);
+    if (resp.success) {
+      console.log("Place Added Sucessful");
+    } else {
+      alert("Something went wrong...");
+      console.log(resp.error);
+    }
+  };
+
   return (
     <div className="flex h-screen">
       <NavBar />
@@ -42,19 +66,37 @@ const AddPlace = () => {
             type="place"
             label="Place"
             labelPlacement="outside"
+            onChange={(text) =>
+              setPlaceFields({
+                ...placeFields,
+                PlaceName: text.target.value,
+              })
+            }
           />
           <Input
             key={"outside"}
             type="state"
             label="State"
             labelPlacement="outside"
+            onChange={(text) =>
+              setPlaceFields({
+                ...placeFields,
+                StateId: Number(text.target.value),
+              })
+            }
           />
           <Input
             key={"outside"}
             type="description"
             label="Description"
             labelPlacement="outside"
-          />{" "}
+            onChange={(text) =>
+              setPlaceFields({
+                ...placeFields,
+                Description: text.target.value,
+              })
+            }
+          />
           <p>Location</p>
           <div className="flex gap-x-3">
             <Input
@@ -62,12 +104,24 @@ const AddPlace = () => {
               type="latitude"
               label="Latitude"
               labelPlacement="outside"
+              onChange={(text) =>
+                setPlaceFields({
+                  ...placeFields,
+                  Latitude: Number(text.target.value),
+                })
+              }
             />
             <Input
               key={"outside"}
               type="Longitude"
               label="Longitude"
               labelPlacement="outside"
+              onChange={(text) =>
+                setPlaceFields({
+                  ...placeFields,
+                  Longitude: Number(text.target.value),
+                })
+              }
             />
           </div>
           <Input
@@ -83,8 +137,15 @@ const AddPlace = () => {
               name="myfile"
               ref={fileInputRef}
               className="absolute font-extrabold text-lg left-0 top-0 opacity-0"
-              onChange={handleFileInputChange}
+              // onChange={handleFileInputChange}
               multiple
+              // onChange={(event) => {
+              //   const file = event.target.files?.[0] || null;
+              //   setPlaceFields({
+              //     ...placeFields,
+              //     image: file !== null ? file : null,
+              //   });
+              // }}
             />
             {selectedImages.length > 0 ? (
               <>
@@ -101,7 +162,10 @@ const AddPlace = () => {
                   ))}
                 </div>
                 {showAddButton && (
-                  <button className="border h-11 w-20 opacity-20" onClick={handleImageClick}>
+                  <button
+                    className="border h-11 w-20 opacity-20"
+                    onClick={handleImageClick}
+                  >
                     <Image
                       src="/images/admin/addImage.svg"
                       alt="Add More Images"
@@ -122,6 +186,9 @@ const AddPlace = () => {
               </button>
             )}
           </div>
+          <Button type="submit" color="primary" onClick={onAddPlace}>
+            Add Place
+          </Button>
         </div>
       </div>
     </div>

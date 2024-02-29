@@ -6,7 +6,7 @@ const Users = () => {
   return (
     <div className="flex h-screen">
       <NavBar />
-      <div>
+      <div className="w-[75%] h-screen py-3">
         <SearchBar />
         <div className="flex gap-x-4">
           <h2 className="text-center">Users</h2>

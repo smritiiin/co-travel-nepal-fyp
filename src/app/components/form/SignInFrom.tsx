@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { login } from "../../api/login";
 import Link from "next/link";
-import { Input, Button, Checkbox } from "@nextui-org/react";
+import { Input, Button } from "@nextui-org/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
