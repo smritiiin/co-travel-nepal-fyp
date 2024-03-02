@@ -6,7 +6,7 @@ import TravelPlans from "./components/homepage/travelPlans";
 import TravelStories from "./components/homepage/travelStories";
 
 import { useEffect } from "react";
-import { Card, CardHeader, CardBody, Image } from "@nextui-org/react";
+import WhyUs from "./components/homepage/whyus";
 
 export default function Home() {
   useEffect(() => {
@@ -47,9 +47,10 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="">
+    <div className=" flex flex-col gap-10">
       <LandingPage />
       <PopularDestinations />
+      <WhyUs />
       <TravelStories />
       <TravelPlans />
       <Testimonials />

@@ -1,8 +1,8 @@
 "use client";
 import { addPlace } from "@/app/api/addPlaceAPI";
-import NavBar from "../../NavBar";
 import { Input, Image, Button } from "@nextui-org/react";
 import { useRef, useState } from "react";
+import NavAdmin from "../../NavBar";
 
 const AddPlace = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -57,7 +57,7 @@ const AddPlace = () => {
 
   return (
     <div className="flex h-screen">
-      <NavBar />
+      <NavAdmin />
       <div className="p-7">
         <h1 className="">Add Place</h1>
         <div>

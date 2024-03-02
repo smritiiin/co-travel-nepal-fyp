@@ -1,11 +1,11 @@
-import { Input } from '@nextui-org/react';
-import React from 'react'
-import { SearchIcon } from './SearchIcon';
+import { Input } from "@nextui-org/react";
+import React from "react";
+import { SearchIcon } from "./SearchIcon";
 
 const SearchBar = () => {
   return (
     <div>
-      <div className="flex justify-end items-center mb-4">
+      <div className="flex justify-end items-center">
         <Input
           classNames={{
             base: "max-w-full sm:max-w-[10rem] h-10",
@@ -22,6 +22,6 @@ const SearchBar = () => {
       </div>
     </div>
   );
-}
+};
 
-export default SearchBar
+export default SearchBar;

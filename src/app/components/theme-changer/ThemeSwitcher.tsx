@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Switch, Button, select } from "@nextui-org/react";
 import { IoMdSunny } from "react-icons/io";

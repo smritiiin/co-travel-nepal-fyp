@@ -1,11 +1,11 @@
 import React from "react";
-import NavBar from "../NavBar";
 import SearchBar from "../SearchBar";
+import NavAdmin from "../NavBar";
 
 const Users = () => {
   return (
     <div className="flex h-screen">
-      <NavBar />
+      <NavAdmin />
       <div className="w-[75%] h-screen py-3">
         <SearchBar />
         <div className="flex gap-x-4">

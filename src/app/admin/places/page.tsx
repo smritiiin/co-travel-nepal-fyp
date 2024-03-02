@@ -4,6 +4,7 @@ import { Button, Divider, Table } from "@nextui-org/react";
 import NavBar from "../NavBar";
 import SearchBar from "../SearchBar";
 import { useRouter } from "next/navigation";
+import NavAdmin from "../NavBar";
 
 export default function Places() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function Places() {
 
   return (
     <div className="h-screen flex">
-      <NavBar />
+      <NavAdmin />
       <div className="w-[75%] h-screen py-3">
         <SearchBar />
 

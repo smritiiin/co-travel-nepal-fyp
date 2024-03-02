@@ -16,9 +16,9 @@ const Logo = () => {
         src="/images/logo.svg"
       ></Image>
       <div className="">
-        <h2 className=" text-center font-bold text-accent">
+        <h3 className=" text-center font-bold text-accent">
           Co-Travel <br /> Nepal
-        </h2>
+        </h3>
       </div>
     </div>
   );

@@ -1,12 +1,15 @@
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const TravelStories = () => {
   return (
-    <div className="w-full overflow-hidden">
+    <div className=" px-10 flex flex-col gap-5 overflow-hidden ">
       <div className="flex justify-between">
-        <h1>Travel Stories</h1>
-        <p>Read More</p>
+        <h2>Travel Blogs</h2>
+        <Link href="/stories" className=" text-blue-700 font-semibold">
+          Read More
+        </Link>
       </div>
 
       <div className="flex">

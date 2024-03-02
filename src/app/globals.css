@@ -30,3 +30,13 @@ h1 {
   font-weight: bold;
   font-size: 50px;
 }
+
+h2 {
+  font-weight: bold;
+  font-size: 38px;
+}
+
+
+body {
+  background-color: #eff8fa;
+}

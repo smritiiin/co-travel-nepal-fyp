@@ -1,14 +1,15 @@
+import { Button } from "@nextui-org/react";
 import Image from "next/image";
 import React from "react";
 
 const TravelPlans = () => {
   return (
-    <div>
-      <div className="flex justify-between">
-        <h1 className="">Travel Plans</h1>
-        <p>See all</p>
+    <div className=" h-screen p-4 flex flex-col items-center justify-around ">
+      <div>
+        <h2>Plan Your Vacation!</h2>
+        <p>Vacations to make you experience enjoyable in Nepal!</p>
       </div>
-      <div className="flex justify-around mt-8">
+      <div className="flex justify-around items-stretch w-full">
         {/* Each card for travel package */}
         <div className=" rounded shadow px-6 py-5">
           <Image
@@ -49,6 +50,8 @@ const TravelPlans = () => {
           </div>
         </div>
       </div>
+
+      <Button color="primary"> See All</Button>
     </div>
   );
 };

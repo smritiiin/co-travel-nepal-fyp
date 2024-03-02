@@ -8,7 +8,6 @@ import {
 
 import { NAV_LINKS } from "@/constants";
 import Logo from "./Logo";
-import Image from "next/image";
 import SearchBar from "./SearchBar";
 import DarkLightMode from "../theme-changer/ThemeSwitcher";
 import UserProfile from "./UserProfile";
@@ -25,7 +24,7 @@ const Nav = () => {
 
         <NavbarContent className="hidden sm:flex gap-4" justify="center">
           <div className="h-full flex max-w-full px-5">
-            <NavbarItem className="border ">
+            <NavbarItem>
               {" "}
               <ul className="hidden h-full gap-12 lg:flex md:flex justify-center">
                 {NAV_LINKS.map((link) => (

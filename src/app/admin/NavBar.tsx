@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, Image } from '@nextui-org/react';
-const NavBar = () => {
+const NavAdmin = () => {
   return (
     <div className=" flex flex-col items-center justify-around bg-[#EFF8FA] w-[25%]">
       <div className="flex flex-col items-center">
@@ -82,4 +82,4 @@ const NavBar = () => {
   );
 }
 
-export default NavBar
+export default NavAdmin
