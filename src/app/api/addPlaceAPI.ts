@@ -13,7 +13,7 @@ export const addPlace = async ({
   Description: string;
   Latitude: number;
   Longitude: number;
-  Image?: File | null;
+  Image: any ;
 }) => {
   try {
     const response = await axios.post("http://localhost:8000/api/place/add", {

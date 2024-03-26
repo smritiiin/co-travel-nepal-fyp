@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 const Destination = () => {
   return (
-    <div className="w-full bg-[#EFF8FA]">
+    <div className="w-full ">
       <div className="flex p-16 h-screen gap-x-6">
         <div className="w-1/2">
           <h1>What makes this country a wonderful place to visit.</h1>

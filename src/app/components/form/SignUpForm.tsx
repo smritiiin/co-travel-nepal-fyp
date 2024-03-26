@@ -12,10 +12,10 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import * as z from "zod";
 
 const SignUpForm = () => {
- const [isVisible1, setIsVisible1] = useState(false);
- const [isVisible2, setIsVisible2] = useState(false);
- const toggleVisibility1 = () => setIsVisible1(!isVisible1);
- const toggleVisibility2 = () => setIsVisible2(!isVisible2);
+  const [isVisible1, setIsVisible1] = useState(false);
+  const [isVisible2, setIsVisible2] = useState(false);
+  const toggleVisibility1 = () => setIsVisible1(!isVisible1);
+  const toggleVisibility2 = () => setIsVisible2(!isVisible2);
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,23 +23,29 @@ const SignUpForm = () => {
   const [lname, setLname] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
- const onSignup = async (e: any) => {
-  e.preventDefault();
-  // console.log("Email: ", email);
-  // console.log("Password: ", password);
+  const onSignup = async (e: any) => {
+    e.preventDefault();
+    // console.log("Email: ", email);
+    // console.log("Password: ", password);
 
-  const resp: any = await signup({ email,fname, lname, password, confirmPassword });
-  console.log("THIS IS RESPONSE: ", resp);
-  if (resp.success) {
-    console.log("Signup Sucessful");
-    document.cookie = `x-access-token=${resp.data.token}; path=/;`;
-    // window.location.href = "/auth/login";
-  } else {
-    console.log("Something went wrong...");
-    console.log(resp.error);
-    // alert(resp.error);
-  }
-};
+    const resp: any = await signup({
+      email,
+      fname,
+      lname,
+      password,
+      confirmPassword,
+    });
+    console.log("THIS IS RESPONSE: ", resp);
+    if (resp.success) {
+      console.log("Signup Sucessful");
+      document.cookie = `x-access-token=${resp.data.token}; path=/;`;
+      // window.location.href = "/auth/login";
+    } else {
+      console.log("Something went wrong...");
+      console.log(resp.error);
+      // alert(resp.error);
+    }
+  };
 
   // type Inputs = {
   //   email: string;
@@ -179,7 +185,7 @@ const SignUpForm = () => {
             <div className=" text-red-500">{errors.password?.message}</div>
           )} */}
 
-          <Checkbox>Option</Checkbox>
+          {/* <Checkbox>Option</Checkbox> */}
 
           <Button type="submit" color="primary" onClick={onSignup}>
             Sign Up

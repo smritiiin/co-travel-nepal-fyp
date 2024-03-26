@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
 import Footer from "./components/Footer";
+import { useTheme } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,6 +20,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+  const {theme} = useTheme();
   const pathname = usePathname();
   const showNavbar =
     pathname !== "/auth/login" &&
@@ -30,7 +33,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <Providers>
           {showNavbar && <Navbar />}
-          <main className="relative ">{children}</main>
+          <main className="relative" id="body">{children}</main>
           {showNavbar && <Footer />}
         </Providers>
       </body>

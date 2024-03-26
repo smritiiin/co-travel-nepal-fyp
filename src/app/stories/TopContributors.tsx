@@ -1,9 +1,11 @@
-import React from 'react'
+import React from "react";
 
 const TopContributors = () => {
   return (
-    <div>TopContributors</div>
-  )
-}
+    <div>
+      <h3 className=" font-semibold p-5">Top Contributors</h3>
+    </div>
+  );
+};
 
-export default TopContributors
+export default TopContributors;

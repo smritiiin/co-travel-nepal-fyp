@@ -1,11 +1,11 @@
-import React from 'react'
-import { Link, Image } from '@nextui-org/react';
+import React from "react";
+import { Link, Image } from "@nextui-org/react";
 const NavAdmin = () => {
   return (
     <div className=" flex flex-col items-center justify-around bg-[#EFF8FA] w-[25%]">
       <div className="flex flex-col items-center">
         <Image
-          src="/images/admin/admin.svg"
+          src="/images/admin/admin.png"
           alt="Admin Profile Picture"
           height={100}
           width={100}
@@ -80,6 +80,6 @@ const NavAdmin = () => {
       </div>
     </div>
   );
-}
+};
 
-export default NavAdmin
+export default NavAdmin;

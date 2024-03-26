@@ -15,6 +15,7 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+    
     },
   },
 
@@ -24,13 +25,13 @@ const config: Config = {
       themes: {
         light: {},
         dark: {
-          colors: {
-            primary: {
-              DEFAULT: "#c251db",
-              foreground: "#000000",
-            },
-            focus: "#BEF264",
-          },
+          // colors: {
+          //   primary: {
+          //     DEFAULT: "#c251db",
+          //     foreground: "#000000",
+          //   },
+          //   focus: "#BEF264",
+          // },
         },
       },
     }),

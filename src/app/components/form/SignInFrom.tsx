@@ -23,10 +23,7 @@ const SignInFrom = () => {
       console.log("Login Sucessful");
       document.cookie = `x-access-token=${resp.data.token}; path=/;`;
       console.log("COOKIE is : ", document.cookie);
-      resp.data.role === "ADMIN" ?
-        // ? console.log("Admin Logged in ")
-        // : console.log("USERR");
-      router.push("/admin") : router.push("/");
+      resp.data.role === "ADMIN" ? router.push("/admin") : router.push("/");
       console.log("ROLE is : ", resp.data.role);
       // window.location.href = "/";
       // router.push("/");

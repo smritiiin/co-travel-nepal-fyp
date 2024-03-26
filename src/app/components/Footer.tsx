@@ -2,7 +2,7 @@ import { Button, Divider } from "@nextui-org/react";
 import Image from "next/image";
 import React from "react";
 
-import { NAV_LINKS } from "@/constants";
+import { NAV_LINKS } from "@/utils";
 import Link from "next/link";
 
 const Footer = () => {
