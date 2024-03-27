@@ -106,11 +106,13 @@ const Travellers = () => {
           ) : (
             responseData.map((item) => (
               <Card
+              isPressable
+              isHoverable
                 key={item.id}
                 className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] mx-auto my-3"
                 shadow="sm"
               >
-                <CardBody>
+                <CardBody >
                   <div className="flex items-center justify-around">
                     <Image
                       alt="User"

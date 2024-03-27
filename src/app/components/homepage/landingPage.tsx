@@ -17,9 +17,13 @@ const LandingPage = () => {
             destination information and inspiration from us!
           </p>
         </div>
-        <div className="flex justify-center items-center gap-x-4 w-full">
-          <Button color="primary" size="lg" className=" w-44" >Explore</Button>
-          <Button color="primary" size="lg" className="w-44">Connect</Button>
+        <div className="flex justify-start items-center gap-x-4 w-full">
+          <Button color="primary" size="lg" className=" w-44">
+            Explore
+          </Button>
+          <Button color="primary" size="lg" className="w-44">
+            Connect
+          </Button>
         </div>
       </div>
       <div className="w-1/2">
