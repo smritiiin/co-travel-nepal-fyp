@@ -1,7 +1,60 @@
-import { Select, SelectItem } from "@nextui-org/react";
+"use client";
+import { Card, CardBody, Select, SelectItem } from "@nextui-org/react";
 import Image from "next/image";
+import { parse } from "path";
 import React from "react";
+import { useState, useEffect } from "react";
+import Places from "../admin/places/page";
+
+interface Place {
+  PlaceId: number;
+  Description: string;
+  Image: string;
+  Latitude: string;
+  Longitude: string;
+  PlaceName: string;
+}
+
 const Destination = () => {
+  const [selectedState, setSelectedState] = useState<number>(0);
+  const [stateOptions, setStateOptions] = useState([]);
+  const [places, setPlaces] = useState<Place[]>([]);
+
+  const handleStateChange = async (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    // console.log("STateID Before:", stateId);
+    const parsedID = parseInt(event.target.value);
+    setSelectedState(parsedID);
+
+    try {
+      // console.log("STATEID after:", parsedID);
+      const response = await fetch(
+        `http://localhost:8000/api/place/state/${parsedID}`
+      );
+      const data = await response.json();
+      console.log("Places: ", data);
+      setPlaces(data);
+    } catch (error) {
+      console.error("Error fetching places:", error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchStateOptions = async () => {
+      try {
+        const response = await fetch("http://localhost:8000/api/place/state");
+        const data = await response.json();
+        setStateOptions(data);
+        console.log("DATA: ", data);
+      } catch (error) {
+        console.error("Error fetching state data:", error);
+      }
+    };
+
+    fetchStateOptions();
+  }, []);
+
   return (
     <div className="w-full ">
       <div className="flex p-16 h-screen gap-x-6">
@@ -34,17 +87,40 @@ const Destination = () => {
           </span>{" "}
           is
         </h1>
-        {/* <Select label="Select an animal" className="max-w-xs">
-          {animals.map((animal) => (
-            <SelectItem key={animal.value} value={animal.value}>
-              {animal.label}
+        <Select
+          size="sm"
+          label="Select a state"
+          className="max-w-xs"
+          onChange={handleStateChange}
+        >
+          {stateOptions.map((state: any) => (
+            <SelectItem key={state.StateId} value={state.StateId}>
+              {state.StateName}
             </SelectItem>
           ))}
-        </Select> */}
-        <select className="select">
-          <option>Bagmati</option>
-        </select>
+        </Select>
       </div>
+      {places.length === 0 ? (
+        <p> No places Found</p>
+      ) : (
+        <div className="flex gap-4 flex-wrap">
+          {places.map((place) => (
+            <Card key={place.PlaceId}>
+              <Image
+                src={`http://localhost:8000/${place.Image}`}
+                alt={place.PlaceName}
+                width={200}
+                height={200}
+              />
+              <h3>{place.PlaceName}</h3>
+              <p>{place.Description}</p>
+              <p>
+                Latitude: {place.Latitude}, Longitude: {place.Longitude}
+              </p>
+            </Card>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

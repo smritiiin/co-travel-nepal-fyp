@@ -4,8 +4,10 @@ import React from "react";
 
 import { NAV_LINKS } from "@/utils";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const Footer = () => {
+  const router = useRouter();
   return (
     <div className="bg-[#42A7C3] rounded-t-[20px] w-full mt-auto">
       <div className=" bg-[url('/images/FooterBggg.svg')] px-20 py-3">
@@ -16,10 +18,16 @@ const Footer = () => {
               <h2 className=" font-bold text-xl">The Beauty of Nepal</h2>
             </div>
             <div className="flex flex-col gap-2 ">
-              <Button className="bg-[#42A7C3] font-bold text-white">
+              <Button
+                className="bg-[#42A7C3] font-bold text-white"
+                onClick={() => router.push("/auth/login")}
+              >
                 Login
               </Button>
-              <Button className="bg-white font-bold text-[#42A7C3] ">
+              <Button
+                className="bg-white font-bold text-[#42A7C3] "
+                onClick={() => router.push("/auth/signup")}
+              >
                 Signup
               </Button>
             </div>

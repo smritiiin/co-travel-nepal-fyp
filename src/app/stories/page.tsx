@@ -6,20 +6,26 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useToken } from "@/utils/token";
+
 import { Card, CardHeader, CardBody } from "@nextui-org/react";
 import Loading from "../components/Loading";
+import { LoginCard } from "../components/LoginCard";
 
 const Stories = () => {
+  const { getCookieValue, isTokenAvailableAndNotExpired } = useToken();
+
   const [responseData, setResponseData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [showLoginModal, setShowLoginModal] = useState(false);
 
-   const latestBlogs = [...responseData];
+  const latestBlogs = [...responseData];
 
-   // Sort the latest blogs by publishedDate in descending order
-   latestBlogs.sort(
-     (a, b) =>
-       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-   );
+  // Sort the latest blogs by publishedDate in descending order
+  latestBlogs.sort(
+    (a, b) =>
+      new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+  );
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/blog")
@@ -36,7 +42,24 @@ const Stories = () => {
   const router = useRouter();
 
   const handleClick = () => {
-    router.push("/stories/addBlog");
+    const checkTokenValidity = async () => {
+      const isTokenValid = isTokenAvailableAndNotExpired("x-access-token");
+      console.log("Is Token Valid:", isTokenValid);
+      console.log("COOKIE:", getCookieValue);
+
+      if (!isTokenValid) {
+        console.log("Please Login...");
+        setShowLoginModal(true);
+      } else {
+        router.push("/stories/addBlog");
+      }
+    };
+    checkTokenValidity();
+  };
+  
+  const handleLoginModalClose = () => {
+    router.push("/stories");
+    setShowLoginModal(false);
   };
 
   return (
@@ -106,7 +129,9 @@ const Stories = () => {
               )}
             </div>
           </div>
-
+          {showLoginModal && (
+            <LoginCard isOpen={true} onClose={handleLoginModalClose} />
+          )}
           <Button color="primary" onClick={handleClick}>
             {" "}
             <Image

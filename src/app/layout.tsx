@@ -20,20 +20,22 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-
-  const {theme} = useTheme();
+  const { theme } = useTheme();
   const pathname = usePathname();
   const showNavbar =
     pathname !== "/auth/login" &&
     pathname !== "/auth/signup" &&
-    !pathname.startsWith("/admin");
+    !pathname.startsWith("/admin") &&
+    !pathname.startsWith("/agent");
 
   return (
     <html lang="en">
       <body className={inter.className}>
         <Providers>
           {showNavbar && <Navbar />}
-          <main className="relative" id="body">{children}</main>
+          <main className="relative" id="body">
+            {children}
+          </main>
           {showNavbar && <Footer />}
         </Providers>
       </body>

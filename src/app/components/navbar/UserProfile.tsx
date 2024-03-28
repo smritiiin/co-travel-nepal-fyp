@@ -18,11 +18,18 @@ import {
 
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { useToken } from "@/utils/token";
 
 export default function UserProfile() {
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { isTokenAvailableAndNotExpired } = useToken();
 
+  //  const checkTokenValidity = async () => {
+  //     const isTokenValid = isTokenAvailableAndNotExpired("x-access-token");
+  //     console.log("Is Token Valid:", isTokenValid);
+  //     console.log("COOKIE:", getCookieValue);
+  //  }
   const handleLogout = () => {
     const token = Cookies.get("x-access-token");
     // Clear token from cookie
@@ -60,7 +67,7 @@ export default function UserProfile() {
         </DropdownTrigger>
         <DropdownMenu
           aria-label="Custom item styles"
-          disabledKeys={["profile"]}
+          disabledKeys={["logout-disabled"]}
           className="p-3"
           itemClasses={{
             base: [
@@ -99,9 +106,24 @@ export default function UserProfile() {
 
           <DropdownSection aria-label="Help & Feedback">
             {/* <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem> */}
-            <DropdownItem key="logout" onPress={onOpen}>
-              Log Out
-            </DropdownItem>
+            {isTokenAvailableAndNotExpired("x-access-token") ? (
+              <DropdownItem
+                key="logout"
+                className="text-danger"
+                color="danger"
+                onPress={onOpen}
+              >
+                Log Out
+              </DropdownItem>
+            ) : (
+              <DropdownItem
+                key="logout-disabled"
+                className="text-danger"
+                color="danger"
+              >
+                Log Out
+              </DropdownItem>
+            )}
           </DropdownSection>
         </DropdownMenu>
       </Dropdown>
