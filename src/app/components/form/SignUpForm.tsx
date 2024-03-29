@@ -1,114 +1,101 @@
 import { signupValidation } from "@/app/auth/validation/signupValidation";
-import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import React, { useState } from "react";
-import CoverImg from "../CoverImg";
-import { useForm, SubmitHandler } from "react-hook-form";
 import { signup } from "../../api/signup";
 
 import { Input, Button, Checkbox } from "@nextui-org/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 
-import * as z from "zod";
+import { ZodType, z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+type FormData = {
+  fname: string;
+  lname: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
 
 const SignUpForm = () => {
+  //zod schema
+  const schema: ZodType<FormData> = z
+    .object({
+      fname: z.string().min(2).max(30),
+      lname: z.string().min(2).max(30),
+      email: z.string().email(),
+      password: z.string().min(8).max(30),
+      confirmPassword: z.string().min(8).max(30),
+    })
+    .refine((data) => data.password === data.confirmPassword, {
+      message: "Passwords do not  match",
+      path: ["confirmPassword"],
+    });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
+
   const [isVisible1, setIsVisible1] = useState(false);
   const [isVisible2, setIsVisible2] = useState(false);
   const toggleVisibility1 = () => setIsVisible1(!isVisible1);
   const toggleVisibility2 = () => setIsVisible2(!isVisible2);
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fname, setFname] = useState("");
-  const [lname, setLname] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-
-  const onSignup = async (e: any) => {
-    e.preventDefault();
-    // console.log("Email: ", email);
-    // console.log("Password: ", password);
-
-    const resp: any = await signup({
-      email,
-      fname,
-      lname,
-      password,
-      confirmPassword,
-    });
+  const onSignup = async (e: FormData) => {
+    const resp: any = await signup(e);
     console.log("THIS IS RESPONSE: ", resp);
     if (resp.success) {
       console.log("Signup Sucessful");
       document.cookie = `x-access-token=${resp.data.token}; path=/;`;
-      // window.location.href = "/auth/login";
     } else {
-      console.log("Something went wrong...");
       console.log(resp.error);
-      // alert(resp.error);
     }
   };
 
-  // type Inputs = {
-  //   email: string;
-  //   username: string;
-  //   password: string;
-  // };
-
-  // const {
-  //   register,
-  //   handleSubmit,
-  //   formState: { errors, isSubmitting },
-  // } = useForm<Inputs>({
-  //   defaultValues: {
-  //     email: "",
-  //     username: "",
-  //     password: "",
-  //   },
-  //   resolver: zodResolver(signupValidation),
-  // });
-  // const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-
   return (
-    <div className="flex justify-center items-center">
-      <div className="flex flex-col">
+    <div className="flex justify-center items-center space-y-3">
+      <div className="flex flex-col ">
         <h1>Create an account!</h1>
 
-        <form
-          // onSubmit={handleSubmit(onSubmit)}
-          className="space-y-3 flex flex-col"
-        >
-          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+        <form onSubmit={handleSubmit(onSignup)} className="flex flex-col gap-3">
+          <div className="flex-wrap md:flex-nowrap">
             <Input
               type="email"
+              {...register("email")}
               label="Email"
               name="email"
-              onChange={(e) => setEmail(e.target.value)}
             />
+            {errors.email && <span>{errors.email.message}</span>}
           </div>
 
           <div className="flex gap-x-2">
-            <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+            <div className="w-full flex-wrap md:flex-nowrap">
               <Input
+                {...register("fname")}
                 type="text"
                 label="First Name"
                 name="fname"
-                onChange={(e) => setFname(e.target.value)}
               />
+              {errors.fname && <span>{errors.fname.message}</span>}
             </div>
-            <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+            <div className="w-full flex-wrap md:flex-nowrap">
               <Input
                 type="text"
+                {...register("lname")}
                 label="Last Name"
                 name="lname"
-                onChange={(e) => setLname(e.target.value)}
               />
+              {errors.lname && <span>{errors.lname.message}</span>}
             </div>
           </div>
-          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+          <div className="w-full flex-wrap md:flex-nowrap ">
             <Input
-              // type="password"
+              {...register("password")}
               label="Password"
               name="password"
-              onChange={(e) => setPassword(e.target.value)}
               endContent={
                 <button
                   className="focus:outline-none"
@@ -124,14 +111,14 @@ const SignUpForm = () => {
               }
               type={isVisible1 ? "text" : "password"}
             />
+            {errors.password && <span>{errors.password.message}</span>}
           </div>
 
-          <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+          <div className="w-full flex-wrap md:flex-nowrap gap-4">
             <Input
-              // type="password"
+              {...register("confirmPassword")}
               label="Confirm Password"
               name="confirmPassword"
-              onChange={(e) => setConfirmPassword(e.target.value)}
               endContent={
                 <button
                   className="focus:outline-none"
@@ -147,47 +134,12 @@ const SignUpForm = () => {
               }
               type={isVisible2 ? "text" : "password"}
             />
+            {errors.confirmPassword && (
+              <span>{errors.confirmPassword.message}</span>
+            )}
           </div>
 
-          {/* <Input
-            type="text"
-            id="email"
-            placeholder="Email"
-            className="input input-bordered w-full max-w-xs"
-            {...register("email")}
-            disabled={isSubmitting}
-          />
-          {errors.email?.message && (
-            <div className=" text-red-500">{errors.email?.message}</div>
-          )} */}
-
-          {/* <Input
-            type="text"
-            id="username"
-            placeholder="Username"
-            className="input input-bordered w-full max-w-xs"
-            {...register("username")}
-            disabled={isSubmitting}
-          />
-          {errors.username?.message && (
-            <div className=" text-red-500">{errors.username?.message}</div>
-          )}
-
-          <Input
-            type="password"
-            id="password"
-            placeholder="Password"
-            className="input input-bordered w-full max-w-xs"
-            {...register("password")}
-            disabled={isSubmitting}
-          />
-          {errors.password?.message && (
-            <div className=" text-red-500">{errors.password?.message}</div>
-          )} */}
-
-          {/* <Checkbox>Option</Checkbox> */}
-
-          <Button type="submit" color="primary" onClick={onSignup}>
+          <Button type="submit" color="primary">
             Sign Up
           </Button>
         </form>
@@ -199,9 +151,6 @@ const SignUpForm = () => {
           </Link>
         </p>
       </div>
-      {/* <div>
-        <CoverImg />
-      </div> */}
     </div>
   );
 };

@@ -5,19 +5,37 @@ import { Input, Button } from "@nextui-org/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 
+import { useForm } from "react-hook-form";
+import { ZodType, z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+type FormData = {
+  email: string;
+  password: string;
+};
+
 const SignInFrom = () => {
+  // declare zod schema
+  const schema: ZodType<FormData> = z.object({
+    email: z.string().email(),
+    password: z.string().min(8).max(30),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({ resolver: zodResolver(schema) });
+
   const router = useRouter();
-
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const [isVisible, setIsVisible] = useState(false);
+
+  const [loginError, setLoginError] = useState("");
+
   const toggleVisibility = () => setIsVisible(!isVisible);
 
-  const onLogin = async (e: any) => {
-    e.preventDefault();
-
-    const resp: any = await login({ email, password });
+  const onLogin = async (e: FormData) => {
+    const resp: any = await login(e);
     console.log("THIS IS RESPONSE: ", resp);
     if (resp.success) {
       console.log("Login Sucessful");
@@ -31,32 +49,33 @@ const SignInFrom = () => {
         router.push("/");
       }
       console.log("ROLE is : ", resp.data.role);
-      // window.location.href = "/";
-      // router.push("/");
     } else {
-      alert("Something went wrong...");
-      // alert(resp.error);
+      setLoginError("User not Found!");
     }
   };
+
   return (
     <div className=" mt-10 flex flex-col space-y-3">
       <h1>Welcome Back!</h1>
-      <form className="space-y-3 flex flex-col">
-        <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+      <form
+        className="space-y-3 flex flex-col"
+        onSubmit={handleSubmit(onLogin)}
+      >
+        <div className=" w-full flex-wrap md:flex-nowrap gap-4">
           <Input
             type="email"
+            {...register("email", { required: true })}
             label="Email"
             name="email"
-            onChange={(e) => setEmail(e.target.value)}
           />
+          {errors.email && <span>{errors.email.message}</span>}
         </div>
-
-        <div className="flex w-full flex-wrap md:flex-nowrap gap-4">
+        <div className="w-full flex-wrap md:flex-nowrap gap-4">
           <Input
             label="Password"
+            {...register("password")}
             type={isVisible ? "text" : "password"}
             name="password"
-            onChange={(e) => setPassword(e.target.value)}
             endContent={
               <button
                 className="focus:outline-none"
@@ -71,11 +90,13 @@ const SignInFrom = () => {
               </button>
             }
           />
+          {errors.password && <span>{errors.password.message}</span>}
         </div>
 
-        <p className=" text-blue-400 underline text-right">Forgot Password?</p>
+        {loginError && <span className="error">{loginError}</span>}
 
-        <Button type="submit" color="primary" onClick={onLogin}>
+        <p className=" text-blue-400 underline text-right">Forgot Password?</p>
+        <Button type="submit" color="primary">
           Sign In
         </Button>
       </form>
@@ -91,38 +112,3 @@ const SignInFrom = () => {
 };
 
 export default SignInFrom;
-
-// import { loginValidation } from "@/app/auth/validation/loginValidation";
-// import { zodResolver } from "@hookform/resolvers/zod";
-// import Link from "next/link";
-// import React from "react";
-// import { useForm, SubmitHandler } from "react-hook-form";
-// import * as z from "zod";
-
-// import { Input, Button, Checkbox } from "@nextui-org/react";
-// import { FaEye, FaEyeSlash } from "react-icons/fa";
-
-// const SignInFrom = () => {
-//   const [isVisible, setIsVisible] = React.useState(false);
-
-//   const toggleVisibility = () => setIsVisible(!isVisible);
-
-//   type Inputs = {
-//     email: string;
-//     password: string;
-//   };
-
-//   const {
-//     register,
-//     handleSubmit,
-//     formState: { errors, isSubmitting },
-//   } = useForm<Inputs>({
-//     defaultValues: {
-//       email: "",
-//       password: "",
-//     },
-//     resolver: zodResolver(loginValidation),
-//   });
-//   const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
-// };
-// export default SignInFrom;

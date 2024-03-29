@@ -39,3 +39,8 @@ h2 {
   /* background-color: #eff8fa; */
   padding: 0 40px;
 }
+
+span {
+  color: red;
+  font-size: small;
+}
