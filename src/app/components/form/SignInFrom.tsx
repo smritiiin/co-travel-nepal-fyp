@@ -18,7 +18,7 @@ const SignInFrom = () => {
   // declare zod schema
   const schema: ZodType<FormData> = z.object({
     email: z.string().email(),
-    password: z.string().min(8).max(30),
+    password: z.string(),
   });
 
   const {
@@ -61,7 +61,7 @@ const SignInFrom = () => {
         className="space-y-3 flex flex-col"
         onSubmit={handleSubmit(onLogin)}
       >
-        <div className=" w-full flex-wrap md:flex-nowrap gap-4">
+        <div className=" w-full md:flex-nowrap gap-4">
           <Input
             type="email"
             {...register("email", { required: true })}

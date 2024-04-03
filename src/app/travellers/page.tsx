@@ -12,7 +12,7 @@ import { error } from "console";
 
 const Travellers = () => {
   const router = useRouter();
-  const { getCookieValue, isTokenAvailableAndNotExpired } = useToken();
+  const { isTokenAvailableAndNotExpired } = useToken();
 
   const [responseData, setResponseData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -23,7 +23,6 @@ const Travellers = () => {
     const checkTokenValidity = async () => {
       const isTokenValid = isTokenAvailableAndNotExpired("x-access-token");
       console.log("Is Token Valid:", isTokenValid);
-      console.log("COOKIE:", getCookieValue);
 
       if (!isTokenValid) {
         console.log("Please Login...");
@@ -49,35 +48,9 @@ const Travellers = () => {
   };
 
   const handleLoginModalClose = () => {
-    router.push('/')
+    router.push("/");
     // setShowLoginModal(false);
   };
-
-  useEffect(() => {
-    if (responseData && responseData.length > 0) {
-      const userIds = responseData.map((item) => item.UserId);
-
-      // Fetch usernames
-      axios
-        .all(
-          userIds.map((userId) =>
-            axios.get(`http://localhost:8000/api/user/user/${userId}`)
-          )
-        )
-        .then(function (userResponses) {
-          const fetchedUsernames = userResponses.map(
-            (userResponse) =>
-              userResponse.data.fname + " " + userResponse.data.lname
-          );
-
-          setUsernames(fetchedUsernames);
-          console.log(usernames);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  }, [responseData]);
 
   const cardClick = (profileId: any) => {
     console.log("Card Clicked");
@@ -106,13 +79,13 @@ const Travellers = () => {
           ) : (
             responseData.map((item) => (
               <Card
-              isPressable
-              isHoverable
+                isPressable
+                isHoverable
                 key={item.id}
                 className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] mx-auto my-3"
                 shadow="sm"
               >
-                <CardBody >
+                <CardBody>
                   <div className="flex items-center justify-around">
                     <Image
                       alt="User"
@@ -130,9 +103,10 @@ const Travellers = () => {
                       <div className="flex justify-between items-start">
                         <div className="flex flex-col gap-0">
                           <h3 className="font-bold text-foreground/90">
-                            {usernames.map((username, index) => (
-                              <h3 key={index}>{username}</h3>
-                            ))}
+                            <h3>
+                              {" "}
+                              {item.UserProfile.fname} {item.UserProfile.lname}
+                            </h3>
                           </h3>
                           <div className="flex justify-start items-center gap-4">
                             <Image

@@ -1,5 +1,14 @@
 "use client";
-import { Button, Divider, Table } from "@nextui-org/react";
+import {
+  Button,
+  Divider,
+  Table,
+  TableCell,
+  TableHeader,
+  TableRow,
+  TableColumn,
+  TableBody,
+} from "@nextui-org/react";
 import SearchBar from "../SearchBar";
 import { useRouter } from "next/navigation";
 import NavAdmin from "../NavBar";
@@ -15,14 +24,14 @@ export default function Places() {
   const [responseData, setResponseData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Number of items to display per page
+  const [itemsPerPage, setItemsPerPage] = useState(4); // Number of items to display per page
 
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/place/")
       .then(function (response) {
         console.log(response.data);
-        setResponseData(response.data );
+        setResponseData(response.data);
         setIsLoading(false);
       })
       .catch(function (error) {
@@ -35,9 +44,18 @@ export default function Places() {
     router.push("/admin/places/addPlace");
   };
 
-  // Calculate the range of items to display based on the current page
+  // Define the event handler for the items per page dropdown
+  const handleItemsPerPageChange = (event: any) => {
+    const newItemsPerPage = parseInt(event.target.value, 10);
+    setItemsPerPage(newItemsPerPage);
+  };
+
+  // Calculate the total number of pages
+  const totalPages = Math.ceil(responseData.length / itemsPerPage);
+
+  // Update the displayed items based on the current page and items per page
   const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = startIndex + itemsPerPage;
+  const endIndex = Math.min(startIndex + itemsPerPage, responseData.length);
   const displayedItems = responseData.slice(startIndex, endIndex);
 
   // Function to handle page change
@@ -60,69 +78,85 @@ export default function Places() {
           </div>
           <Divider className="mb-2" />
           {/* <div> */}
-          <table className="font-thin">
-            <tr>
-              <th>.</th>
-              <th>Place</th>
-              <th>State</th>
-              <th>Description</th>
-              <th>Location</th>
-              <th>Must See Place</th>
-              <th>.</th>
-            </tr>
-            {isLoading ? (
-              <Loading />
-            ) : (
-              displayedItems.map((item) => (
-                <tr key={item.id} className="mb-2 items-center border">
-                  <td>
-                    <Image
-                      alt="Card background"
-                      className="rounded-xl"
-                      src={`http://localhost:8000/${item.Image}`}
-                      width={100}
-                      height={100}
-                      // onError={() => console.error("Failed to load image")}
-                      key={item.Image}
-                    />
-                  </td>
-                  <td className="pb-0 pt-2 px-4 flex-col items-start">
-                    {/* <p className="text-tiny uppercase font-bold">Daily Mix</p> */}
-                    <h4 className="font-bold text-large">{item.PlaceName}</h4>
-                    {/* <small className="text-default-500">{item.StateId}</small> */}
-                  </td>
-                  <td className="pb-0 pt-2 px-4 flex-col items-start">
-                    {/* <p className="text-tiny uppercase font-bold">Daily Mix</p> */}
-                    {/* <h4 className="font-bold text-large">{item.PlaceName}</h4> */}
-                    <small className="text-default-500">{item.StateId}</small>
-                  </td>
-
-                  <td className="pb-0 pt-2 px-4 flex-col items-start">
-                    <small className="text-default-500">
-                      {item.Description}
-                    </small>
-                  </td>
-                  <td className="pb-0 pt-2 px-4 flex-col items-start">
-                    <small className="text-default-500">
-                      {item.Longitude}, {item.Latitude}
-                    </small>
-                  </td>
-                  <td className="pb-0 pt-2 px-4 flex-col items-start">
-                    <small className="text-default-500">
-                      Bhaktapur Durbar Square
-                    </small>
-                  </td>
-                </tr>
-              ))
-            )}
-          </table>
-          {/* </div> */}
-
-          <Pagination
-            total={Math.ceil(responseData.length / itemsPerPage)}
-            initialPage={currentPage}
-            onChange={handlePageChange}
-          />
+          {isLoading ? (
+            <Loading />
+          ) : (
+            <>
+              <Table className="font-thin">
+                <TableHeader>
+                  <TableColumn>.</TableColumn>
+                  <TableColumn>Place</TableColumn>
+                  <TableColumn>State</TableColumn>
+                  <TableColumn>Description</TableColumn>
+                  <TableColumn>Location</TableColumn>
+                  <TableColumn>Must See Place</TableColumn>
+                </TableHeader>
+                <TableBody>
+                  {displayedItems.map((item) => (
+                    <TableRow
+                      className="mb-2 items-center border"
+                      key={item.id}
+                    >
+                      <TableCell>
+                        <Image
+                          alt="Card background"
+                          className="rounded-xl"
+                          src={`http://localhost:8000/${item.Image}`}
+                          width={100}
+                          height={100}
+                          onError={() => console.error("Failed to load image")}
+                          key={item.Image}
+                        />
+                      </TableCell>
+                      <TableCell className="pb-0 pt-2 px-4 flex-col items-start">
+                        <h4 className="font-bold text-large">
+                          {item.PlaceName}
+                        </h4>
+                      </TableCell>
+                      <TableCell className="pb-0 pt-2 px-4 flex-col items-start">
+                        <small className="text-default-500">
+                          {item.StateId}
+                        </small>
+                      </TableCell>
+                      <TableCell className="pb-0 pt-2 px-4 flex-col items-start">
+                        <small className="text-default-500">
+                          {item.Description}
+                        </small>
+                      </TableCell>
+                      <TableCell className="pb-0 pt-2 px-4 flex-col items-start">
+                        <small className="text-default-500">
+                          {item.Longitude}, {item.Latitude}
+                        </small>
+                      </TableCell>
+                      <TableCell className="pb-0 pt-2 px-4 flex-col items-start">
+                        <small className="text-default-500">
+                          Bhaktapur Durbar Square
+                        </small>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <div className="flex justify-between mt-3">
+                <select
+                  className=" rounded-lg"
+                  value={itemsPerPage}
+                  onChange={handleItemsPerPageChange}
+                >
+                  <option value={2}>2</option>
+                  <option value={4}>4 </option>
+                  <option value={8}>8</option>
+                  <option value={10}>10 </option>
+                  <option value={15}>15 </option>
+                </select>
+                <Pagination
+                  total={totalPages}
+                  initialPage={currentPage}
+                  onChange={handlePageChange}
+                />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

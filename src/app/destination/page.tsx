@@ -28,7 +28,6 @@ const Destination = () => {
     setSelectedState(parsedID);
 
     try {
-      // console.log("STATEID after:", parsedID);
       const response = await fetch(
         `http://localhost:8000/api/place/state/${parsedID}`
       );
@@ -39,6 +38,8 @@ const Destination = () => {
       console.error("Error fetching places:", error);
     }
   };
+
+  // console.log("PLACES: ", places);
 
   useEffect(() => {
     const fetchStateOptions = async () => {
@@ -51,13 +52,12 @@ const Destination = () => {
         console.error("Error fetching state data:", error);
       }
     };
-
     fetchStateOptions();
   }, []);
 
   return (
     <div className="w-full ">
-      <div className="flex p-16 h-screen gap-x-6">
+      <div className="flex p-16 min-h-screen gap-x-6">
         <div className="w-1/2">
           <h1>What makes this country a wonderful place to visit.</h1>
           <p>
@@ -82,7 +82,7 @@ const Destination = () => {
       <div className="flex justify-center items-end">
         <h1 className="text-center">
           Your next{" "}
-          <span className=" text-green-700">
+          <span className=" text-green-700 font-bold text-[40px]">
             travel <br /> Destination
           </span>{" "}
           is
@@ -100,11 +100,11 @@ const Destination = () => {
           ))}
         </Select>
       </div>
-      {places.length === 0 ? (
+      {places.length <= 0 ? (
         <p> No places Found</p>
       ) : (
         <div className="flex gap-4 flex-wrap">
-          {places.map((place) => (
+          {places.length >0 && places.map((place) => (
             <Card key={place.PlaceId}>
               <Image
                 src={`http://localhost:8000/${place.Image}`}

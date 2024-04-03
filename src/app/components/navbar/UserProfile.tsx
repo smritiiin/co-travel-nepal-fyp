@@ -19,17 +19,13 @@ import {
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useToken } from "@/utils/token";
+import { login } from "@/app/api/login";
 
 export default function UserProfile() {
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const { isTokenAvailableAndNotExpired } = useToken();
 
-  //  const checkTokenValidity = async () => {
-  //     const isTokenValid = isTokenAvailableAndNotExpired("x-access-token");
-  //     console.log("Is Token Valid:", isTokenValid);
-  //     console.log("COOKIE:", getCookieValue);
-  //  }
   const handleLogout = () => {
     const token = Cookies.get("x-access-token");
     // Clear token from cookie
@@ -42,6 +38,10 @@ export default function UserProfile() {
     } else {
       console.log("Logout failed");
     }
+  };
+
+  const login = () => {
+    router.push("/auth/login");
   };
 
   return (
@@ -117,11 +117,12 @@ export default function UserProfile() {
               </DropdownItem>
             ) : (
               <DropdownItem
-                key="logout-disabled"
+                key="login"
                 className="text-danger"
-                color="danger"
+                color="primary"
+                onPress={login}
               >
-                Log Out
+                Log In
               </DropdownItem>
             )}
           </DropdownSection>

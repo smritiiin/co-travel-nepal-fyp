@@ -1,6 +1,9 @@
 import React from "react";
 import { Link, Image } from "@nextui-org/react";
+import { useToken } from "@/utils/token";
 const NavAdmin = () => {
+  const token =useToken();
+  
   return (
     <div className=" flex flex-col items-center justify-around bg-[#EFF8FA] w-[25%]">
       <div className="flex flex-col items-center">

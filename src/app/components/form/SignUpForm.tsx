@@ -9,6 +9,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { mailOptions, transporter } from "@/utils/nodemailer";
 
 type FormData = {
   fname: string;
@@ -44,15 +45,28 @@ const SignUpForm = () => {
   const toggleVisibility1 = () => setIsVisible1(!isVisible1);
   const toggleVisibility2 = () => setIsVisible2(!isVisible2);
 
-  const onSignup = async (e: FormData) => {
+  const onSignup = async (e: FormData, res: any) => {
     const resp: any = await signup(e);
     console.log("THIS IS RESPONSE: ", resp);
-    if (resp.success) {
-      console.log("Signup Sucessful");
-      document.cookie = `x-access-token=${resp.data.token}; path=/;`;
-    } else {
-      console.log(resp.error);
-    }
+
+    // try {
+    //   await transporter.sendMail({
+    //     ...mailOptions,
+    //     subject: "No-reply",
+    //     text: "Email aaayooo",
+    //     html: "<h1> THISIS WORKING</h1>",
+    //   });
+
+    //   return res.status(200).json({ success: true });
+    // } catch (error) {
+    //   console.log(error);
+    // }
+    // if (resp.success) {
+    //   console.log("Signup Sucessful");
+    //   document.cookie = `x-access-token=${resp.data.token}; path=/;`;
+    // } else {
+    //   console.log(resp.error);
+    // }
   };
 
   return (
