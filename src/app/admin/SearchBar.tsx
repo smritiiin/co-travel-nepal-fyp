@@ -2,7 +2,7 @@ import { Input } from "@nextui-org/react";
 import React from "react";
 import { SearchIcon } from "./SearchIcon";
 
-const SearchBar = () => {
+const SearchBar = ({ onChange }) => {
   return (
     <div>
       <div className="flex justify-end items-center">
@@ -18,6 +18,8 @@ const SearchBar = () => {
           size="sm"
           startContent={<SearchIcon size={18} />}
           type="search"
+          // value={value}
+          onChange={onChange}
         />
       </div>
     </div>

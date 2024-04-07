@@ -1,7 +1,13 @@
+"use client";
 import Image from "next/image";
-import { Divider } from "@nextui-org/react";
+import { Avatar, Button, Divider } from "@nextui-org/react";
+import { useToken } from "@/utils/token";
+import { useRouter } from "next/navigation";
 
 const Profile = () => {
+  const { getUsernameAndRoleFromToken } = useToken();
+  const router = useRouter();
+
   return (
     <div className=" flex flex-col gap-5">
       <div className=" z-0">
@@ -23,7 +29,7 @@ const Profile = () => {
         ></Image>
       </div>
       <div className="text-center">
-        <h2>NAME</h2>
+        <h2>{getUsernameAndRoleFromToken("x-access-token").username}</h2>
         <h4 className=" text-[#6C6C6C]">Location</h4>
         <p className="font-bold"> I love travellinggg yeyyyy!</p>
       </div>
@@ -42,6 +48,17 @@ const Profile = () => {
           <h1>222</h1>
           Source
         </div>
+      </div>
+
+      <div className="flex justify-center mb-10">
+        <Button
+          color="primary"
+          onClick={() => {
+            router.push("/profile/create");
+          }}
+        >
+          Create a Profile
+        </Button>
       </div>
     </div>
   );

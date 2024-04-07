@@ -17,8 +17,8 @@ const Travellers = () => {
   const [responseData, setResponseData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showLoginModal, setShowLoginModal] = useState(false);
-  const [usernames, setUsernames] = useState<string[]>([]);
 
+  const [searchTerm, setSearchTerm] = useState('')
   useEffect(() => {
     const checkTokenValidity = async () => {
       const isTokenValid = isTokenAvailableAndNotExpired("x-access-token");
@@ -61,7 +61,7 @@ const Travellers = () => {
       <div className="flex flex-col w-full">
         <div className="flex justify-around items-center mb-5">
           <h1> Find Friends</h1>
-          <SearchBar />
+          <SearchBar onChange={(event: { target: { value: React.SetStateAction<string>; }; }) => {setSearchTerm(event.target.value)}} />
           <Image
             src="/images/Travellers/Chat.svg"
             alt="Chat"
@@ -77,7 +77,26 @@ const Travellers = () => {
           {isLoading ? (
             <Loading />
           ) : (
-            responseData.map((item) => (
+            responseData.filter((val) =>{
+              if (searchTerm === "") {
+                return val;
+              } else if (
+                val.UserProfile.fname &&
+                val.UserProfile.fname
+                  .toLowerCase()
+                  .includes(searchTerm.toLowerCase())
+              ) {
+                return val;
+              } else if (
+                val.TravellingTo &&
+                Array.isArray(val.TravellingTo) &&
+                val.TravellingTo.some((destination: any) =>
+                  destination.toLowerCase().includes(searchTerm.toLowerCase())
+                )
+              ) {
+                return val;
+              }
+            }).map((item) => (
               <Card
                 isPressable
                 isHoverable
@@ -95,9 +114,8 @@ const Travellers = () => {
                       width={80}
                       onClick={() => cardClick(item.ProfileID)}
                     />
-
                     <div
-                      className="flex flex-col col-span-6 md:col-span-8"
+                      className="flex flex-col col-span-6 md:col-span-8 pl-4"
                       onClick={() => cardClick(item.ProfileID)}
                     >
                       <div className="flex justify-between items-start">

@@ -9,7 +9,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { mailOptions, transporter } from "@/utils/nodemailer";
+// import { mailOptions, transporter } from "@/utils/nodemailer";
 
 type FormData = {
   fname: string;
@@ -23,9 +23,9 @@ const SignUpForm = () => {
   //zod schema
   const schema: ZodType<FormData> = z
     .object({
-      fname: z.string().min(2).max(30),
-      lname: z.string().min(2).max(30),
-      email: z.string().email(),
+      fname: z.string().nonempty("First Name is required"),
+      lname: z.string().nonempty("Last Name is required"),
+      email: z.string().nonempty("Email is required").email(),
       password: z.string().min(8).max(30),
       confirmPassword: z.string().min(8).max(30),
     })

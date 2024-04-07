@@ -17,8 +17,8 @@ type FormData = {
 const SignInFrom = () => {
   // declare zod schema
   const schema: ZodType<FormData> = z.object({
-    email: z.string().email(),
-    password: z.string(),
+    email: z.string().nonempty("Email is required").email(),
+    password: z.string().nonempty("Password is required"),
   });
 
   const {
@@ -50,7 +50,7 @@ const SignInFrom = () => {
       }
       console.log("ROLE is : ", resp.data.role);
     } else {
-      setLoginError("User not Found!");
+      setLoginError("Invalid Email and Password");
     }
   };
 

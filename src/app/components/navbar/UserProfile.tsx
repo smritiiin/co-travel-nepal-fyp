@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import {
   Dropdown,
@@ -14,17 +15,18 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
+  Skeleton,
 } from "@nextui-org/react";
 
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useToken } from "@/utils/token";
-import { login } from "@/app/api/login";
 
 export default function UserProfile() {
   const router = useRouter();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const { isTokenAvailableAndNotExpired } = useToken();
+  const { isTokenAvailableAndNotExpired, getUsernameAndRoleFromToken } =
+    useToken();
 
   const handleLogout = () => {
     const token = Cookies.get("x-access-token");
@@ -55,15 +57,19 @@ export default function UserProfile() {
         }}
       >
         <DropdownTrigger>
-          <Avatar
-            isBordered
-            as="button"
-            className="transition-transform h-9 w-9"
-            color="primary"
-            name="Jason Hughes"
-            size="sm"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          />
+          {isTokenAvailableAndNotExpired("x-access-token") ? (
+            <Avatar
+              isBordered
+              // as="button"
+              className="transition-transform h-9 w-9"
+              color="primary"
+              name="Jason Hughes"
+              size="sm"
+              src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+            />
+          ) : (
+            <Avatar isBordered size="sm"></Avatar>
+          )}
         </DropdownTrigger>
         <DropdownMenu
           aria-label="Custom item styles"
@@ -85,19 +91,33 @@ export default function UserProfile() {
         >
           <DropdownSection aria-label="Profile & Actions" showDivider>
             <DropdownItem className="h-14 gap-2">
-              <User
-                name="Junior Garcia"
-                description="@jrgarciadev"
-                classNames={{
-                  name: "text-default-600",
-                  description: "text-default-500",
-                }}
-                avatarProps={{
-                  size: "sm",
-                  src: "https://avatars.githubusercontent.com/u/30373425?v=4",
-                }}
-                onClick={() => router.push("/profile")}
-              />
+              {isTokenAvailableAndNotExpired("x-access-token") ? (
+                <User
+                  name={getUsernameAndRoleFromToken("x-access-token").username}
+                  description={
+                    getUsernameAndRoleFromToken("x-access-token").role
+                  }
+                  classNames={{
+                    name: "text-default-600",
+                    description: "text-default-500",
+                  }}
+                  avatarProps={{
+                    size: "sm",
+                    src: "https://i.pravatar.cc/150?u=a042581f4e29026704d",
+                  }}
+                  onClick={() => router.push("/profile")}
+                />
+              ) : (
+                <div className="max-w-[300px] w-full flex items-center gap-3">
+                  <div>
+                    <Skeleton className="flex rounded-full w-12 h-12" />
+                  </div>
+                  <div className="w-full flex flex-col gap-2">
+                    <Skeleton className="h-3 w-4/5 rounded-lg" />
+                    <Skeleton className="h-3 w-3/5 rounded-lg" />
+                  </div>
+                </div>
+              )}
             </DropdownItem>
             <DropdownItem key="dashboard">Dashboard</DropdownItem>
             <DropdownItem key="settings">Settings</DropdownItem>

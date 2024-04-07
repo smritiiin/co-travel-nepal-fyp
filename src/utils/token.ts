@@ -1,3 +1,4 @@
+"use client";
 import { useEffect } from "react";
 
 export const useToken = () => {
@@ -55,11 +56,11 @@ export const useToken = () => {
   };
 
   useEffect(() => {
-    const token = getCookieValue("x-access-token");
-    console.log("Token:", token);
+    // const token = getCookieValue("x-access-token");
+    // console.log("Token:", token);
 
     const isTokenExpired = isTokenAvailableAndNotExpired("x-access-token");
-    console.log("Is Token Available and Not Expired:", isTokenExpired);
+    // console.log("Is Token Available and Not Expired:", isTokenExpired);
 
     const { username, role, id } =
       getUsernameAndRoleFromToken("x-access-token");
@@ -70,7 +71,7 @@ export const useToken = () => {
 
   // Return any additional values or functions you need to use in your component
   return {
-    getCookieValue,
+    // getCookieValue,
     isTokenAvailableAndNotExpired,
     getUsernameAndRoleFromToken,
   };
