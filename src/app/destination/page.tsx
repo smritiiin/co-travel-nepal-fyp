@@ -1,10 +1,11 @@
 "use client";
 import { Card, CardBody, Select, SelectItem } from "@nextui-org/react";
 import Image from "next/image";
-import { parse } from "path";
 import React from "react";
 import { useState, useEffect } from "react";
 import Places from "../admin/places/page";
+import { useRouter } from "next/navigation";
+
 
 interface Place {
   PlaceId: number;
@@ -16,6 +17,8 @@ interface Place {
 }
 
 const Destination = () => {
+  const router= useRouter();
+
   const [selectedState, setSelectedState] = useState<number>(0);
   const [stateOptions, setStateOptions] = useState([]);
   const [places, setPlaces] = useState<Place[]>([]);
@@ -46,6 +49,8 @@ const Destination = () => {
       try {
         const response = await fetch("http://localhost:8000/api/place/state");
         const data = await response.json();
+        // console.log("RESPONSEIS::",response);
+
         setStateOptions(data);
         console.log("DATA: ", data);
       } catch (error) {
@@ -54,6 +59,12 @@ const Destination = () => {
     };
     fetchStateOptions();
   }, []);
+
+   const cardClick = (PlaceId: any) => {
+     console.log("Card Clicked");
+     console.log("PlaceId:", PlaceId);
+     router.push(`/destination/${PlaceId}`);
+   };
 
   return (
     <div className="w-full ">
@@ -87,20 +98,22 @@ const Destination = () => {
           </span>{" "}
           is
         </h1>
-        <Select
-          size="sm"
-          label="Select a state"
-          className="max-w-xs"
-          onChange={handleStateChange}
-        >
-          {stateOptions.map((state: any) => (
+        {stateOptions.map((state: any) => (
+          <Select
+            size="sm"
+            label="Select a state"
+            className="max-w-xs"
+            onChange={handleStateChange}
+            key={state.StateId}
+          >
             <SelectItem key={state.StateId} value={state.StateId}>
               {state.StateName}
             </SelectItem>
-          ))}
-        </Select>
+          </Select>
+        ))}
       </div>
-      {places.length <= 0 ? (
+
+ {places.length <= 0 ? (
         <p> No places Found</p>
       ) : (
         <div className="flex gap-4 flex-wrap">
@@ -111,6 +124,7 @@ const Destination = () => {
                 alt={place.PlaceName}
                 width={200}
                 height={200}
+                onClick={()=> cardClick(place.PlaceId)}
               />
               <h3>{place.PlaceName}</h3>
               <p>{place.Description}</p>
@@ -119,8 +133,7 @@ const Destination = () => {
               </p>
             </Card>
           ))}
-        </div>
-      )}
+      </div>)}
     </div>
   );
 };

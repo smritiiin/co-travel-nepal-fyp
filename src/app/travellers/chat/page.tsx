@@ -27,6 +27,7 @@ const Messenger = () => {
         const res = await axios.get(
           "http://localhost:8000/api/conversation/" + id
         );
+        console.log("CONVO:", res.data)
         setConversations(res.data);
       } catch (error) {
         console.log(error);
