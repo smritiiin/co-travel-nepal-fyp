@@ -13,7 +13,8 @@ import Loading from "../components/Loading";
 import { LoginCard } from "../components/LoginCard";
 
 const Stories = () => {
-  const { getCookieValue, isTokenAvailableAndNotExpired } = useToken();
+  
+  const { isTokenAvailableAndNotExpired } = useToken();
 
   const [responseData, setResponseData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +27,17 @@ const Stories = () => {
     (a, b) =>
       new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
   );
+
+  const shuffleArray = (array: any) => {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  const popularBlogs = shuffleArray([...responseData]);
+
   useEffect(() => {
     axios
       .get("http://localhost:8000/api/blog")
@@ -45,7 +57,6 @@ const Stories = () => {
     const checkTokenValidity = async () => {
       const isTokenValid = isTokenAvailableAndNotExpired("x-access-token");
       console.log("Is Token Valid:", isTokenValid);
-      console.log("COOKIE:", getCookieValue);
 
       if (!isTokenValid) {
         console.log("Please Login...");
@@ -56,12 +67,16 @@ const Stories = () => {
     };
     checkTokenValidity();
   };
-  
+
   const handleLoginModalClose = () => {
     router.push("/stories");
     setShowLoginModal(false);
   };
-
+  const cardClick = (id: any) => {
+    console.log("Card Clicked");
+    console.log("BlogId:", id);
+    router.push(`/stories/${id}`);
+  };
   return (
     <div>
       <div className="text-center my-5">
@@ -80,9 +95,14 @@ const Stories = () => {
               {isLoading ? (
                 <Loading />
               ) : (
-                responseData.map((item) => (
-                  <Card key={item.id} className="py-4">
-                    <CardBody className="overflow-visible py-2">
+                popularBlogs.map((item: any) => (
+                  <Card
+                    key={item.id}
+                    className="py-4 w-[280px] h-[370px]"
+                    onClick={() => cardClick(item.id)}
+                    isPressable
+                  >
+                    <CardBody className="py-2 overflow-hidden">
                       <Image
                         alt="Blog Cover"
                         className="object-cover rounded-xl"
@@ -90,12 +110,15 @@ const Stories = () => {
                         width={270}
                         height={200}
                       />
+                      <CardHeader className="pb-0 pt-2 flex-col items-start">
+                        <h4 className="font-bold text-large truncate...">
+                          {item.title}
+                        </h4>
+                        <p className="text-default-500  truncate...">
+                          {item.content}
+                        </p>
+                      </CardHeader>
                     </CardBody>
-                    <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                      {/* <p className="text-tiny uppercase font-bold">Daily Mix</p> */}
-                      <h4 className="font-bold text-large">{item.title}</h4>
-                      <small className="text-default-500">{item.content}</small>
-                    </CardHeader>
                   </Card>
                 ))
               )}
@@ -108,22 +131,29 @@ const Stories = () => {
                 <Loading />
               ) : (
                 latestBlogs.map((item) => (
-                  <Card key={item.id} className="py-4">
-                    <CardBody className="overflow-visible py-2">
+                  <Card
+                    key={item.id}
+                    className="py-4 w-[280px] h-[370px]"
+                    onClick={() => cardClick(item.id)}
+                    isPressable
+                  >
+                    <CardBody className="py-2 overflow-hidden">
                       <Image
                         alt="Blog Cover"
                         className="object-cover rounded-xl"
                         src={`http://localhost:8000/${item.imageUrl}`}
                         width={270}
                         height={200}
-                        key={item.imageUrl}
                       />
+                      <CardHeader className="pb-0 pt-2 flex-col items-start">
+                        <h4 className="font-bold text-large truncate...">
+                          {item.title}
+                        </h4>
+                        <p className="text-default-500  truncate...">
+                          {item.content}
+                        </p>
+                      </CardHeader>
                     </CardBody>
-                    <CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
-                      {/* <p className="text-tiny uppercase font-bold">Daily Mix</p> */}
-                      <h4 className="font-bold text-large">{item.title}</h4>
-                      <small className="text-default-500">{item.content}</small>
-                    </CardHeader>
                   </Card>
                 ))
               )}
