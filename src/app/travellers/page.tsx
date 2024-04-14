@@ -58,14 +58,14 @@ const Travellers = ({ conversationId, profileId }) => {
     router.push(`/profile/${profileId}`);
   };
 
-  const openConversation = async ( profileId: any) => {
+  const openConversation = async (profileId: any) => {
     console.log("Open Conversation");
     // const senderId = getUsernameAndRoleFromToken("x-access-token").id;
-  console.log("PROFILEIDDDD:",profileId) ;
+    console.log("PROFILEIDDDD:", profileId);
 
     try {
       console.log("senderid", getUsernameAndRoleFromToken("x-access-token").id);
-      console.log("receiverid:", profileId)
+      console.log("receiverid:", profileId);
       const response = await axios.post(
         "http://localhost:8000/api/conversation/new",
         {
@@ -73,9 +73,8 @@ const Travellers = ({ conversationId, profileId }) => {
           receiverId: profileId,
         }
       );
-      console.log("CLICKED RESPONSE: ",response);
-    router.push("/travellers/chat");
-
+      console.log("CLICKED RESPONSE: ", response);
+      router.push("/travellers/chat");
     } catch (error) {
       // Handle the successful conversation creation, e.g., navigate to the conversation page
 
@@ -99,6 +98,7 @@ const Travellers = ({ conversationId, profileId }) => {
           <Image
             src="/images/Travellers/Chat.svg"
             alt="Chat"
+            className="	"
             width={90}
             height={20}
             onClick={handleChat}
@@ -192,7 +192,7 @@ const Travellers = ({ conversationId, profileId }) => {
                           alt="Chat"
                           height={40}
                           width={40}
-                          onClick={ ()=> openConversation(item.ProfileId )}
+                          onClick={() => openConversation(item.ProfileId)}
                         />
                       </div>
                     </div>

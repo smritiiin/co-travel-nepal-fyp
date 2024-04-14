@@ -48,25 +48,6 @@ const SignUpForm = () => {
   const onSignup = async (e: FormData, res: any) => {
     const resp: any = await signup(e);
     console.log("THIS IS RESPONSE: ", resp);
-
-    // try {
-    //   await transporter.sendMail({
-    //     ...mailOptions,
-    //     subject: "No-reply",
-    //     text: "Email aaayooo",
-    //     html: "<h1> THISIS WORKING</h1>",
-    //   });
-
-    //   return res.status(200).json({ success: true });
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    // if (resp.success) {
-    //   console.log("Signup Sucessful");
-    //   document.cookie = `x-access-token=${resp.data.token}; path=/;`;
-    // } else {
-    //   console.log(resp.error);
-    // }
   };
 
   return (

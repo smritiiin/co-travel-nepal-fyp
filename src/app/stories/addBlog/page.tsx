@@ -10,12 +10,15 @@ import {
   Textarea,
 } from "@nextui-org/react";
 import { useState } from "react";
+import { useToken } from "@/utils/token";
 
 const AddBlog = () => {
+  const {getUsernameAndRoleFromToken} = useToken();
+
   const [blogFields, setBlogFields] = useState({
     title: "",
     content: "",
-    authorId: "",
+    authorId: getUsernameAndRoleFromToken("x-access-token").id,
     imageUrl: null,
   });
   // const onAddBlog = async (e: any) => {
@@ -47,7 +50,7 @@ const AddBlog = () => {
       const formData = new FormData();
       formData.append("title", blogFields.title);
       formData.append("content", blogFields.content);
-      formData.append("authorId", blogFields.authorId);
+      formData.append("authorId", String(blogFields.authorId));
 
       if (blogFields.imageUrl) {
         formData.append("imageUrl", blogFields.imageUrl);
@@ -95,16 +98,7 @@ const AddBlog = () => {
             // label="Content"
             placeholder="Enter your Content"
             onChange={handleInputChange}
-          ></textarea>
-          {/* <h2>Author</h2> */}
-          <input
-            id="authorId"
-            type="text"
-            value={blogFields.authorId}
-            name="authorId"
-            placeholder="Author"
-            onChange={handleInputChange}
-          ></input>
+          ></textarea>        
           <div>
             <input
               type="file"

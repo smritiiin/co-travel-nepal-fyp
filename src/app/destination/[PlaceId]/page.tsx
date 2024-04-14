@@ -9,7 +9,7 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
   // const [placeData, setPlaceData] = useState<any[]>([]);
   const [placeData, setPlaceData] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
-  // const [weatherData, setWeatherData] = useState(null);
+  // const [elevation, setElevation] = useState<number | null>(null);
   const [weatherData, setWeatherData] = useState<any>(null);
 
   useEffect(() => {
@@ -57,6 +57,25 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
     };
     fetchWeatherData();
   }, [lat, lon]);
+  const [elevation, setElevation] = useState(null);
+
+  useEffect(() => {
+    const fetchElevation = async () => {
+      try {
+        const response = await axios.get(
+          `https://api.open-elevation.com/api/v1/lookup?locations=${lat},${lon}`
+        );
+        const { data } = response;
+        // Extract the elevation value from the response
+        const elevationValue = data.results[0].elevation;
+        setElevation(elevationValue);
+      } catch (error) {
+        console.error("Error fetching elevation data:", error);
+      }
+    };
+
+    fetchElevation();
+  }, [lat, lon]);
 
   return (
     <div key={params.PlaceId}>
@@ -74,9 +93,7 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
           ></Image>
 
           <div>
-            <h2 style={style.heading}>
-              Description
-            </h2>
+            <h2 style={style.heading}>Description</h2>
             <p>
               {placeData.Description} . The conditional expression checks if the
               stateOptions array has at least one element (stateOptions.length
@@ -108,17 +125,17 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
                   </li>
                   <li className="flex gap-4">
                     <Image
-                      src={`http://localhost:8000/${placeData.Image}`}
-                      alt=""
+                      src="/images/Destinations/elevation2.webp"
+                      alt="Elevation Gain"
                       height={40}
                       width={40}
                       className="object-cover rounded-md"
                     ></Image>
-                    Easy
+                    <div>Elevation: {elevation} meters</div>
                   </li>
                   <li className="flex gap-4">
                     <Image
-                      src={`http://localhost:8000/${placeData.Image}`}
+                      src="/images/Destinations/health-icon.jpg"
                       alt=""
                       height={40}
                       width={40}
@@ -186,12 +203,8 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
             </div>
           </Card>
           <div>
-            <h2 style={style.heading}>
-              Cultural Importance
-            </h2>
-            <div>
-              
-            </div>
+            <h2 style={style.heading}>Cultural Importance</h2>
+            <div></div>
           </div>
         </div>
       )}

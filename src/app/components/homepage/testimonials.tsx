@@ -5,8 +5,10 @@ const Testimonials = () => {
   return (
     <div className="w-full">
       <div>
-        <h1>Testimonials</h1>
-        <p>See what our users has to say about Co-Travel Nepal</p>
+        <div>
+          <h1>Testimonials</h1>
+          <p>See what our users has to say about Co-Travel Nepal</p>
+        </div>
       </div>
 
       <div className="rounded shadow px-6 py-5 flex justify-center ">

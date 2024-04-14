@@ -72,7 +72,7 @@ const Destination = () => {
         <div className="w-1/2">
           <h1>What makes this country a wonderful place to visit.</h1>
           <p>
-            Having stopover in myriad places in Indonesia is what makes this
+            Having stopover in myriad places in Nepal is what makes this
             country a wonderful place to visit. The beauty of scenic natural
             landscapes blended with various unique culture of its people. Enjoy
             the untouched beaches, mountains, lakes, and many more pleasing

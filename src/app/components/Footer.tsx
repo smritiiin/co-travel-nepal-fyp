@@ -1,12 +1,14 @@
 import { Button, Divider } from "@nextui-org/react";
-import Image from "next/image";
-import React from "react";
 
 import { NAV_LINKS } from "@/utils";
+import { useToken } from "@/utils/token";
+
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 const Footer = () => {
+  const {isTokenAvailableAndNotExpired} = useToken();
+
   const router = useRouter();
   return (
     <div className="bg-[#42A7C3] rounded-t-[20px] w-full mt-auto">
@@ -18,18 +20,38 @@ const Footer = () => {
               <h2 className=" font-bold text-xl">The Beauty of Nepal</h2>
             </div>
             <div className="flex flex-col gap-2 ">
-              <Button
-                className="bg-[#42A7C3] font-bold text-white"
-                onClick={() => router.push("/auth/login")}
-              >
-                Login
-              </Button>
-              <Button
-                className="bg-white font-bold text-[#42A7C3] "
-                onClick={() => router.push("/auth/signup")}
-              >
-                Signup
-              </Button>
+              {isTokenAvailableAndNotExpired("x-access-token") ? (
+                <>
+                  <Button
+                    className="bg-[#42A7C3] font-bold text-white"
+                    onClick={() => router.push("/profile")}
+                  >
+                    Review
+                  </Button>
+                  
+                  <Button
+                    className="bg-white font-bold text-[#42A7C3] "
+                    onClick={() => router.push("/auth/signup")}
+                  >
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    className="bg-[#42A7C3] font-bold text-white"
+                    onClick={() => router.push("/auth/login")}
+                  >
+                   Login
+                  </Button>
+                  <Button
+                    className="bg-white font-bold text-[#42A7C3] "
+                    onClick={() => router.push("/auth/signup")}
+                  >
+                    Signup
+                  </Button>
+                </>
+              )}
             </div>
           </div>
           <div className=" mt-3 flex flex-col gap-3">

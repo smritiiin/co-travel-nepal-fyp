@@ -95,7 +95,7 @@ const SignInFrom = () => {
 
         {loginError && <span className="error">{loginError}</span>}
 
-        <p className=" text-blue-400 underline text-right">Forgot Password?</p>
+        {/* <p className=" text-blue-400 underline text-right">Forgot Password?</p> */}
         <Button type="submit" color="primary">
           Sign In
         </Button>
