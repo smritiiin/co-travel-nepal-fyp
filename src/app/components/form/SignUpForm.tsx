@@ -63,7 +63,11 @@ const SignUpForm = () => {
               label="Email"
               name="email"
             />
-            {errors.email && <span id="error">{errors.email.message}</span>}
+            {errors.email && (
+              <span className=" text-red-500 text-sm ">
+                {errors.email.message}
+              </span>
+            )}
           </div>
 
           <div className="flex gap-x-2">
@@ -74,7 +78,11 @@ const SignUpForm = () => {
                 label="First Name"
                 name="fname"
               />
-              {errors.fname && <span id="error">{errors.fname.message}</span>}
+              {errors.fname && (
+                <span className="text-red-500 text-sm">
+                  {errors.fname.message}
+                </span>
+              )}
             </div>
             <div className="w-full flex-wrap md:flex-nowrap">
               <Input
@@ -83,7 +91,11 @@ const SignUpForm = () => {
                 label="Last Name"
                 name="lname"
               />
-              {errors.lname && <span id="error">{errors.lname.message}</span>}
+              {errors.lname && (
+                <span className=" text-red-500 text-sm ">
+                  {errors.lname.message}
+                </span>
+              )}
             </div>
           </div>
           <div className="w-full flex-wrap md:flex-nowrap ">
@@ -106,7 +118,11 @@ const SignUpForm = () => {
               }
               type={isVisible1 ? "text" : "password"}
             />
-            {errors.password && <span id="error">{errors.password.message}</span>}
+            {errors.password && (
+              <span className=" text-red-500 text-sm ">
+                {errors.password.message}
+              </span>
+            )}
           </div>
 
           <div className="w-full flex-wrap md:flex-nowrap gap-4">
@@ -130,7 +146,9 @@ const SignUpForm = () => {
               type={isVisible2 ? "text" : "password"}
             />
             {errors.confirmPassword && (
-              <span id="error">{errors.confirmPassword.message}</span>
+              <span className=" text-red-500 text-sm ">
+                {errors.confirmPassword.message}
+              </span>
             )}
           </div>
 
@@ -141,7 +159,10 @@ const SignUpForm = () => {
 
         <p className="flex gap-x-2 text-xs text-gray-600 mt-5">
           Already have an account?
-          <Link href="/auth/login" className=" text-blue-600 font-semibold underline">
+          <Link
+            href="/auth/login"
+            className=" text-blue-600 font-semibold underline"
+          >
             Log in
           </Link>
         </p>

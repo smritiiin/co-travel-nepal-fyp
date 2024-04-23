@@ -40,7 +40,7 @@ h2 {
   padding: 0 40px;
 }
 
-span #error {
+span .error {
   color: red;
   font-size: small;
 }

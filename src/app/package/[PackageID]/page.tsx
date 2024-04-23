@@ -117,21 +117,21 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
   ) : (
     <div key={params.PackageID}>
       <div key={packageData.PackageID}>
-        <h2 className="text-center"> {packageData.Name}</h2>
+        {/* <h2 className="text-center"> {packageData.Name}</h2> */}
         <div
-          className="flex bg-cover min-h-full w-full justify-end rounded-xl"
+          className="flex  bg-current min-h-full w-full justify-end rounded-xl"
           style={{
             backgroundImage: "url('/images/travelPlan/travelPackageCover.jpg')",
           }}
         >
-          <div className="p-10 text-4xl font-semibold text-[#3c3744] rounded-lg font-serif animate-typing">
+          <div className="p-4 text-4xl font-semibold text-[#3c3744] rounded-lg font-serif animate-typing ">
             <p>
               Explore the Wonders of Nepal <br />
               With
-              <span className="text-[#fb8686] text-5xl"> Lumbini Holidays</span>
+              <span className="text-[#1b4b23] text-5xl"> Lumbini Holidays</span>
             </p>
           </div>
-          <div className="p-10 text-2xl font-semibold bg-blue-400 rounded-lg mt-40 mb-10 mx-10 text-white shadow-inner border">
+          <div className="p-10 text-2xl font-semibold bg-[#cdc1b5] rounded-lg mt-40 mb-10 mx-10 text-white shadow-inner border">
             <p>{packageData.Duration - 1} Nights</p>
             <p>{packageData.Duration} Days</p>
           </div>
@@ -144,24 +144,34 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
               alt=""
               width={350}
               height={306}
-              className="object-cover w-full h-full  rounded-lg"
+              className="object-cover w-full h-full rounded-lg"
             />
           </div>
           <div className="p-6 flex flex-col justify-between">
             <div>
-              <p className="font-medium mb-2">{packageData.Description}</p>
-              <p className="text-gray-500">
-                Number of People: {packageData.NoOfPerson}
-              </p>
-              <p className="text-gray-500">
-                Accommodation: {packageData.Accommodation}
-              </p>
-              <p className="text-gray-500">
-                Activities: {packageData.Activities}
-              </p>
-              <p className="text-gray-500">
-                Travel Itinerary: {packageData.Itinerary}
-              </p>
+              <h2 className="font-semibold text-lg mb-4">{packageData.Name}</h2>
+              <div className="text-gray-600 mb-2">
+                <p>
+                  <span className="font-bold">Description:</span>{" "}
+                  {packageData.Description}
+                </p>
+                <p>
+                  <span className="font-bold">Number of People:</span>{" "}
+                  {packageData.NoOfPerson}
+                </p>
+                <p>
+                  <span className="font-bold">Accommodation:</span>{" "}
+                  {packageData.Accommodation}
+                </p>
+                <p>
+                  <span className="font-bold">Activities:</span>{" "}
+                  {packageData.Activities}
+                </p>
+                <p>
+                  <span className="font-bold">Travel Itinerary:</span>{" "}
+                  {packageData.Itinerary}
+                </p>
+              </div>
             </div>
             <p className="font-semibold mt-3">
               Price:{" "}

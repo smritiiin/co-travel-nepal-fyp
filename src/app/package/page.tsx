@@ -53,16 +53,18 @@ const Packages = () => {
               isPressable
               key={item.PackageID}
               onClick={() => cardClick(item.PackageID)}
-              className="min-w-fit"
+              className="min-w-fit "
             >
               <CardBody>
-                <Image
-                  alt="Card background"
-                  className="rounded-xl"
-                  src={`http://localhost:8000/${item.CoverImage}`}
-                  width={300}
-                  height={300}
-                />
+                <div className="relative w-[200px] h-[150px] mb-1">
+                  <Image
+                    alt="Card background"
+                    className="rounded-xl object-cover"
+                    src={`http://localhost:8000/${item.CoverImage}`}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                </div>
                 <div className="flex item-center">
                   <Image
                     src="/images/TravelPlan/Location.png"
@@ -73,10 +75,18 @@ const Packages = () => {
                   <p>Nepal</p>
                 </div>
                 <h3 className="font-semibold text-[#333333]">{item.Name}</h3>
-                <p className="font-[#636363]">{item.Duration} Days/{item.Duration-1} Nights</p>
-                <p className="font-[#636363]">Total Person: {item.NoOfPerson} </p>
+                <p className="font-[#636363] font-semibold">
+                  {item.Duration} <span className=" text-xs">Days</span>/{" "}
+                  {item.Duration - 1} <span className=" text-xs">Nights</span>
+                </p>
+                <p className="text-[#2a2a2a] font-sm ">
+                  Total Person: {item.NoOfPerson}{" "}
+                </p>
 
-                <p className="font-[#347F90]"> Rs {item.Price}.00</p>
+                <p className=" font-semibold text-[#347F90]">
+                  {" "}
+                  Rs {item.Price}.00
+                </p>
               </CardBody>
             </Card>
           ))}

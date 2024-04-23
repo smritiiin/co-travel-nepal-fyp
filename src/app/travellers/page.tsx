@@ -131,7 +131,7 @@ const Travellers = () => {
               })
               .map((item) => (
                 <Card
-                  // isPressable
+                  isPressable
                   isHoverable
                   key={item.id}
                   className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] mx-auto my-3"

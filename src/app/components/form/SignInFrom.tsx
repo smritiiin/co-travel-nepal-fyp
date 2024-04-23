@@ -68,8 +68,9 @@ const SignInFrom = () => {
             label="Email"
             name="email"
           />
-          {errors.email && <span id='error'
-          >{errors.email.message}</span>}
+          {errors.email && (
+            <span className="text-red-500 text-sm">{errors.email.message}</span>
+          )}
         </div>
         <div className="w-full flex-wrap md:flex-nowrap gap-4">
           <Input
@@ -91,10 +92,16 @@ const SignInFrom = () => {
               </button>
             }
           />
-          {errors.password && <span id="error">{errors.password.message}</span>}
+          {errors.password && (
+            <span className="text-red-500 text-sm">
+              {errors.password.message}
+            </span>
+          )}
         </div>
 
-        {loginError && <span className="error">{loginError}</span>}
+        {loginError && (
+          <span className=" text-red-500 text-sm ">{loginError}</span>
+        )}
 
         {/* <p className=" text-blue-400 underline text-right">Forgot Password?</p> */}
         <Button type="submit" color="primary">
