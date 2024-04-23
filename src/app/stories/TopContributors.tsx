@@ -19,7 +19,7 @@ const TopContributors = () => {
 
   return (
     <div>
-      <h3 className=" font-semibold p-5">Top Contributors</h3>
+      <h3 className=" font-semibold p-5 text-gray-600">Top Contributors</h3>
       {contributors.map((contributor) => (
         <div key={contributor.authorId} className="my-4">
           <div className="flex items-center">

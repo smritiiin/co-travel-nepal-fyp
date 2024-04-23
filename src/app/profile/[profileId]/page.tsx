@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
+import { Avatar, Button, Divider, Image } from "@nextui-org/react";
+import axios from "axios";
 
 const ViewProfile = ({ params }: { params: { profileId: string } }) => {
   // <div>Profile {params.profileId}</div>
-  const [profileData, setProfileData] = useState(null);
+  const [profileData, setProfileData] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -12,11 +14,11 @@ const ViewProfile = ({ params }: { params: { profileId: string } }) => {
     const fetchProfileData = async () => {
       try {
         // Simulating an API request with a delay
-        const response = await fetch(
+        const response = await axios.get(
           `http://localhost:8000/api/profile/${params.profileId}`
         );
-        const data = await response.json();
-        setProfileData(data);
+        // const data = await response.json();
+        setProfileData(response.data);
         setIsLoading(false);
         console.log(response);
       } catch (error) {
@@ -27,79 +29,97 @@ const ViewProfile = ({ params }: { params: { profileId: string } }) => {
     fetchProfileData();
   }, [params.profileId]);
 
+  console.log("first", profileData)
   if (isLoading) {
     return <p>Loading profile data...</p>;
   }
 
-  return (
-    <div>
-      <h1>Profile Page</h1>
-      <p>Profile ID: {params.profileId}</p>
+ return (
+   <div className="flex flex-col gap-5 w-full">
+     <div className="z-0">
+       <Image
+         src="/images/profile/banner.png"
+         alt="Cover Image"
+         width={1500}
+         height={500}
+         className="w-[1444px] h-[350px] object-cover"
+       />
+     </div>
+     <div className="flex justify-center items-center -mt-20 z-10">
+       <Image
+         src="/images/user.svg"
+         alt="User"
+         width={130}
+         height={20}
+         className="border-2 border-gray-500 rounded-full"
+       />
+     </div>
+     <div className="text-center">
+       <h2>
+         {profileData.UserProfile.fname} {profileData.UserProfile.lname}
+       </h2>
+       <h4 className="text-[#6C6C6C]">{profileData.Nationality}, {profileData.Type}</h4>
+       <p className="font-bold">I love travellinggg yeyyyy!</p>
+     </div>
 
-      {profileData && (
-        <div>
-          <h2>Profile Details</h2>
-          {/* <p>Name: {profileData.name}</p>
-          <p>Email: {profileData.email}</p> */}
-          {/* Render other profile details as needed */}
-        </div>
-      )}
-    </div>
-  );
+     <div className="flex justify-center mb-10 gap-5">
+       <Button color="primary">Edit Profile</Button>
+       <Button className="border-2 border-[#A5A58D]">
+         Update Travel Status
+       </Button>
+     </div>
+
+     <div>
+       <h3>Nationality: {profileData.Nationality}</h3>
+       <h3>Gender: {profileData.Gender}</h3>
+       <h3>Interests:</h3>
+       <ul>
+         {profileData.Interests.map((interest: any, index: number) => (
+           <li key={index}>{interest}</li>
+         ))}
+       </ul>
+       <h3>Languages:</h3>
+       <ul>
+         {profileData.Languages.map((language: any, index: number) => (
+           <li key={index}>{language}</li>
+         ))}
+       </ul>
+       <h3>Travel Experiences:</h3>
+       <ul>
+         {profileData.TravelExperiences.map(
+           (experience: any, index: number) => (
+             <li key={index}>{experience}</li>
+           )
+         )}
+       </ul>
+       <h3>Travel Preferences:</h3>
+       <ul>
+         {profileData.TravelPreferences.map(
+           (preference: any, index: number) => (
+             <li key={index}>{preference}</li>
+           )
+         )}
+       </ul>
+       <h3>Travelling To:</h3>
+       <ul>
+         {profileData.TravellingTo.map((location: any, index: number) => (
+           <li key={index}>{location}</li>
+         ))}
+       </ul>
+       <h3>Type: {profileData.Type}</h3>
+       <h3>Contact Number: {profileData.ContactNumber}</h3>
+       <h3>User ID: {profileData.UserId}</h3>
+       <h3>User Profile:</h3>
+       <ul>
+         <li>ID: {profileData.UserProfile.id}</li>
+         <li>Email: {profileData.UserProfile.email}</li>
+         <li>First Name: {profileData.UserProfile.fname}</li>
+         <li>Last Name: {profileData.UserProfile.lname}</li>
+         {/* Add additional properties as needed */}
+       </ul>
+     </div>
+   </div>
+ );
 };
 
 export default ViewProfile;
-
-// "use client"
-
-// import { useRouter } from "next/router";
-// import { useEffect, useState } from "react";
-
-// const ProfilePage = () => {
-
-// const [profileData, setProfileData] = useState(null);
-// const [isLoading, setIsLoading] = useState(true);
-
-// useEffect(() => {
-//   // Fetch profile data based on the profileId parameter
-//   // You can replace this code with your actual API or database call
-//   const fetchProfileData = async () => {
-//     try {
-//       // Simulating an API request with a delay
-//       const response = await fetch(
-//         `http://localhost:8000/api/profile/${profileId}`
-//       );
-//       const data = await response.json();
-//       setProfileData(data);
-//       setIsLoading(false);
-//       console.log(response)
-//     } catch (error) {
-//       console.error("Error fetching profile data:", error);
-//     }
-//   };
-
-//   fetchProfileData();
-// }, [profileId]);
-
-// if (isLoading) {
-//   return <p>Loading profile data...</p>;
-// }
-
-// return (
-//   <div>
-//     <h1>Profile Page</h1>
-//     <p>Profile ID: {profileId}</p>
-
-//     {profileData && (
-//       <div>
-//         <h2>Profile Details</h2>
-//         {/* <p>Name: {profileData.name}</p>
-//         <p>Email: {profileData.email}</p> */}
-//         {/* Render other profile details as needed */}
-//       </div>
-//     )}
-//   </div>
-// );
-// };
-
-// export default ProfilePage;

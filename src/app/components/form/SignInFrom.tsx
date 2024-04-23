@@ -55,7 +55,7 @@ const SignInFrom = () => {
   };
 
   return (
-    <div className=" mt-10 flex flex-col space-y-3">
+    <div className=" mt-10 flex flex-col space-y-3 pr-20">
       <h1>Welcome Back!</h1>
       <form
         className="space-y-3 flex flex-col"
@@ -68,7 +68,8 @@ const SignInFrom = () => {
             label="Email"
             name="email"
           />
-          {errors.email && <span>{errors.email.message}</span>}
+          {errors.email && <span id='error'
+          >{errors.email.message}</span>}
         </div>
         <div className="w-full flex-wrap md:flex-nowrap gap-4">
           <Input
@@ -90,7 +91,7 @@ const SignInFrom = () => {
               </button>
             }
           />
-          {errors.password && <span>{errors.password.message}</span>}
+          {errors.password && <span id="error">{errors.password.message}</span>}
         </div>
 
         {loginError && <span className="error">{loginError}</span>}
@@ -101,9 +102,12 @@ const SignInFrom = () => {
         </Button>
       </form>
 
-      <p className="flex gap-x-3">
-        Dont have an account?
-        <Link href="/auth/signup" className=" text-blue-600 font-semibold">
+      <p className="flex gap-x-2 text-xs text-gray-600 mt-5">
+        Don{"'"}t have an account?
+        <Link
+          href="/auth/signup"
+          className=" text-blue-600 font-semibold underline"
+        >
           SignUp
         </Link>
       </p>

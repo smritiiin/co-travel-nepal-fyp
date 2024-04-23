@@ -1,7 +1,7 @@
 "use client";
 
 import TopContributors from "./TopContributors";
-import { Button } from "@nextui-org/react";
+import { Button, Divider } from "@nextui-org/react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -13,7 +13,6 @@ import Loading from "../components/Loading";
 import { LoginCard } from "../components/LoginCard";
 
 const Stories = () => {
-  
   const { isTokenAvailableAndNotExpired } = useToken();
 
   const [responseData, setResponseData] = useState<any[]>([]);
@@ -78,19 +77,18 @@ const Stories = () => {
     router.push(`/stories/${id}`);
   };
   return (
-    <div>
+    <div className="px-5">
       <div className="text-center my-5">
         <h2> From our Travellers</h2>
         <p> Get to know Nepal better from travel enthusiast like you</p>
       </div>
-
+      <Divider />
+      <br/>
       <div className="flex gap-x-6 w-full">
-        <div className=" w-[20%]">
-          <TopContributors />
-        </div>
+        <div className=" w-[20%]"><TopContributors /></div>
         <div className=" flex flex-col justify-center items-center flex-wrap w-[80%]">
           <div>
-            <h2> Popular Blogs</h2>
+            <h3 className="font-semibold text-lg mt-2"> Popular Blogs</h3>
             <div className="flex gap-5">
               {isLoading ? (
                 <Loading />
@@ -98,7 +96,7 @@ const Stories = () => {
                 popularBlogs.map((item: any) => (
                   <Card
                     key={item.id}
-                    className="py-4 w-[280px] h-[370px]"
+                    className="py-4 w-[280px] h-[350px]"
                     onClick={() => cardClick(item.id)}
                     isPressable
                   >
@@ -107,8 +105,8 @@ const Stories = () => {
                         alt="Blog Cover"
                         className="object-cover rounded-xl"
                         src={`http://localhost:8000/${item.imageUrl}`}
-                        width={270}
-                        height={200}
+                        width={190}
+                        height={190}
                       />
                       <CardHeader className="pb-0 pt-2 flex-col items-start">
                         <h4 className="font-bold text-large truncate...">
@@ -125,7 +123,7 @@ const Stories = () => {
             </div>
           </div>
           <div>
-            <h2> Latest Blogs</h2>
+            <h3 className="font-semibold text-lg mt-5"> Latest Blogs</h3>
             <div className="flex gap-5">
               {isLoading ? (
                 <Loading />
@@ -133,7 +131,7 @@ const Stories = () => {
                 latestBlogs.map((item) => (
                   <Card
                     key={item.id}
-                    className="py-4 w-[280px] h-[370px]"
+                    className="py-4 w-[280px] h-[350px]"
                     onClick={() => cardClick(item.id)}
                     isPressable
                   >
@@ -162,7 +160,7 @@ const Stories = () => {
           {showLoginModal && (
             <LoginCard isOpen={true} onClose={handleLoginModalClose} />
           )}
-          <Button color="primary" onClick={handleClick}>
+          <Button color="primary" className="my-3" onClick={handleClick}>
             {" "}
             <Image
               src="/images/Blogs/addBlog.svg"

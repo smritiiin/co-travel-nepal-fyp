@@ -72,10 +72,10 @@ const Destination = () => {
         <div className="w-1/2">
           <h1>What makes this country a wonderful place to visit.</h1>
           <p>
-            Having stopover in myriad places in Nepal is what makes this
-            country a wonderful place to visit. The beauty of scenic natural
-            landscapes blended with various unique culture of its people. Enjoy
-            the untouched beaches, mountains, lakes, and many more pleasing
+            Having stopover in myriad places in Nepal is what makes this country
+            a wonderful place to visit. The beauty of scenic natural landscapes
+            blended with various unique culture of its people. Enjoy the
+            untouched beaches, mountains, lakes, and many more pleasing
             destinations as well as the magnificent city skylines throughout the
             country. And when you decide to see them all, a visit won’t be
             enough to embrace the wonders of Nepal.
@@ -98,42 +98,46 @@ const Destination = () => {
           </span>{" "}
           is
         </h1>
-        {stateOptions.map((state: any) => (
-          <Select
-            size="sm"
-            label="Select a state"
-            className="max-w-xs"
-            onChange={handleStateChange}
-            key={state.StateId}
-          >
-            <SelectItem key={state.StateId} value={state.StateId}>
+        <Select
+          size="sm"
+          label="Select a state"
+          className="max-w-xs"
+          onChange={handleStateChange}
+          key=""
+        >
+          {stateOptions.map((state: any) => (
+            <SelectItem key={state.StateId} value={state.StateId} className=" text-gray-700">
               {state.StateName}
             </SelectItem>
-          </Select>
-        ))}
+          ))}
+        </Select>
       </div>
 
- {places.length <= 0 ? (
-        <p> No places Found</p>
+      {places.length <= 0 ? (
+        <p className="text-center py-2"> Please select a state</p>
       ) : (
-        <div className="flex gap-4 flex-wrap">
-          {places.length >0 && places.map((place) => (
-            <Card key={place.PlaceId}>
-              <Image
-                src={`http://localhost:8000/${place.Image}`}
-                alt={place.PlaceName}
-                width={200}
-                height={200}
-                onClick={()=> cardClick(place.PlaceId)}
-              />
-              <h3>{place.PlaceName}</h3>
-              <p>{place.Description}</p>
-              <p>
-                Latitude: {place.Latitude}, Longitude: {place.Longitude}
-              </p>
-            </Card>
-          ))}
-      </div>)}
+        <div className="grid grid-cols-4 gap-4">
+          {places.length > 0 &&
+            places.map((place) => (
+              <Card key={place.PlaceId} className="p-3 mb-5 ">
+                <Image
+                  src={`http://localhost:8000/${place.Image}`}
+                  alt={place.PlaceName}
+                  className="  object-cover rounded-md"
+                  width={250}
+                  height={200}
+                  onClick={() => cardClick(place.PlaceId)}
+                />
+                <h3 className="font-bold">{place.PlaceName}</h3>
+                <p className=" text-gray-600 text-sm truncate">{place.Description}</p>
+                {/* <p className="text-sm ">
+                  Latitude: {place.Latitude}<br/>
+                  Longitude: {place.Longitude}
+                </p> */}
+              </Card>
+            ))}
+        </div>
+      )}
     </div>
   );
 };

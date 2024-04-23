@@ -119,9 +119,15 @@ export default function UserProfile() {
                 </div>
               )}
             </DropdownItem>
-            <DropdownItem key="dashboard">Dashboard</DropdownItem>
-            <DropdownItem key="settings">Settings</DropdownItem>
-            <DropdownItem key="new_project">New Project</DropdownItem>
+            <DropdownItem className="sm:block md:hidden" key="dashboard">
+              Dashboard
+            </DropdownItem>
+            <DropdownItem key="settings" className="sm:block md:hidden">
+              Settings
+            </DropdownItem>
+            <DropdownItem className="sm:block md:hidden" key="new_project">
+              New Project
+            </DropdownItem>
           </DropdownSection>
 
           <DropdownSection aria-label="Help & Feedback">
@@ -177,22 +183,16 @@ export default function UserProfile() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1">
-                You are about to be logged out
-              </ModalHeader>
+              <ModalHeader className="flex flex-col gap-1">Log Out</ModalHeader>
               <ModalBody>
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Nullam pulvinar risus non risus hendrerit venenatis.
-                  Pellentesque sit amet hendrerit risus, sed porttitor quam.
-                </p>
+                <p className="font-semibold">You are about to be logged out.</p>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="light" onPress={onClose}>
                   Close
                 </Button>
                 <Button color="primary" onPress={handleLogout}>
-                  Action
+                  Log out
                 </Button>
               </ModalFooter>
             </>

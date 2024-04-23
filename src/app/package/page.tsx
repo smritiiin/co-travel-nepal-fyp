@@ -40,11 +40,14 @@ const Packages = () => {
   };
 
   return (
-    <div>
-      <div className="min-h-screen">PACKAGES</div>
+    <div className="mt-3">
+      {/* <div className="min-h-screen">PACKAGES</div> */}
       <div>
-        <h1> Our Packages </h1>
-        <div className="grid grid-cols-5 gap-4 mt-6 border">
+        <h2 className=" font-semibold text-3xl underline text-center">
+          {" "}
+          Our Packages{" "}
+        </h2>
+        <div className="grid grid-cols-5 gap-4 my-6  ">
           {responseData.map((item) => (
             <Card
               isPressable
@@ -70,8 +73,10 @@ const Packages = () => {
                   <p>Nepal</p>
                 </div>
                 <h3 className="font-semibold text-[#333333]">{item.Name}</h3>
-                <p className="font-[#636363]">{item.Duration}</p>
-                <p className="font-[#347F90]"> Rs{item.Price}.00 /person </p>
+                <p className="font-[#636363]">{item.Duration} Days/{item.Duration-1} Nights</p>
+                <p className="font-[#636363]">Total Person: {item.NoOfPerson} </p>
+
+                <p className="font-[#347F90]"> Rs {item.Price}.00</p>
               </CardBody>
             </Card>
           ))}

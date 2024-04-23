@@ -13,13 +13,14 @@ const Messenger = () => {
   const { getUsernameAndRoleFromToken } = useToken();
 
   const [conversations, setConversations] = useState([]);
-  const [currentChat, setCurrentChat] = useState(null);
+  const [currentChat, setCurrentChat] = useState();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
 
-  const scrollRef = useRef(); 
+  const scrollRef = useRef();
 
   const { id } = getUsernameAndRoleFromToken("x-access-token");
+  console.log("ID IS:", id);
 
   useEffect(() => {
     const getConversations = async () => {
@@ -27,7 +28,7 @@ const Messenger = () => {
         const res = await axios.get(
           "http://localhost:8000/api/conversation/" + id
         );
-        console.log("CONVO:", res.data)
+        console.log("CONVO:", res.data);
         setConversations(res.data);
       } catch (error) {
         console.log(error);
@@ -36,7 +37,7 @@ const Messenger = () => {
     getConversations();
   }, [id]);
 
-  console.log("CURRENT CHAT", currentChat?.id);
+  console.log("CURRENT CHAT", currentChat?._id);
 
   useEffect(() => {
     const getMessages = async () => {
@@ -54,9 +55,9 @@ const Messenger = () => {
     getMessages();
   }, [currentChat]);
 
-useEffect(()=>{
-  scrollRef.current?.scrollIntoView({ behavior: "smooth" });
-}, [messages])
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const sendMessage = async (e: any) => {
     e.preventDefault();
@@ -98,7 +99,7 @@ useEffect(()=>{
               <>
                 <div className="chatBoxTop">
                   {messages.map((m: any) => (
-                    <div ref={scrollRef}> 
+                    <div ref={scrollRef}>
                       <Message message={m} own={m.SenderUserId === id} />
                     </div>
                   ))}

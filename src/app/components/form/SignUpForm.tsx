@@ -63,7 +63,7 @@ const SignUpForm = () => {
               label="Email"
               name="email"
             />
-            {errors.email && <span>{errors.email.message}</span>}
+            {errors.email && <span id="error">{errors.email.message}</span>}
           </div>
 
           <div className="flex gap-x-2">
@@ -74,7 +74,7 @@ const SignUpForm = () => {
                 label="First Name"
                 name="fname"
               />
-              {errors.fname && <span>{errors.fname.message}</span>}
+              {errors.fname && <span id="error">{errors.fname.message}</span>}
             </div>
             <div className="w-full flex-wrap md:flex-nowrap">
               <Input
@@ -83,7 +83,7 @@ const SignUpForm = () => {
                 label="Last Name"
                 name="lname"
               />
-              {errors.lname && <span>{errors.lname.message}</span>}
+              {errors.lname && <span id="error">{errors.lname.message}</span>}
             </div>
           </div>
           <div className="w-full flex-wrap md:flex-nowrap ">
@@ -106,7 +106,7 @@ const SignUpForm = () => {
               }
               type={isVisible1 ? "text" : "password"}
             />
-            {errors.password && <span>{errors.password.message}</span>}
+            {errors.password && <span id="error">{errors.password.message}</span>}
           </div>
 
           <div className="w-full flex-wrap md:flex-nowrap gap-4">
@@ -130,7 +130,7 @@ const SignUpForm = () => {
               type={isVisible2 ? "text" : "password"}
             />
             {errors.confirmPassword && (
-              <span>{errors.confirmPassword.message}</span>
+              <span id="error">{errors.confirmPassword.message}</span>
             )}
           </div>
 
@@ -139,9 +139,9 @@ const SignUpForm = () => {
           </Button>
         </form>
 
-        <p className="flex gap-x-2 mt-5">
+        <p className="flex gap-x-2 text-xs text-gray-600 mt-5">
           Already have an account?
-          <Link href="/auth/login" className=" text-blue-600 font-semibold">
+          <Link href="/auth/login" className=" text-blue-600 font-semibold underline">
             Log in
           </Link>
         </p>

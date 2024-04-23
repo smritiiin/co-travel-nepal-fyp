@@ -11,7 +11,7 @@ const Admin = () => {
     <div className="flex h-screen">
       <NavBar />
       <div className="w-[75%] h-screen p-8">
-       <SearchBar/>
+       {/* <SearchBar/> */}
         <div className="flex gap-6">
           <Card className="bg-[#F0F9FF] w-96">
             <div className=" p-4">

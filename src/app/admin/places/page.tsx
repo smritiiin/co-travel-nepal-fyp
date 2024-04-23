@@ -67,7 +67,7 @@ export default function Places() {
     <div className="h-screen flex">
       <NavAdmin />
       <div className="w-[75%] h-screen py-3">
-        <SearchBar />
+        {/* <SearchBar /> */}
 
         <div className="bg-[#F8F8F8] p-4">
           <div className="flex justify-between items-center mb-2">

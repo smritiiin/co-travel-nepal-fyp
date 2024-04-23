@@ -4,6 +4,7 @@ import { Card } from "@nextui-org/react";
 import axios from "axios";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { text } from "stream/consumers";
 
 const Place = ({ params }: { params: { PlaceId: string } }) => {
   // const [placeData, setPlaceData] = useState<any[]>([]);
@@ -35,13 +36,13 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
 
   // console.log("Latitude", lat);
   // console.log("Lognitude", lon);
-  useEffect(() => {
-    const iframeData = document.getElementById("iframeId");
-    if (iframeData) {
-      // Perform null check
-      iframeData.src = `https://maps.google.com/maps?q=${lat},${lon}&hl=es;&output=embed`;
-    }
-  });
+ useEffect(() => {
+   const iframeData = document.getElementById("iframeId") as HTMLIFrameElement;
+   if (iframeData) {
+     // Perform null check
+     iframeData.src = `https://maps.google.com/maps?q=${lat},${lon}&hl=es;&output=embed`;
+   }
+ });
 
   useEffect(() => {
     const apiKey = "30a5638e1df4113cadafe7235d04f709";
@@ -82,19 +83,21 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
       {isLoading ? (
         <Loading />
       ) : (
-        <div key={placeData.PlaceId}>
+        <div key={placeData.PlaceId} className=" space-y-5 mt-2">
           <h2>{placeData.PlaceName}</h2>
-          <Image
-            src={`http://localhost:8000/${placeData.Image}`}
-            alt=""
-            height={200}
-            width={400}
-            className=" object-cover"
-          ></Image>
+          <div className=" h-2/4 w-full object-cover">
+            <Image
+              src={`http://localhost:8000/${placeData.Image}`}
+              alt=""
+              height={400}
+              width={550}
+              className="object-cover rounded-lg shadow-md mx-auto"
+            ></Image>
+          </div>
 
           <div>
             <h2 style={style.heading}>Description</h2>
-            <p>
+            <p className=" text-justify pr-3 py-2">
               {placeData.Description} . The conditional expression checks if the
               stateOptions array has at least one element (stateOptions.length
               0). If it does, the defaultValue is set to the StateId of the
@@ -109,31 +112,16 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
             <h2 className="text-right" style={style.heading}>
               Additional Info
             </h2>
-            <div className="flex">
-              <iframe id="iframeId" width={400} height="350px"></iframe>
-              <div>
-                <ul>
-                  <li className="flex gap-4">
-                    <Image
-                      src={`http://localhost:8000/${placeData.Image}`}
-                      alt=""
-                      height={40}
-                      width={40}
-                      className="object-cover rounded-md"
-                    ></Image>
-                    Easy
-                  </li>
-                  <li className="flex gap-4">
-                    <Image
-                      src="/images/Destinations/elevation2.webp"
-                      alt="Elevation Gain"
-                      height={40}
-                      width={40}
-                      className="object-cover rounded-md"
-                    ></Image>
-                    <div>Elevation: {elevation} meters</div>
-                  </li>
-                  <li className="flex gap-4">
+            <div className="flex justify-around px-5">
+              <iframe
+                id="iframeId"
+                width={400}
+                height="350px"
+                className="rounded-lg shadow-md"
+              ></iframe>
+              <div className="border rounded-md shadow-md bg-slate-50">
+                <ul className="grid grid-cols-1 gap-6 p-5 rounded">
+                  <li style={style.list}>
                     <Image
                       src="/images/Destinations/health-icon.jpg"
                       alt=""
@@ -141,11 +129,31 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
                       width={40}
                       className="object-cover rounded-md"
                     ></Image>
-                    Easy
+                    {placeData.Difficulty}
                   </li>
-                  <li className="flex gap-4">
+                  <li style={style.list}>
                     <Image
-                      src={`http://localhost:8000/${placeData.Image}`}
+                      src="/images/Destinations/elevation2.webp"
+                      alt="Elevation Gain"
+                      height={40}
+                      width={40}
+                      className="object-cover rounded-md"
+                    ></Image>
+                    <div> {elevation} meters.</div>
+                  </li>
+                  <li style={style.list}>
+                    <Image
+                      src="/images/Destinations/home.png"
+                      alt=""
+                      height={40}
+                      width={40}
+                      className="object-cover rounded-md"
+                    ></Image>
+                    {placeData.Accomodation}
+                  </li>
+                  <li style={style.list}>
+                    <Image
+                      src="/images/Destinations/suncloud.jpg"
                       alt=""
                       height={40}
                       width={40}
@@ -158,7 +166,7 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
             </div>
           </div>
 
-          <Card className="max-w-fit">
+          <Card className="max-w-fit ml-10">
             <div className="bg-white rounded-lg p-6">
               <div className="flex justify-between items-center mb-4">
                 <div className="text-xl font-bold">Weather Forecast</div>
@@ -172,9 +180,11 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
               <div className="grid grid-cols-3 gap-2 justify-center items-center">
                 {weatherData?.weather && (
                   <div className="flex items-center">
-                    <img
+                    <Image
                       src={`https://openweathermap.org/img/wn/${weatherData.weather[0].icon}.png`}
                       alt="Weather Icon"
+                      width={30}
+                      height={30}
                       className="mr-4"
                     />
                     <div className="text-xl font-bold">
@@ -202,10 +212,12 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
               </div>
             </div>
           </Card>
-          <div>
+          <br />
+          <br />
+          {/* <div>
             <h2 style={style.heading}>Cultural Importance</h2>
             <div></div>
-          </div>
+          </div> */}
         </div>
       )}
     </div>
@@ -214,9 +226,18 @@ const Place = ({ params }: { params: { PlaceId: string } }) => {
 
 const style = {
   heading: {
-    fontWeight: "600",
+    fontWeight: "550",
+    fontSize: "24px",
     color: "#296B2F",
     textDecoration: "underline",
+  },
+  list: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: " 10px 20px",
+    width: "300px",
+    color: "#296B2F",
   },
 };
 

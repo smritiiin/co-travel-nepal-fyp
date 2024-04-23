@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/admin/places/addPlace", "src/app/destination/[PlaceId]"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/admin/places/addPlace", "src/app/destination/[PlaceId]", "../backend_server/src/middlewares/payment.ts"],
   "exclude": ["node_modules"]
 }
