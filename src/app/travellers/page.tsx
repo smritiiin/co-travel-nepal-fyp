@@ -134,7 +134,7 @@ const Travellers = () => {
                   isPressable
                   isHoverable
                   key={item.id}
-                  className="border-none bg-background/60 dark:bg-default-100/50 max-w-[610px] mx-auto my-3"
+                  className="border-none bg-background/60 dark:bg-default-100/50 min-w-[630px] mx-auto my-3 "
                   shadow="sm"
                 >
                   <CardBody>

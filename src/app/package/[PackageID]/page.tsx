@@ -248,7 +248,7 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
                     Submit
                   </Button>
 
-                  {/* <Button onClick={payment}>Pay Garam Ta</Button> */}
+                   <Button onClick={payment}>Pay Garam Ta</Button> 
                 </form>
               </ModalBody>
             </>

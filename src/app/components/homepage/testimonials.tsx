@@ -114,7 +114,7 @@ const Testimonials = () => {
             <Modal isOpen={isOpen} onClose={onClose}>
               <ModalContent>
                 <ModalHeader className="flex flex-col gap-1">
-                  Modal Title
+                  Add Review
                 </ModalHeader>
                 <ModalBody>
                   <form onSubmit={addReview}>
@@ -155,7 +155,7 @@ const Testimonials = () => {
           <Loading />
         ) : (
           userReview.map((item) => (
-            <Card key={item.ReviewerId} className="flex-1">
+            <Card key={item.ReviewerId} className="grid grid-cols-4">
               <CardBody className="py-2 flex flex-col justify-between">
                 <div className="flex gap-3 items-center mb-2">
                   <Avatar></Avatar>

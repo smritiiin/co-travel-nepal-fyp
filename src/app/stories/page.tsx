@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useToken } from "@/utils/token";
 
-import { Card, CardHeader, CardBody } from "@nextui-org/react";
+import { Card, CardHeader, CardBody, CardFooter } from "@nextui-org/react";
 import Loading from "../components/Loading";
 import { LoginCard } from "../components/LoginCard";
 
@@ -83,9 +83,11 @@ const Stories = () => {
         <p> Get to know Nepal better from travel enthusiast like you</p>
       </div>
       <Divider />
-      <br/>
+      <br />
       <div className="flex gap-x-6 w-full">
-        <div className=" w-[20%]"><TopContributors /></div>
+        <div className=" w-[20%]">
+          <TopContributors />
+        </div>
         <div className=" flex flex-col justify-center items-center flex-wrap w-[80%]">
           <div>
             <h3 className="font-semibold text-lg mt-2"> Popular Blogs</h3>
@@ -117,6 +119,10 @@ const Stories = () => {
                         </p>
                       </CardHeader>
                     </CardBody>
+                    <Divider />
+                    <CardFooter>
+                      {item.author.fname} {item.author.lname}
+                    </CardFooter>
                   </Card>
                 ))
               )}
@@ -152,6 +158,10 @@ const Stories = () => {
                         </p>
                       </CardHeader>
                     </CardBody>
+                    <Divider />
+                    <CardFooter>
+                      {item.author.fname} {item.author.lname}
+                    </CardFooter>
                   </Card>
                 ))
               )}

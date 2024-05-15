@@ -3,14 +3,26 @@ import Image from "next/image";
 const PopularDestinations = () => {
   return (
     <div className="px-10 mt-8">
-      <div>
-        <h2 className="text-left text-3xl font-bold">Popular Destinations</h2>
-        <p>Vacations to make your experience enjoyable in Nepal!</p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h2 className="text-left text-3xl font-bold">Popular Destinations</h2>
+          <p>Vacations to make your experience enjoyable in Nepal!</p>
+        </div>
+        <div className="text-blue-600 font-semibold text-sm">View All</div>
       </div>
 
-{/* CARD COMPONENT FOR POPULAR DESTINATIONS */}
-    
-    <div className="w-[296px] h-[332px]">
+      {/* CARD COMPONENT FOR POPULAR DESTINATIONS */}
+
+      <Image
+        src="/images/home/places.png"
+        alt=""
+        className="my-5"
+        layout="responsive"
+        objectFit="cover"
+        width={570}
+        height={390}
+      ></Image>
+      {/* <div className="w-[296px] h-[332px]">
       <div className=" w-[296px] h-[332px]  bg-[#f0f0f073] rounded-[16px] border border-solid border-white backdrop-blur-sm backdrop-brightness-[100%] [-webkit-backdrop-filter:blur(4px)_brightness(100%)]">
         <div className="relative h-[310px] top-[6px]">
           <Image
@@ -47,7 +59,7 @@ const PopularDestinations = () => {
       </div>
   
 
-      </div>
+      </div> */}
     </div>
   );
 };

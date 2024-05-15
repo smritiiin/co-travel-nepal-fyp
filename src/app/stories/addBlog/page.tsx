@@ -1,5 +1,4 @@
 "use client";
-import { addStories } from "@/app/api/addStories";
 import {
   Button,
   Card,
@@ -13,27 +12,14 @@ import { useState } from "react";
 import { useToken } from "@/utils/token";
 
 const AddBlog = () => {
-  const {getUsernameAndRoleFromToken} = useToken();
-
+  const { getUsernameAndRoleFromToken } = useToken();
+  const [message, setMessage] = useState("");
   const [blogFields, setBlogFields] = useState({
     title: "",
     content: "",
     authorId: getUsernameAndRoleFromToken("x-access-token").id,
     imageUrl: null,
   });
-  // const onAddBlog = async (e: any) => {
-  //   e.preventDefault();
-  //   console.log("The values are: ", blogFields);
-
-  //   const resp: any = await addStories(blogFields);
-  //   console.log("THIS IS RESPONSE: ", resp);
-  //   if (resp.success) {
-  //     console.log("Blog Added Sucessful");
-  //   } else {
-  //     alert("Something went wrong...");
-  //     console.log(resp.error);
-  //   }
-  // };
 
   const handleInputChange = (e: any) => {
     if (e.target.name === "imageUrl") {
@@ -62,7 +48,11 @@ const AddBlog = () => {
       });
 
       if (response.ok) {
-        alert(JSON.stringify(await response.json()));
+        setMessage("Blog added successfully!");
+        setBlogFields({...blogFields,  "title": "" , "content":"" , "imageUrl": null});
+        window.setTimeout(()=>{
+          setMessage("");
+        },1000);
       } else {
         console.log(response);
       }
@@ -98,7 +88,7 @@ const AddBlog = () => {
             // label="Content"
             placeholder="Enter your Content"
             onChange={handleInputChange}
-          ></textarea>        
+          ></textarea>
           <div>
             <input
               type="file"
@@ -108,6 +98,7 @@ const AddBlog = () => {
               onChange={handleInputChange}
             ></input>
           </div>
+          {message && <span className="text-green-500 text-sm">{message}</span>}
 
           <Button type="submit" color="primary">
             Create Blog
