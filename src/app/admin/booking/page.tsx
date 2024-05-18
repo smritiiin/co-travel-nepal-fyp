@@ -12,6 +12,7 @@ import {
 } from "@nextui-org/react";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import adminAuth from "@/utils/adminAuth";
 
 const Booking = () => {
   const [bookingData, setBookingData] = useState<any[]>([]);
@@ -90,4 +91,4 @@ const Booking = () => {
   );
 };
 
-export default Booking;
+export default adminAuth(Booking);

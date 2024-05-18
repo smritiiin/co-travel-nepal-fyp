@@ -2,6 +2,7 @@
 import { Button } from "@nextui-org/react";
 import React from "react";
 import NavAgent from "./NavAgent";
+import agentAuth from "@/utils/agentAuth";
 
 const Agent = () => {
   const addPackage = () => {
@@ -21,4 +22,4 @@ const Agent = () => {
   );
 };
 
-export default Agent;
+export default agentAuth(Agent);

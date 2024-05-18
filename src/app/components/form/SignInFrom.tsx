@@ -4,10 +4,12 @@ import Link from "next/link";
 import { Input, Button } from "@nextui-org/react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 import { useForm } from "react-hook-form";
 import { ZodType, z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useToken } from "@/utils/token";
 
 type FormData = {
   email: string;
@@ -29,26 +31,27 @@ const SignInFrom = () => {
 
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
-
   const [loginError, setLoginError] = useState("");
 
   const toggleVisibility = () => setIsVisible(!isVisible);
 
+  const { getUsernameAndRoleFromToken } = useToken();
   const onLogin = async (e: FormData) => {
     const resp: any = await login(e);
-    console.log("THIS IS RESPONSE: ", resp);
     if (resp.success) {
+      Cookies.set("x-access-token", resp.data.token, { expires: 1 }); // expires in 1 day
+
+      console.log(resp.data.token);
       console.log("Login Sucessful");
-      document.cookie = `x-access-token=${resp.data.token}; path=/;`;
-      console.log("COOKIE is : ", document.cookie);
-      if (resp.data.role === "ADMIN") {
+      var userRole = getUsernameAndRoleFromToken("x-access-token").role;
+      console.log("ROLE", userRole);
+      if (userRole === "ADMIN") {
         router.push("/admin");
-      } else if (resp.data.role === "AGENT") {
+      } else if (userRole === "AGENT") {
         router.push("/agent");
       } else {
         router.push("/");
       }
-      console.log("ROLE is : ", resp.data.role);
     } else {
       setLoginError("Invalid Email and Password");
     }

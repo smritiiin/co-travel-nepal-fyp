@@ -34,9 +34,9 @@ export const useToken = () => {
   const getUsernameAndRoleFromToken = (
     cookieName: string
   ): { username: string; role: string; id: number } => {
-    if (!isTokenAvailableAndNotExpired("x-access-token")) {
-      return { username: "Guest", role: "guest", id: -1 };
-    }
+    // if (!isTokenAvailableAndNotExpired("x-access-token")) {
+    //   return { username: "Guest", role: "guest", id: -1 };
+    // }
     const token = getCookieValue(cookieName);
     let username = "";
     let role = "";
@@ -67,9 +67,9 @@ export const useToken = () => {
 
     const { username, role, id } =
       getUsernameAndRoleFromToken("x-access-token");
-    // console.log("Username:", username);
-    // console.log("Role:", role);
-    // console.log("ID:", id);
+    console.log("Username:", username);
+    console.log("Role:", role);
+    console.log("ID:", id);
   }, []); // Empty dependency array to run the effect only once
 
   // Return any additional values or functions you need to use in your component

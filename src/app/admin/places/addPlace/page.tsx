@@ -2,8 +2,12 @@
 import { useState } from "react";
 import NavAdmin from "../../NavBar";
 import { Button, Card, CardBody, CardHeader, Divider } from "@nextui-org/react";
+import { useRouter } from "next/navigation";
+import adminAuth from "@/utils/adminAuth";
 
 const AddPlaceForm = () => {
+  const router = useRouter();
+
   const [placeData, setPlaceData] = useState({
     PlaceName: "",
     Description: "",
@@ -55,6 +59,7 @@ const AddPlaceForm = () => {
         setMessage("Place added successfully!");
         window.setTimeout(() => {
           setMessage("");
+          router.push("/admin/places");
         }, 1000);
       } else {
         console.log(response);
@@ -202,148 +207,4 @@ const AddPlaceForm = () => {
   );
 };
 
-export default AddPlaceForm;
-
-// import { addPlace } from "@/app/api/addPlaceAPI";
-// import { Input, Image, Button } from "@nextui-org/react";
-// import { useRef, useState } from "react";
-// import NavAdmin from "../../NavBar";
-
-// const AddPlace = () => {
-//   const fileInputRef = useRef<HTMLInputElement>(null);
-
-//   const [placeFields, setPlaceFields] = useState({
-//     PlaceName: "",
-//     StateId: 0,
-//     Description: "",
-//     Latitude: 0,
-//     Longitude: 0,
-//     Image: [] as string[],
-//   });
-
-//       const handleImageChange = (
-//         event: React.ChangeEvent<HTMLInputElement>
-//       ) => {
-//         const files = event.target.files;
-//         if (files) {
-//           const fileURLs = Array.from(files).map((file) =>
-//             URL.createObjectURL(file)
-//           );
-//           setPlaceFields({
-//             ...placeFields,
-//             Image: [...placeFields.Image, ...fileURLs], // Append the new file URLs to the existing array
-//           });
-//         }
-//       };
-
-//   const onAddPlace = async (e: any) => {
-//     e.preventDefault();
-//     console.log("These are the values", placeFields);
-
-//     const resp: any = await addPlace(placeFields);
-//     console.log("THIS IS RESPONSE: ", resp);
-//     if (resp.success) {
-//       console.log("Place Added Sucessful");
-//     } else {
-//       alert("Something went wrong...");
-//       console.log(resp.error);
-//     }
-//   };
-
-//   return (
-//     <div className="flex h-screen">
-//       <NavAdmin />
-//       <div className="p-7">
-//         <h1 className="">Add Place</h1>
-//         <form>
-//           <Input
-//             key={"outside"}
-//             type="place"
-//             label="Place"
-//             labelPlacement="outside"
-//             onChange={(text) =>
-//               setPlaceFields({
-//                 ...placeFields,
-//                 PlaceName: text.target.value,
-//               })
-//             }
-//           />
-//           <Input
-//             key={"outside"}
-//             type="state"
-//             label="State"
-//             labelPlacement="outside"
-//             onChange={(text) =>
-//               setPlaceFields({
-//                 ...placeFields,
-//                 StateId: Number(text.target.value),
-//               })
-//             }
-//           />
-//           <Input
-//             key={"outside"}
-//             type="description"
-//             label="Description"
-//             labelPlacement="outside"
-//             onChange={(text) =>
-//               setPlaceFields({
-//                 ...placeFields,
-//                 Description: text.target.value,
-//               })
-//             }
-//           />
-//           <p>Location</p>
-//           <div className="flex gap-x-3">
-//             <Input
-//               key={"outside"}
-//               type="latitude"
-//               label="Latitude"
-//               labelPlacement="outside"
-//               onChange={(text) =>
-//                 setPlaceFields({
-//                   ...placeFields,
-//                   Latitude: Number(text.target.value),
-//                 })
-//               }
-//             />
-//             <Input
-//               key={"outside"}
-//               type="Longitude"
-//               label="Longitude"
-//               labelPlacement="outside"
-//               onChange={(text) =>
-//                 setPlaceFields({
-//                   ...placeFields,
-//                   Longitude: Number(text.target.value),
-//                 })
-//               }
-//             />
-//           </div>
-//           <Input
-//             key={"outside"}
-//             type="places"
-//             label="Must Visit places"
-//             labelPlacement="outside"
-//           />
-//           <p>Add Images</p>
-//           <div className="relative overflow-hidden inline-block">
-//             <input
-//               type="file"
-//               name="myfile"
-//               ref={fileInputRef}
-//               // className="absolute font-extrabold text-lg left-0 top-0 opacity-0"
-//               multiple
-//               onChange={handleImageChange}
-//             />
-
-//           </div>
-//           <Button type="submit" color="primary" onClick={onAddPlace}>
-//             Add Place
-//           </Button>
-//         </form>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default AddPlace;
+export default adminAuth(AddPlaceForm);

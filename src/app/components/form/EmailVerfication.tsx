@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import pic from "../assets/mail.png";
 import pic2 from "../assets/refresh icon.png";
+import Image from "next/image";
 
 const EmailVerifiedComponent = ({ email }) => {
   const [timer, setTimer] = useState(300); // Initial timer value in seconds
@@ -55,7 +56,7 @@ const EmailVerifiedComponent = ({ email }) => {
     <>
       <div className="flex flex-col justify-center items-center h-full">
         <div className="text-3xl">
-          <img
+          <Image
             src={pic}
             className={`animate-bounce mt-4`}
             alt="Mail Icon"

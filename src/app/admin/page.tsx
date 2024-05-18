@@ -1,17 +1,17 @@
 "use client";
 
-// import Image from "next/image";
-import { Card, Link, Image, Input } from "@nextui-org/react";
-import { SearchIcon } from "./SearchIcon";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Card, Image, Button, Spacer } from "@nextui-org/react";
 import NavBar from "./NavBar";
-import SearchBar from "./SearchBar";
+import { useToken } from "@/utils/token";
+import adminAuth from "@/utils/adminAuth";
 
 const Admin = () => {
   return (
     <div className="flex h-screen">
       <NavBar />
       <div className="w-[75%] h-screen p-8">
-       {/* <SearchBar/> */}
         <div className="flex gap-6">
           <Card className="bg-[#F0F9FF] w-96">
             <div className=" p-4">
@@ -71,4 +71,4 @@ const Admin = () => {
   );
 };
 
-export default Admin;
+export default adminAuth(Admin);

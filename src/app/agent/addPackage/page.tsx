@@ -120,7 +120,7 @@ const AddPackage = () => {
                 onChange={handleInputChange}
                 // {...register("Name")}
               ></Input>
-                {/* {errors.Name && (
+              {/* {errors.Name && (
                   <span className="font-bold text-xl from-red-900">
                     {errors.Name.message} Helloo
                   </span>
@@ -184,4 +184,4 @@ const AddPackage = () => {
     </div>
   );
 };
-export default AddPackage;
+export default agentAuth(AddPackage);

@@ -1,6 +1,7 @@
 "use client";
 import { Card, CardBody, Divider } from "@nextui-org/react";
 import NavAdmin from "../NavBar";
+import adminAuth from "@/utils/adminAuth";
 
 const page = () => {
   return (
@@ -19,4 +20,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default adminAuth(page);

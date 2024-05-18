@@ -1,3 +1,4 @@
+import agentAuth from '@/utils/agentAuth'
 import React from 'react'
 
 const Booking = () => {
@@ -6,4 +7,4 @@ const Booking = () => {
   )
 }
 
-export default Booking
+export default agentAuth(Booking)

@@ -5,6 +5,7 @@ import { useState } from "react";
 import UserData from "@/app/components/admin/Users";
 import TravellerData from "@/app/components/admin/Travellers";
 import GuideData from "@/app/components/admin/Guide";
+import adminAuth from "@/utils/adminAuth";
 
 const Users = () => {
   const [selectedTab, setSelectedTab] = useState("users");
@@ -77,4 +78,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default adminAuth(Users);
