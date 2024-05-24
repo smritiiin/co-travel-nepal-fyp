@@ -30,20 +30,20 @@ const TravelPlans = () => {
           Vacations to make your experience enjoyable in Nepal!
         </p>
       </div>
-      <div className="flex justify-around items-stretch w-full">
+      <div className="grid grid-cols-4 gap-4 items-stretch w-full">
         {/* Iterate through packages and display only the first three */}
         {packages.slice(0, 4).map((pkg) => (
           <Card
             key={pkg.PackageID}
-            className="shadow-lg px-6 py-5 max-w-xs rounded-md"
+            className="shadow-lg px-2 py-4 max-w-xs rounded-md"
           >
-            <CardBody className="p-0">
+            <CardBody className="p-0 ">
               <Image
                 src={`http://localhost:8000/${pkg.CoverImage}`}
                 alt={pkg.Name}
-                width={300}
+                width={400}
                 height={200}
-                className="object-cover rounded-t-md"
+                className="object-cover w-full rounded-t-md"
               />
               <CardFooter>
                 <div className="text-lg font-bold">

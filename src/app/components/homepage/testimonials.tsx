@@ -60,6 +60,7 @@ const Testimonials = () => {
         // setIsLoading(false);
       });
   }, []);
+
   const handleStarInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rating = parseInt(e.target.value);
     setReviews({ ...reviews, Rating: rating });
@@ -97,10 +98,10 @@ const Testimonials = () => {
   };
 
   return (
-    <div className="w-full mb-10">
-      <div className="flex justify-between items-center mb-5">
-        <div>
-          <h1>Testimonials</h1>
+    <div className="w-full mb-10 px-4">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-5">
+        <div className="mb-4 md:mb-0">
+          <h1 className="text-2xl font-bold">Testimonials</h1>
           <p>See what our users have to say about Co-Travel Nepal</p>
         </div>
         {isTokenAvailableAndNotExpired("x-access-token") && (
@@ -150,7 +151,7 @@ const Testimonials = () => {
           </>
         )}
       </div>
-      <div className="gap-5 grid grid-cols-4">
+      <div className="gap-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
         {isLoading ? (
           <Loading />
         ) : (
@@ -161,7 +162,6 @@ const Testimonials = () => {
                   <Avatar></Avatar>
                   <div>
                     <h3 className="font-bold">
-                      {" "}
                       {item.User.fname} {item.User.lname}
                     </h3>
                     <p className="text-[#676767] text-sm font-semibold ">
@@ -169,7 +169,7 @@ const Testimonials = () => {
                     </p>
                   </div>
                 </div>
-                <p>{item.Review}</p>
+                <p className="truncate">{item.Review}</p>
                 <div className="flex items-center justify-end">
                   {renderStars(item.Rating)}
                 </div>

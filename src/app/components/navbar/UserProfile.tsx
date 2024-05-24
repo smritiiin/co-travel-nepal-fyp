@@ -21,6 +21,8 @@ import {
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { useToken } from "@/utils/token";
+import Link from "next/link";
+import { NAV_LINKS } from "@/utils";
 
 export default function UserProfile() {
   const router = useRouter();
@@ -120,14 +122,18 @@ export default function UserProfile() {
               )}
             </DropdownItem>
             <DropdownItem className="sm:block md:hidden" key="dashboard">
-              Dashboard
+                {NAV_LINKS.map((link) => (
+                  <Link
+                    href={link.href}
+                    key={link.key}
+                    className="flex gap-2 transition-all cursor-pointer hover:text-red-600"
+                  >
+                    
+                    {link.label}
+                  </Link>
+                ))}
             </DropdownItem>
-            <DropdownItem key="settings" className="sm:block md:hidden">
-              Settings
-            </DropdownItem>
-            <DropdownItem className="sm:block md:hidden" key="new_project">
-              New Project
-            </DropdownItem>
+            
           </DropdownSection>
 
           <DropdownSection aria-label="Help & Feedback">
