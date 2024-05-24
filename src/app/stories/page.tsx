@@ -50,6 +50,7 @@ const Stories = () => {
         setIsLoading(false);
       });
   }, []);
+
   const router = useRouter();
 
   const handleClick = () => {
@@ -71,34 +72,36 @@ const Stories = () => {
     router.push("/stories");
     setShowLoginModal(false);
   };
+
   const cardClick = (id: any) => {
     console.log("Card Clicked");
     console.log("BlogId:", id);
     router.push(`/stories/${id}`);
   };
+
   return (
     <div className="px-5">
       <div className="text-center my-5">
-        <h2> From our Travellers</h2>
-        <p> Get to know Nepal better from travel enthusiast like you</p>
+        <h2>From our Travellers</h2>
+        <p>Get to know Nepal better from travel enthusiasts like you</p>
       </div>
       <Divider />
       <br />
-      <div className="flex gap-x-6 w-full">
-        <div className=" w-[20%]">
+      <div className="grid grid-cols-4 gap-6">
+        <div className="col-span-1 border">
           <TopContributors />
         </div>
-        <div className=" flex flex-col justify-center items-center flex-wrap w-[80%]">
+        <div className="col-span-3 flex flex-col overflow-scroll">
           <div>
-            <h3 className="font-semibold text-lg mt-2"> Popular Blogs</h3>
-            <div className="flex gap-5">
+            <h3 className="font-semibold text-lg mt-2">Popular Blogs</h3>
+            <div className="flex gap-5 overflow-x-auto">
               {isLoading ? (
                 <Loading />
               ) : (
                 popularBlogs.map((item: any) => (
                   <Card
                     key={item.id}
-                    className="py-4 w-[280px] h-[350px]"
+                    className="py-4 w-[280px] h-[350px] flex-shrink-0"
                     onClick={() => cardClick(item.id)}
                     isPressable
                   >
@@ -111,10 +114,10 @@ const Stories = () => {
                         height={190}
                       />
                       <CardHeader className="pb-0 pt-2 flex-col items-start">
-                        <h4 className="font-bold text-large truncate...">
+                        <h4 className="font-bold text-large truncate">
                           {item.title}
                         </h4>
-                        <p className="text-default-500  truncate...">
+                        <p className="text-default-500 truncate">
                           {item.content}
                         </p>
                       </CardHeader>
@@ -129,15 +132,15 @@ const Stories = () => {
             </div>
           </div>
           <div>
-            <h3 className="font-semibold text-lg mt-5"> Latest Blogs</h3>
-            <div className="flex gap-5">
+            <h3 className="font-semibold text-lg mt-5">Latest Blogs</h3>
+            <div className="flex gap-5 overflow-x-auto">
               {isLoading ? (
                 <Loading />
               ) : (
                 latestBlogs.map((item) => (
                   <Card
                     key={item.id}
-                    className="py-4 w-[280px] h-[350px]"
+                    className="py-4 w-[280px] h-[350px] flex-shrink-0"
                     onClick={() => cardClick(item.id)}
                     isPressable
                   >
@@ -150,10 +153,10 @@ const Stories = () => {
                         height={200}
                       />
                       <CardHeader className="pb-0 pt-2 flex-col items-start">
-                        <h4 className="font-bold text-large truncate...">
+                        <h4 className="font-bold text-large truncate">
                           {item.title}
                         </h4>
-                        <p className="text-default-500  truncate...">
+                        <p className="text-default-500 truncate">
                           {item.content}
                         </p>
                       </CardHeader>
@@ -171,13 +174,12 @@ const Stories = () => {
             <LoginCard isOpen={true} onClose={handleLoginModalClose} />
           )}
           <Button color="primary" className="my-3" onClick={handleClick}>
-            {" "}
             <Image
               src="/images/Blogs/addBlog.svg"
               alt=""
               width={20}
               height={20}
-            ></Image>
+            />
             Add Your Blog
           </Button>
         </div>

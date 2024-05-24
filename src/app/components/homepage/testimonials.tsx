@@ -150,12 +150,12 @@ const Testimonials = () => {
           </>
         )}
       </div>
-      <div className="flex gap-5">
+      <div className="gap-5 grid grid-cols-4">
         {isLoading ? (
           <Loading />
         ) : (
           userReview.map((item) => (
-            <Card key={item.ReviewerId} className="grid grid-cols-4">
+            <Card key={item.ReviewerId} className="">
               <CardBody className="py-2 flex flex-col justify-between">
                 <div className="flex gap-3 items-center mb-2">
                   <Avatar></Avatar>

@@ -1,83 +1,94 @@
 import { Card, CardBody } from "@nextui-org/react";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+
+interface Blog {
+  id: number;
+  title: string;
+  content: string;
+  imageUrl: string;
+}
 
 const TravelStories = () => {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/api/blog")
+      .then((response) => {
+        console.log(response.data);
+        setBlogs(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  const router = useRouter();
+  const cardClick = (id: any) => {
+    console.log("Card Clicked");
+    console.log("BlogId:", id);
+    router.push(`/stories/${id}`);
+  };
+
   return (
-    <div className="px-2 flex flex-col h-screen gap-4">
+    <div className="px-2 flex flex-col gap-4">
       <div className="flex justify-between">
-        <h2>Travel Blogs</h2>
+        <h2 className="text-2xl font-bold">Travel Blogs</h2>
         <Link href="/stories" className=" text-blue-700 font-semibold">
           Read More
         </Link>
       </div>
 
-      <div className="flex gap-7">
-        {/* THis is the top article for this week/ most read this month */}
-        <Card className=" p-1">
-          <CardBody>
-            <Image
-              src="/images/Blogs/Bandipur-blog.svg"
-              width={450}
-              height={350}
-              alt=""
-            />
-            <p className=" w-[450px] truncate overflow-hidden font-semibold">
-              Bandipur: authentic village and beautiful hidden gem in Nepal!
-            </p>
-          </CardBody>
-        </Card>
+      <div className="grid grid-cols-2 gap-4">
+        {blogs.length > 0 && (
+          <>
+            {/* Top article for this week / most read this month */}
+            <Card className="p-1" isHoverable isPressable>
+              <CardBody>
+                <Image
+                  src={`http://localhost:8000/${blogs[0].imageUrl}`}
+                  width={550}
+                  height={300}
+                  alt={blogs[0].title}
+                  className="object-cover rounded-md"
+                  onClick={() => cardClick(blogs[0].id)}
 
-        {/* Other blogs with headline */}
-        <div className=" w-1/2">
-          <Card className="p-1 ">
-            <div className="flex h-full">
-              <div className="w-1/2">
-                <Image
-                  src="/images/Blogs/Bandipur-blog.svg"
-                  width={280}
-                  height={150}
-                  alt=""
                 />
-              </div>
-              <div className=" w-1/2">
-                <p className=" font-semibold">
-                  Bandipur: authentic village and beautiful hidden gem in Nepal!
-                </p>
-                <p className=" text-ellipsis overflow-hidden h-full w-full">
-                  You will do the Annapurna Circuit trek in Nepal. This is a
-                  wonderful hike and a physical challenge. We can recommend
-                  everyone to walk this amazing trek in
-                  Nepal....................
-                </p>
-              </div>
+                <p className="font-semibold mt-2">{blogs[0].title}</p>
+              </CardBody>
+            </Card>
+
+            <div className="flex flex-col gap-2">
+              {blogs.slice(1, 4).map((blog) => (
+                <Card key={blog.id} className="p-2 flex-1" isHoverable isPressable>
+                  <div
+                    className="flex h-full"
+                    onClick={() => cardClick(blog.id)}
+                  >
+                    <div className="">
+                      <Image
+                        src={`http://localhost:8000/${blog.imageUrl}`}
+                        width={240}
+                        height={100}
+                        alt={blog.title}
+                        className="object-cover rounded-lg"
+                      />
+                    </div>
+                    <div className="w-1/2 p-2">
+                      <p className="font-semibold truncate">{blog.title}</p>
+                      <p className="text-ellipsis overflow-hidden h-full w-full text-sm">
+                        {blog.content.slice(0, 100)}...
+                      </p>
+                    </div>
+                  </div>
+                </Card>
+              ))}
             </div>
-          </Card>
-          <Card className="p-1 ">
-            <div className="flex h-full">
-              <div className="w-1/2">
-                <Image
-                  src="/images/Blogs/Bandipur-blog.svg"
-                  width={280}
-                  height={150}
-                  alt=""
-                />
-              </div>
-              <div className=" w-1/2">
-                <p className=" font-semibold">
-                  Bandipur: authentic village and beautiful hidden gem in Nepal!
-                </p>
-                <p className=" text-ellipsis overflow-hidden h-full w-full">
-                  You will do the Annapurna Circuit trek in Nepal. This is a
-                  wonderful hike and a physical challenge. We can recommend
-                  everyone to walk this amazing trek in
-                  Nepal....................
-                </p>
-              </div>
-            </div>
-          </Card>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
