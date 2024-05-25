@@ -9,15 +9,11 @@ const ViewProfile = ({ params }: { params: { profileId: string } }) => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Fetch profile data based on the profileId parameter
-    // You can replace this code with your actual API or database call
-    const fetchProfileData = async () => {
+     const fetchProfileData = async () => {
       try {
-        // Simulating an API request with a delay
         const response = await axios.get(
           `http://localhost:8000/api/profile/${params.profileId}`
         );
-        // const data = await response.json();
         setProfileData(response.data);
         setIsLoading(false);
         console.log(response);
