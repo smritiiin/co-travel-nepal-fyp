@@ -1,7 +1,28 @@
 import React from "react";
-import { Link, Image } from "@nextui-org/react";
+import { Link, Image, Button } from "@nextui-org/react";
+import { useToken } from "@/utils/token";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 const NavAgent = () => {
+  const { getUsernameAndRoleFromToken } = useToken();
+
+   const router = useRouter();
+
+   const handleLogout = () => {
+     const token = Cookies.get("x-access-token");
+     // Clear token from cookie
+     Cookies.remove("x-access-token");
+
+     // Check if token is successfully cleared
+     if (!Cookies.get("x-access-token")) {
+       console.log("Logout successful");
+       return router.push("/auth/login");
+     } else {
+       console.log("Logout failed");
+     }
+   };
+
   return (
     <div className=" flex flex-col items-center justify-around bg-[#EFF8FA] w-[25%]">
       <div className="flex flex-col items-center">
@@ -12,8 +33,12 @@ const NavAgent = () => {
           width={100}
           className="rounded-full mb-5 shadow-md"
         />
-        <p> Name </p>
-        <p> Role</p>
+        <p className="font-semibold">
+          {getUsernameAndRoleFromToken("x-access-token").username}{" "}
+        </p>
+        <p className="text-sm">
+          {getUsernameAndRoleFromToken("x-access-token").role}
+        </p>
       </div>
 
       <div className="mt-4 flex flex-col gap-y-4">
@@ -50,15 +75,15 @@ const NavAgent = () => {
       </div>
 
       <div>
-        <Link href="/" underline="hover" className="flex gap-7">
-          Logout
+        <Button onClick={handleLogout} className="flex gap-7">
+          Logout{" "}
           <Image
             src="/images/admin/logout.svg"
             alt="Logout"
             height={20}
             width={20}
           ></Image>
-        </Link>
+        </Button>
       </div>
     </div>
   );

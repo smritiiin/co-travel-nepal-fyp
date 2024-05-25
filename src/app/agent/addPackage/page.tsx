@@ -13,6 +13,8 @@ import { useState } from "react";
 import { ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import agentAuth from "@/utils/agentAuth";
+import NavAgent from "../NavAgent.tsx"
 
 type FormData = {
   Name: string;
@@ -103,84 +105,87 @@ const AddPackage = () => {
   };
 
   return (
-    <div>
-      <h2 className="text-center">Add Package</h2>
-      <form
-        className="flex flex-col gap-2"
-        encType="multipart/form-data"
-        onSubmit={handleSubmit(onSubmit)}
-      >
-        <Card>
-          <CardBody className="grid grid-cols-2 gap-4">
-            <div className="flex flex-col">
-              <Input
-                type="text"
-                label="Package Name"
-                name="Name"
-                onChange={handleInputChange}
-                // {...register("Name")}
-              ></Input>
-              {/* {errors.Name && (
+    <div className='flex gap-4'>
+    <NavAgent/>
+      <div>
+        <h2 className="text-center">Add Package</h2>
+        <form
+          className="flex flex-col gap-2"
+          encType="multipart/form-data"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <Card>
+            <CardBody className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col">
+                <Input
+                  type="text"
+                  label="Package Name"
+                  name="Name"
+                  onChange={handleInputChange}
+                  // {...register("Name")}
+                ></Input>
+                {/* {errors.Name && (
                   <span className="font-bold text-xl from-red-900">
                     {errors.Name.message} Helloo
                   </span>
                 )} */}
-            </div>
-            <Input
-              type="number"
-              label="Price"
-              name="Price"
-              onChange={handleInputChange}
-            ></Input>
-            <Input
-              type="text"
-              label="Duration"
-              name="Duration"
-              onChange={handleInputChange}
-            ></Input>
-            <Input
-              type="number"
-              label="No of Person"
-              name="NoOfPerson"
-              onChange={handleInputChange}
-            ></Input>
-            <Textarea
-              label="Description"
-              placeholder="Enter your description"
-              name="Description"
-              onChange={handleInputChange}
-            ></Textarea>
-            <Textarea
-              label="Accommodation"
-              placeholder="Accommodation details"
-              name="Accommodation"
-              onChange={handleInputChange}
-            ></Textarea>
-            <Textarea
-              label="Activities"
-              placeholder="Popular Activities"
-              name="Activities"
-              onChange={handleInputChange}
-            ></Textarea>
-            <Textarea
-              label="Itinerary"
-              placeholder=" Day-1: ..."
-              name="Itinerary"
-              onChange={handleInputChange}
-            ></Textarea>
-            <Input
-              type="file"
-              name="CoverImage"
-              onChange={handleInputChange}
-            ></Input>
-          </CardBody>
-          <CardFooter className="flex justify-center">
-            <Button color="primary" type="submit">
-              Add Package
-            </Button>
-          </CardFooter>
-        </Card>
-      </form>
+              </div>
+              <Input
+                type="number"
+                label="Price"
+                name="Price"
+                onChange={handleInputChange}
+              ></Input>
+              <Input
+                type="text"
+                label="Duration"
+                name="Duration"
+                onChange={handleInputChange}
+              ></Input>
+              <Input
+                type="number"
+                label="No of Person"
+                name="NoOfPerson"
+                onChange={handleInputChange}
+              ></Input>
+              <Textarea
+                label="Description"
+                placeholder="Enter your description"
+                name="Description"
+                onChange={handleInputChange}
+              ></Textarea>
+              <Textarea
+                label="Accommodation"
+                placeholder="Accommodation details"
+                name="Accommodation"
+                onChange={handleInputChange}
+              ></Textarea>
+              <Textarea
+                label="Activities"
+                placeholder="Popular Activities"
+                name="Activities"
+                onChange={handleInputChange}
+              ></Textarea>
+              <Textarea
+                label="Itinerary"
+                placeholder=" Day-1: ..."
+                name="Itinerary"
+                onChange={handleInputChange}
+              ></Textarea>
+              <Input
+                type="file"
+                name="CoverImage"
+                onChange={handleInputChange}
+              ></Input>
+            </CardBody>
+            <CardFooter className="flex justify-center">
+              <Button color="primary" type="submit">
+                Add Package
+              </Button>
+            </CardFooter>
+          </Card>
+        </form>
+      </div>
     </div>
   );
 };
