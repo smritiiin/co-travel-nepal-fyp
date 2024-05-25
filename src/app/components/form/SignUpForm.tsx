@@ -9,6 +9,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { ZodType, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 // import { mailOptions, transporter } from "@/utils/nodemailer";
 
 type FormData = {
@@ -33,7 +34,7 @@ const SignUpForm = () => {
       message: "Passwords do not  match",
       path: ["confirmPassword"],
     });
-
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -48,6 +49,7 @@ const SignUpForm = () => {
   const onSignup = async (e: FormData, res: any) => {
     const resp: any = await signup(e);
     console.log("THIS IS RESPONSE: ", resp);
+    router.push("/auth/login");
   };
 
   return (

@@ -23,6 +23,11 @@ const Testimonials = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLoading, setIsLoading] = useState(true);
   const [userReview, setUserReview] = useState<any[]>([]);
+  const [showAllReviews, setShowAllReviews] = useState(false);
+
+  const toggleShowAllReviews = () => {
+    setShowAllReviews(!showAllReviews);
+  };
 
   const [reviews, setReviews] = useState({
     Rating: 0,
@@ -40,10 +45,10 @@ const Testimonials = () => {
         "http://localhost:8000/api/review/addReview",
         reviews
       );
-      console.log(response.data); // Do something with the response
-      // onClose();
+      console.log(response.data);
+      onClose();
     } catch (error) {
-      console.error(error); // Handle error
+      console.error(error);
     }
   };
 
@@ -155,7 +160,7 @@ const Testimonials = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          userReview.map((item) => (
+          userReview.slice(0, showAllReviews ? undefined : 4).map((item) => (
             <Card key={item.ReviewerId} className="">
               <CardBody className="py-2 flex flex-col justify-between">
                 <div className="flex gap-3 items-center mb-2">
@@ -178,6 +183,16 @@ const Testimonials = () => {
           ))
         )}
       </div>
+      {userReview.length > 4 && (
+        <div className="flex justify-center mt-4">
+          <button
+            className="text-blue-600 font-bold hover:underline"
+            onClick={toggleShowAllReviews}
+          >
+            {showAllReviews ? "See Less" : "See All"}
+          </button>
+        </div>
+      )}
     </div>
   );
 };

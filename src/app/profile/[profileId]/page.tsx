@@ -61,13 +61,7 @@ const ViewProfile = ({ params }: { params: { profileId: string } }) => {
        <h4 className="text-[#6C6C6C]">{profileData.Nationality}, {profileData.Type}</h4>
        <p className="font-bold">I love travellinggg yeyyyy!</p>
      </div>
-
-     <div className="flex justify-center mb-10 gap-5">
-       <Button color="primary">Edit Profile</Button>
-       <Button className="border-2 border-[#A5A58D]">
-         Update Travel Status
-       </Button>
-     </div>
+   
 
      <div>
        <h3>Nationality: {profileData.Nationality}</h3>

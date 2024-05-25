@@ -48,7 +48,7 @@ const PopularDestinations = () => {
             Vacations to make your experience enjoyable in Nepal!
           </p>
         </div>
-        <div className="text-blue-600 font-semibold text-sm mt-2 md:mt-0">
+        <div className="text-blue-600 font-semibold text-sm mt-2 md:mt-0 cursor-pointer" onClick={()=>{router.push('/destination')}}>
           View All
         </div>
       </div>

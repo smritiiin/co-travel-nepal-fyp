@@ -1,6 +1,7 @@
 import { Button, Card, CardBody, CardFooter } from "@nextui-org/react";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 type Package = {
@@ -11,7 +12,14 @@ type Package = {
 };
 
 const TravelPlans = () => {
+  const router = useRouter();
   const [packages, setPackages] = useState<Package[]>([]);
+
+  const cardClick = (PackageID: any) => {
+    console.log("Card Clicked");
+    console.log("PackageID:", PackageID);
+    router.push(`/package/${PackageID}`);
+  };
 
   useEffect(() => {
     axios
@@ -34,8 +42,11 @@ const TravelPlans = () => {
         {/* Iterate through packages and display only the first three */}
         {packages.slice(0, 4).map((pkg) => (
           <Card
+          isHoverable
+          isPressable
             key={pkg.PackageID}
             className="shadow-lg px-2 py-4 max-w-xs rounded-md"
+            onClick={() => cardClick(pkg.PackageID)}
           >
             <CardBody className="p-0 ">
               <Image
@@ -43,7 +54,7 @@ const TravelPlans = () => {
                 alt={pkg.Name}
                 width={400}
                 height={200}
-                className="object-cover w-full rounded-t-md"
+                className="object-cover w-full h-full rounded-t-md"
               />
               <CardFooter>
                 <div className="text-lg font-bold">
@@ -56,7 +67,13 @@ const TravelPlans = () => {
         ))}
       </div>
 
-      <Button color="primary" className="mt-6">
+      <Button
+        color="primary"
+        className="mt-6"
+        onClick={() => {
+          router.push("/package");
+        }}
+      >
         See All
       </Button>
     </div>

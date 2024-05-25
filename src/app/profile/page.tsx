@@ -1,13 +1,63 @@
 "use client";
 import Image from "next/image";
-import { Avatar, Button, Divider } from "@nextui-org/react";
 import { useToken } from "@/utils/token";
 import { useRouter } from "next/navigation";
+import {
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  Button,
+  ModalFooter,
+  useDisclosure,
+  Input,
+} from "@nextui-org/react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Profile = () => {
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const [travellingTo, setTravellingTo] = useState("");
+  const [hasProfile, setHasProfile] = useState(false);
+  const [profileId, setProfileId] = useState(0);
+
   const { getUsernameAndRoleFromToken } = useToken();
   const router = useRouter();
 
+  const id = getUsernameAndRoleFromToken("x-access-token").id;
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:8000/api/profile/userprofile/${id}`
+        );
+        console.log(response);
+        setHasProfile(true);
+        setProfileId(response.data.ProfileId);
+      } catch (error) {
+        setHasProfile(false);
+      }
+    };
+    fetchProfileData();
+  }, [id]);
+
+  console.log("ProfileID", profileId);
+
+  const updateProfile = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:8000/api/profile/update/${profileId}`,
+        {
+          TravellingTo: [travellingTo],
+        }
+      );
+      console.log("Profile update response:", response.data);
+      onClose();
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
   return (
     <div className=" flex flex-col gap-5">
       <div className=" z-0">
@@ -35,40 +85,69 @@ const Profile = () => {
         </h4>
         <p className="font-bold"> I love travellinggg yeyyyy!</p>
       </div>
-      {/* <div className="flex h-24 items-center justify-center space-x-8 text-center mb-101`">
-        <div>
-          <h1>21</h1>
-          Blog
-        </div>
-        <Divider orientation="vertical" />
-        <div>
-          <h1>09</h1>
-          Docs
-        </div>
-        <Divider orientation="vertical" />
-        <div>
-          <h1>222</h1>
-          Source
-        </div>
-      </div> */}
 
       <div className="flex justify-center mb-10 gap-5">
-        <Button
-          color="primary"
-          onClick={() => {
-            router.push("/profile/create");
-          }}
-        >
-          Edit Profile
-        </Button>
-        <Button
-          className="border-2 border-[#A5A58D]"
-          onClick={() => {
-            router.push("/profile/create");
-          }}
-        >
-          Update Travel Status
-        </Button>
+        {!hasProfile && (
+          <Button
+            color="primary"
+            onClick={() => {
+              router.push("/profile/create");
+            }}
+          >
+            Create Profile
+          </Button>
+        )}
+        {hasProfile && (
+          <>
+            <Button
+              color="primary"
+              onClick={() => {
+                router.push("/profile/create");
+              }}
+            >
+              Edit Profile
+            </Button>
+            <Button className="border-2 border-[#A5A58D]" onPress={onOpen}>
+              Update Travel Status
+            </Button>
+            <Modal
+              isOpen={isOpen}
+              onOpenChange={onOpenChange}
+              placement="top-center"
+            >
+              <ModalContent>
+                {(onClose) => (
+                  <>
+                    <ModalHeader className="flex flex-col gap-1">
+                      Travel Status
+                      <p className="font-light">
+                        Where are you travelling Next?
+                      </p>
+                    </ModalHeader>
+                    <ModalBody>
+                      <Input
+                        label="Destination"
+                        placeholder="Enter your next destination"
+                        type="text"
+                        variant="bordered"
+                        value={travellingTo}
+                        onChange={(e) => setTravellingTo(e.target.value)}
+                      />
+                    </ModalBody>
+                    <ModalFooter>
+                      <Button color="danger" variant="flat" onPress={onClose}>
+                        Close
+                      </Button>
+                      <Button color="primary" onPress={updateProfile}>
+                        Update
+                      </Button>
+                    </ModalFooter>
+                  </>
+                )}
+              </ModalContent>
+            </Modal>
+          </>
+        )}
       </div>
     </div>
   );

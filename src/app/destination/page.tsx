@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import Places from "../admin/places/page";
 import { useRouter } from "next/navigation";
 
-
 interface Place {
   PlaceId: number;
   Description: string;
@@ -17,9 +16,9 @@ interface Place {
 }
 
 const Destination = () => {
-  const router= useRouter();
+  const router = useRouter();
 
-  const [selectedState, setSelectedState] = useState<number>(0);
+  const [selectedState, setSelectedState] = useState<number>(1);
   const [stateOptions, setStateOptions] = useState([]);
   const [places, setPlaces] = useState<Place[]>([]);
 
@@ -60,17 +59,19 @@ const Destination = () => {
     fetchStateOptions();
   }, []);
 
-   const cardClick = (PlaceId: any) => {
-     console.log("Card Clicked");
-     console.log("PlaceId:", PlaceId);
-     router.push(`/destination/${PlaceId}`);
-   };
+  const cardClick = (PlaceId: any) => {
+    console.log("Card Clicked");
+    console.log("PlaceId:", PlaceId);
+    router.push(`/destination/${PlaceId}`);
+  };
 
   return (
     <div className="w-full ">
-      <div className="flex p-16 min-h-screen gap-x-6">
-        <div className="w-1/2">
-          <h1>What makes this country a wonderful place to visit.</h1>
+      <div className="flex flex-col md:flex-row p-4 md:p-16 min-h-screen gap-y-6 md:gap-x-6">
+        <div className="w-full md:w-1/2">
+          <h1 className="text-2xl md:text-5xl mb-4 md:leading-snug">
+            What makes this country a wonderful place to visit.
+          </h1>
           <p>
             Having stopover in myriad places in Nepal is what makes this country
             a wonderful place to visit. The beauty of scenic natural landscapes
@@ -86,12 +87,12 @@ const Destination = () => {
           width={500}
           height={200}
           alt=""
-          className="w-1/2"
+          className="w-full md:w-1/2"
         />
       </div>
 
-      <div className="flex justify-center items-end">
-        <h1 className="text-center">
+      <div className="flex justify-center items-end mb-3">
+        <h1 className="text-center text-2xl md:text-4xl">
           Your next{" "}
           <span className=" text-green-700 font-bold text-[40px]">
             travel <br /> Destination
@@ -106,7 +107,11 @@ const Destination = () => {
           key=""
         >
           {stateOptions.map((state: any) => (
-            <SelectItem key={state.StateId} value={state.StateId} className=" text-gray-700">
+            <SelectItem
+              key={state.StateId}
+              value={state.StateId}
+              className=" text-gray-700"
+            >
               {state.StateName}
             </SelectItem>
           ))}
@@ -127,13 +132,12 @@ const Destination = () => {
                   width={250}
                   height={200}
                   onClick={() => cardClick(place.PlaceId)}
+                  // loader={({ src }) => `http://localhost:8000/${src}`}
                 />
                 <h3 className="font-bold">{place.PlaceName}</h3>
-                <p className=" text-gray-600 text-sm truncate">{place.Description}</p>
-                {/* <p className="text-sm ">
-                  Latitude: {place.Latitude}<br/>
-                  Longitude: {place.Longitude}
-                </p> */}
+                <p className=" text-gray-600 text-sm truncate">
+                  {place.Description}
+                </p>
               </Card>
             ))}
         </div>

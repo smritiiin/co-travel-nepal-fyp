@@ -18,6 +18,7 @@ const Stories = () => {
   const [responseData, setResponseData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showAll, setShowAll] = useState(false);
 
   const latestBlogs = [...responseData];
 
@@ -80,45 +81,43 @@ const Stories = () => {
   };
 
   return (
-    <div className="px-5">
+    <div className="px-5 md:px-10 lg:px-20">
       <div className="text-center my-5">
         <h2>From our Travellers</h2>
         <p>Get to know Nepal better from travel enthusiasts like you</p>
       </div>
       <Divider />
       <br />
-      <div className="grid grid-cols-4 gap-6">
-        <div className="col-span-1 border">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="col-span-1 md:col-span-1">
           <TopContributors />
         </div>
-        <div className="col-span-3 flex flex-col overflow-scroll">
+        <div className="col-span-1 md:col-span-3 flex flex-col">
           <div>
             <h3 className="font-semibold text-lg mt-2">Popular Blogs</h3>
-            <div className="flex gap-5 overflow-x-auto">
+            <div className="flex gap-5 md:grid md:grid-cols-3 md:gap-5">
               {isLoading ? (
                 <Loading />
               ) : (
-                popularBlogs.map((item: any) => (
+                popularBlogs.slice(1, 4).map((item: any) => (
                   <Card
                     key={item.id}
-                    className="py-4 w-[280px] h-[350px] flex-shrink-0"
+                    className="w-[280px] h-[350px] flex-shrink-0 md:w-full md:h-auto"
                     onClick={() => cardClick(item.id)}
                     isPressable
                   >
-                    <CardBody className="py-2 overflow-hidden">
+                    <CardBody className="py-1 ">
                       <Image
                         alt="Blog Cover"
-                        className="object-cover rounded-xl"
+                        className="object-cover rounded-xl items-center"
                         src={`http://localhost:8000/${item.imageUrl}`}
                         width={190}
                         height={190}
                       />
                       <CardHeader className="pb-0 pt-2 flex-col items-start">
-                        <h4 className="font-bold text-large truncate">
-                          {item.title}
-                        </h4>
+                        <h4 className="font-bold text-large">{item.title}</h4>
                         <p className="text-default-500 truncate">
-                          {item.content}
+                          {item.content.slice(0, 25)}...
                         </p>
                       </CardHeader>
                     </CardBody>
@@ -133,41 +132,49 @@ const Stories = () => {
           </div>
           <div>
             <h3 className="font-semibold text-lg mt-5">Latest Blogs</h3>
-            <div className="flex gap-5 overflow-x-auto">
+            <div className="flex gap-5 md:grid md:grid-cols-3 md:gap-5">
               {isLoading ? (
                 <Loading />
               ) : (
-                latestBlogs.map((item) => (
-                  <Card
-                    key={item.id}
-                    className="py-4 w-[280px] h-[350px] flex-shrink-0"
-                    onClick={() => cardClick(item.id)}
-                    isPressable
-                  >
-                    <CardBody className="py-2 overflow-hidden">
-                      <Image
-                        alt="Blog Cover"
-                        className="object-cover rounded-xl"
-                        src={`http://localhost:8000/${item.imageUrl}`}
-                        width={270}
-                        height={200}
-                      />
-                      <CardHeader className="pb-0 pt-2 flex-col items-start">
-                        <h4 className="font-bold text-large truncate">
-                          {item.title}
-                        </h4>
-                        <p className="text-default-500 truncate">
-                          {item.content}
-                        </p>
-                      </CardHeader>
-                    </CardBody>
-                    <Divider />
-                    <CardFooter>
-                      {item.author.fname} {item.author.lname}
-                    </CardFooter>
-                  </Card>
-                ))
+                latestBlogs
+                  .slice(0, showAll ? latestBlogs.length : 3)
+                  .map((item) => (
+                    <Card
+                      key={item.id}
+                      className="py-4 w-[280px] h-[350px] flex-shrink-0 md:w-full md:h-auto"
+                      onClick={() => cardClick(item.id)}
+                      isPressable
+                    >
+                      <CardBody className="py-2 overflow-hidden">
+                        <Image
+                          alt="Blog Cover"
+                          className="object-cover rounded-xl"
+                          src={`http://localhost:8000/${item.imageUrl}`}
+                          width={270}
+                          height={200}
+                        />
+                        <CardHeader className="pb-0 pt-2 flex-col items-start">
+                          <h4 className="font-bold text-large">{item.title}</h4>
+                          <p className="text-default-500 truncate">
+                            {item.content.slice(0, 25)}...
+                          </p>
+                        </CardHeader>
+                      </CardBody>
+                      <Divider />
+                      <CardFooter>
+                        {item.author.fname} {item.author.lname}
+                      </CardFooter>
+                    </Card>
+                  ))
               )}
+            </div>
+            <div className="flex justify-center">
+              <p
+                className="mt-4 px-4 py-2 text-blue-500 cursor-pointer "
+                onClick={() => setShowAll(!showAll)}
+              >
+                {showAll ? "Show less" : "Show all"}
+              </p>
             </div>
           </div>
           {showLoginModal && (
