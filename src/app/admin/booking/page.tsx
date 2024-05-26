@@ -1,87 +1,68 @@
 "use client";
 import NavAdmin from "../NavBar";
+import adminAuth from "@/utils/adminAuth";
 import {
-  Divider,
   Table,
   TableCell,
   TableHeader,
   TableRow,
   TableColumn,
   TableBody,
-  Avatar,
+  
 } from "@nextui-org/react";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import adminAuth from "@/utils/adminAuth";
 
 const Booking = () => {
-  const [bookingData, setBookingData] = useState<any[]>([]);
+  const [bookingData, setBookingData] = useState([]);
 
   useEffect(() => {
-    try {
-      axios
-        .get("http://localhost:8000/api/package/booking")
-        .then(function (response) {
-          console.log(response.data);
-          setBookingData(response.data);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } catch (err) {
-      console.log(`Error: ${err}`);
-    }
+    const fetchBookingData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/api/package/booking"
+        );
+        console.log(response.data);
+        setBookingData(response.data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchBookingData();
   }, []);
+
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen gap-5">
       <NavAdmin />
-      <div className="w-[75%] h-screen py-3">
-        {/* <SearchBar /> */}
-        <div className="flex gap-x-4">
-          <h2 className="text-center cursor-point">Booking</h2>
-        </div>
-        <Divider />
-        <br />
-        <Table className="font-thin ml-2">
+      <div className="w-full">
+        <h2>Bookings</h2>
+
+        <Table
+          aria-label="Example table with custom cells"
+          
+        >
           <TableHeader>
-            <TableColumn>User</TableColumn>
-            <TableColumn>Package</TableColumn>
-            <TableColumn>No of Person</TableColumn>
-            <TableColumn>Duration</TableColumn>
+            <TableColumn>Booking ID</TableColumn>
+            <TableColumn>Package </TableColumn>
+            <TableColumn>User ID</TableColumn>
+            <TableColumn>No. of Persons</TableColumn>
+            <TableColumn>Start Date</TableColumn>
+            <TableColumn>End Date</TableColumn>
+            <TableColumn>Payment Status</TableColumn>
           </TableHeader>
           <TableBody>
-            {bookingData.map((item) => (
-              <TableRow
-                className="mb-2 items-center border"
-                key={item.BookingId}
-              >
-                <TableCell className="pb-0 pt-2 px-4 flex-col items-start">
-                  <h4 className="font-semibold">
-                    {item.User.fname} {item.User.lname}
-                  </h4>
+            {bookingData.map((booking) => (
+              <TableRow key={booking.BookingId}>
+                <TableCell>{booking.BookingId}</TableCell>
+                <TableCell>{booking.Package.Name}</TableCell>
+                <TableCell>
+                  {booking.User.fname} {booking.User.lname}
                 </TableCell>
-
-                <TableCell className="pb-0 pt-2 px-4 flex-col items-start">
-                  <h4 className="">{item.Package.Name}</h4>
-                </TableCell>
-                <TableCell className="pb-0 pt-2 px-4 flex-col items-start">
-                  <small className="text-default-500">{item.NoOfPerson}</small>
-                </TableCell>
-                <TableCell className="pb-0 pt-2 px-4 flex-col items-start">
-                  <small className="text-default-500">
-                    {new Date(item.StartDate).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    })}
-                    ,
-                    {new Date(item.EndDate).toLocaleDateString("en-US", {
-                      year: "numeric",
-                      month: "2-digit",
-                      day: "2-digit",
-                    })}
-                  </small>
-                </TableCell>
+                <TableCell>{booking.NoOfPerson}</TableCell>
+                <TableCell>{booking.StartDate}</TableCell>
+                <TableCell>{booking.EndDate}</TableCell>
+                <TableCell>{booking.Payment ? "Paid" : "Unpaid"}</TableCell>
               </TableRow>
             ))}
           </TableBody>

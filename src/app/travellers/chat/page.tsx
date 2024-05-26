@@ -9,6 +9,8 @@ import { useToken } from "@/utils/token";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 
+const roughWords = ["idiot", "lame", "jerk", "fool"]; 
+
 const Messenger = () => {
   const { getUsernameAndRoleFromToken } = useToken();
 
@@ -16,6 +18,7 @@ const Messenger = () => {
   const [currentChat, setCurrentChat] = useState();
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
+  const [isRoughMessage, setIsRoughMessage] = useState(false);
 
   const scrollRef = useRef();
 
@@ -74,9 +77,22 @@ const Messenger = () => {
       );
       setMessages([...messages, res.data]);
       setNewMessage("");
+      setIsRoughMessage(false); // Reset the rough message flag after sending
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const handleNewMessageChange = (e: any) => {
+    const value = e.target.value;
+    setNewMessage(value);
+    setIsRoughMessage(containsRoughWords(value));
+  };
+
+  const containsRoughWords = (text: string) => {
+    return roughWords.some((word) =>
+      text.toLowerCase().includes(word.toLowerCase())
+    );
   };
 
   return (
@@ -84,10 +100,9 @@ const Messenger = () => {
       <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
-            <input placeholder="Search for friends" className="chatMenuInput" />
 
             {conversations.map((c) => (
-              <div onClick={() => setCurrentChat(c)}>
+              <div onClick={() => setCurrentChat(c)} key={c.id}>
                 <Conversation conversation={c} currentUser={id} />
               </div>
             ))}
@@ -99,7 +114,7 @@ const Messenger = () => {
               <>
                 <div className="chatBoxTop">
                   {messages.map((m: any) => (
-                    <div ref={scrollRef}>
+                    <div ref={scrollRef} key={m.id}>
                       <Message message={m} own={m.SenderUserId === id} />
                     </div>
                   ))}
@@ -109,16 +124,21 @@ const Messenger = () => {
                     placeholder="Enter your message"
                     minRows={2}
                     size="sm"
-                    onChange={(e: any) => setNewMessage(e.target.value)}
+                    onChange={handleNewMessageChange}
                     value={newMessage}
-                  ></Textarea>
-                  <Button color="primary" onClick={sendMessage}>
+                    status={isRoughMessage ? "error" : "default"}
+                  />
+                  <Button
+                    color="primary"
+                    onClick={sendMessage}
+                    disabled={isRoughMessage}
+                  >
                     Send
                   </Button>
                 </div>
               </>
             ) : (
-              <p className=" absolute top-10 text-3xl font-semibold text-center cursor-default text-gray-300 ">
+              <p className="absolute top-10 text-3xl font-semibold text-center cursor-default text-gray-300">
                 Open a chat to start messaging.
               </p>
             )}

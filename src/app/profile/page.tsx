@@ -20,6 +20,8 @@ const Profile = () => {
   const [travellingTo, setTravellingTo] = useState("");
   const [hasProfile, setHasProfile] = useState(false);
   const [profileId, setProfileId] = useState(0);
+  const [profileData, setProfileData] = useState("");
+  const [profileType, setProfileType] = useState("");
 
   const { getUsernameAndRoleFromToken } = useToken();
   const router = useRouter();
@@ -35,6 +37,8 @@ const Profile = () => {
         console.log(response);
         setHasProfile(true);
         setProfileId(response.data.ProfileId);
+        setProfileData(response.data.TravellingTo);
+        setProfileType(response.data.Type);
       } catch (error) {
         setHasProfile(false);
       }
@@ -81,8 +85,17 @@ const Profile = () => {
       <div className="text-center">
         <h2>{getUsernameAndRoleFromToken("x-access-token").username}</h2>
         <h4 className=" text-[#6C6C6C]">
-          {getUsernameAndRoleFromToken("x-access-token").role}
+          {profileType}
         </h4>
+        <div className="flex justify-center items-center gap-2">
+          <Image
+            src="/images/travellers/travellingTo.png"
+            alt="Place"
+            height={30}
+            width={30}
+          ></Image>
+          <h4 className=" text-[#6C6C6C]"> {profileData}</h4>
+        </div>
         <p className="font-bold"> I love travellinggg yeyyyy!</p>
       </div>
 

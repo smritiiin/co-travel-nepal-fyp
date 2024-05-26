@@ -74,7 +74,6 @@ const TravelStories = () => {
                   key={blog.id}
                   className="p-2 flex-1"
                   isHoverable
-                  isPressable
                   onClick={() => cardClick(blog.id)}
                 >
                   <div className="flex h-full">

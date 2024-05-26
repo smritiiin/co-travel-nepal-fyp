@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card, Image, Button, Spacer } from "@nextui-org/react";
 import { useToken } from "./token";
+import Loading from "@/app/components/Loading"; 
 
 const adminAuth = (WrappedComponent: React.ComponentType) => {
   const Auth = (props: any) => {
@@ -12,23 +13,34 @@ const adminAuth = (WrappedComponent: React.ComponentType) => {
       useToken();
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [role, setRole] = useState("");
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-      const isTokenValid = isTokenAvailableAndNotExpired("x-access-token");
-      const userRole = getUsernameAndRoleFromToken("x-access-token").role;
+      const validateToken = async () => {
+        const isTokenValid = isTokenAvailableAndNotExpired("x-access-token");
+        const userRole = getUsernameAndRoleFromToken("x-access-token").role;
 
-      setIsAuthenticated(isTokenValid);
-      setRole(userRole);
+        setIsAuthenticated(isTokenValid);
+        setRole(userRole);
 
-      if (!isTokenValid || userRole !== "ADMIN") {
-        setIsAuthenticated(false);
-        setRole("");
-      }
+        if (!isTokenValid || userRole !== "ADMIN") {
+          setIsAuthenticated(false);
+          setRole("");
+        }
+
+        setIsLoading(false); // Set loading to false after token validation
+      };
+
+      validateToken();
     }, [isTokenAvailableAndNotExpired, getUsernameAndRoleFromToken, router]);
 
     const handleLoginRedirect = () => {
       router.push("/auth/login");
     };
+
+    if (isLoading) {
+      return <Loading />;
+    }
 
     if (!isAuthenticated || role !== "ADMIN") {
       return (

@@ -63,7 +63,7 @@ const Packages = () => {
                     src={`http://localhost:8000/${item.CoverImage}`}
                     layout="fill"
                     objectFit="cover"
-                  />
+                  ></Image>
                 </div>
                 <div className="flex item-center">
                   <Image

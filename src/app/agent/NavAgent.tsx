@@ -7,21 +7,21 @@ import { useRouter } from "next/navigation";
 const NavAgent = () => {
   const { getUsernameAndRoleFromToken } = useToken();
 
-   const router = useRouter();
+  const router = useRouter();
 
-   const handleLogout = () => {
-     const token = Cookies.get("x-access-token");
-     // Clear token from cookie
-     Cookies.remove("x-access-token");
+  const handleLogout = () => {
+    const token = Cookies.get("x-access-token");
+    // Clear token from cookie
+    Cookies.remove("x-access-token");
 
-     // Check if token is successfully cleared
-     if (!Cookies.get("x-access-token")) {
-       console.log("Logout successful");
-       return router.push("/auth/login");
-     } else {
-       console.log("Logout failed");
-     }
-   };
+    // Check if token is successfully cleared
+    if (!Cookies.get("x-access-token")) {
+      console.log("Logout successful");
+      return router.push("/auth/login");
+    } else {
+      console.log("Logout failed");
+    }
+  };
 
   return (
     <div className=" flex flex-col items-center justify-around bg-[#EFF8FA] w-[25%]">
@@ -62,7 +62,7 @@ const NavAgent = () => {
           ></Image>
           Booking
         </Link>
-        <Link href="/agent/addPackage" underline="hover" className="flex gap-7">
+        <Link href="/agent/package" underline="hover" className="flex gap-7">
           {" "}
           <Image
             src="/images/admin/users.svg"
@@ -71,6 +71,16 @@ const NavAgent = () => {
             width={20}
           ></Image>
           Packages
+        </Link>
+        <Link href="/agent/addPackage" underline="hover" className="flex gap-7">
+          {" "}
+          <Image
+            src="/images/admin/users.svg"
+            alt="Users"
+            height={20}
+            width={20}
+          ></Image>
+          Add Packages
         </Link>
       </div>
 

@@ -1,7 +1,9 @@
 import { Button } from "@nextui-org/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const LandingPage = () => {
+  const router= useRouter()
   return (
     <div className="flex flex-col md:flex-row justify-center h-screen">
       <div className="flex flex-col justify-around items-center h-full w-full md:w-1/2 px-3 pb-5 text-center md:text-left">
@@ -18,10 +20,10 @@ const LandingPage = () => {
           </p>
         </div>
         <div className="flex flex-col md:flex-row justify-center md:justify-start items-center gap-4 w-full px-4 md:px-0">
-          <Button color="primary" size="lg" className="w-44">
+          <Button color="primary" size="lg" className="w-44" onClick={()=>{router.push('/destination')}}>
             Explore
           </Button>
-          <Button color="primary" size="lg" className="w-44">
+          <Button color="primary" size="lg" className="w-44" onClick={()=>{router.push('/travellers')}}>
             Connect
           </Button>
         </div>

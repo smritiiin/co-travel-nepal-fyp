@@ -61,7 +61,6 @@ const PopularDestinations = () => {
               key={item.PlaceId}
               className="p-3 mb-5 mt-3"
               isHoverable
-              isPressable
               onClick={() => cardClick(item.PlaceId)}
             >
               <Image

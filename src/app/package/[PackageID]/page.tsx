@@ -21,6 +21,7 @@ import { z, ZodType } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
+import { LoginCard } from "@/app/components/LoginCard";
 
 type FormData = {
   noOfPerson: number;
@@ -46,8 +47,16 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
 
   const [packageData, setPackageData] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showPaymentButton, setShowPaymentButton] = useState(false);
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const {
+    isOpen: isLoginOpen,
+    onOpen: onLoginOpen,
+    onOpenChange: onLoginOpenChange,
+  } = useDisclosure();
+
   const {
     register,
     handleSubmit,
@@ -74,8 +83,24 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
     fetchPackageData();
   }, [params.PackageID]);
 
+  useEffect(() => {
+    const checkLoginStatus = () => {
+      try {
+        const tokenData = getUsernameAndRoleFromToken("x-access-token");
+        if (tokenData.username && tokenData.role) {
+          setIsLoggedIn(true);
+        } else {
+          setIsLoggedIn(false);
+        }
+      } catch (error) {
+        setIsLoggedIn(false);
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
+
   const onSubmit = async (data: FormData) => {
-    console.log("button clicked haii ta!");
     try {
       const bookingData = {
         PackageId: parseInt(params.PackageID),
@@ -91,11 +116,14 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
         bookingData
       );
       console.log(response.data);
-      // router.push("/profile/[profileId]");
+      setShowPaymentButton(true);
     } catch (error) {
       console.log(error);
     }
   };
+   const handleLoginModalClose = () => {
+     router.push("/");
+   };
 
   const payment = async () => {
     try {
@@ -105,10 +133,16 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
 
       console.log(response.data);
       router.push(response.data.payment_url);
-      // Handle the response data here
     } catch (error) {
       console.error("Error:", error);
-      // Handle errors here
+    }
+  };
+
+  const handleBookNowClick = () => {
+    if (isLoggedIn) {
+      onOpen();
+    } else {
+      onLoginOpen();
     }
   };
 
@@ -117,7 +151,6 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
   ) : (
     <div key={params.PackageID}>
       <div key={packageData.PackageID}>
-        {/* <h2 className="text-center"> {packageData.Name}</h2> */}
         <div
           className="flex  bg-current min-h-full w-full justify-end rounded-xl"
           style={{
@@ -145,7 +178,7 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
               width={350}
               height={306}
               className="object-cover w-full h-full rounded-lg"
-            />
+            ></Image>
           </div>
           <div className="p-6 flex flex-col justify-between">
             <div>
@@ -183,12 +216,17 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
         </Card>
 
         <div className="w-full justify-center py-4 items-center flex">
-          <Button onPress={onOpen} color="primary" className="mt-5 mx-auto">
+          <Button
+            onPress={handleBookNowClick}
+            color="primary"
+            className="mt-5 mx-auto"
+          >
             Book Now!
           </Button>
         </div>
       </div>
 
+      {/* Booking Modal */}
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
@@ -197,7 +235,10 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
                 Booking- {packageData.Name}
               </ModalHeader>
               <ModalBody>
-                <form className="flex flex-col gap-4">
+                <form
+                  className="flex flex-col gap-4"
+                  onSubmit={handleSubmit(onSubmit)}
+                >
                   <Input
                     type="number"
                     placeholder="Number of Person"
@@ -233,28 +274,31 @@ const Package = ({ params }: { params: { PackageID: string } }) => {
                   )}
 
                   <ModalFooter>
-                    {/* <Button color="danger" variant="light" onPress={onClose}>
+                    <Button color="danger" variant="light" onPress={onClose}>
                       Cancel
-                    </Button> */}
-                    {/* <Button color="primary" type="submit" >
-                      Book
-                    </Button> */}
+                    </Button>
+                    <Button color="primary" type="submit">
+                      Submit
+                    </Button>
                   </ModalFooter>
-                  <Button
-                    type="submit"
-                    onClick={handleSubmit(onSubmit)}
-                    color="primary"
-                  >
-                    Submit
-                  </Button>
-
-                   <Button onClick={payment}>Pay Garam Ta</Button> 
                 </form>
+                {showPaymentButton && (
+                  <div className="flex justify-center mt-4">
+                    <Button onClick={payment} color="success">
+                      Make Payment
+                    </Button>
+                  </div>
+                )}
               </ModalBody>
             </>
           )}
         </ModalContent>
       </Modal>
+
+      {/* Login Modal */}
+      {!isLoggedIn && (
+        <LoginCard isOpen={true} onClose={handleLoginModalClose} />
+      )}
     </div>
   );
 };

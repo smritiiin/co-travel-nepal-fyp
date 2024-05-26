@@ -79,7 +79,9 @@ const Travellers = () => {
       console.log("CLICKED RESPONSE: ", response);
       router.push("/travellers/chat");
     } catch (error) {
+      router.push("/travellers/chat");
       console.error(error);
+
     }
   };
 
@@ -102,7 +104,7 @@ const Travellers = () => {
             width={70}
             height={20}
             onClick={handleChat}
-          />
+          ></Image>
         </div>
         <div>
           {showLoginModal && (
